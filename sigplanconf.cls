@@ -567,7 +567,7 @@
 
 \def \@copyrightspace {%
   \@float{copyrightbox}[b]%
-  \vbox to 1in{%
+  \vbox to 0.7in{%
     \vfill
     \parbox[b]{20pc}{%
       \scriptsize
