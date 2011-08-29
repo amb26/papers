@@ -26,7 +26,7 @@
 \preprintfooter{The Infusion IoC System}   % 'preprint' option specified.
 
 \title{To Inclusive Design Through Contextually Extended IoC}
-\subtitle{Infusion IoC, a JavaScript library and mentality for delivering accessible and maintainable systems}
+\subtitle{Infusion IoC, a JavaScript Library and Mentality for Scalable Development of Accessible and Maintainable Systems}
 
 \authorinfo{Antranig Basman}
            {Fluid Project, OCAD University, Toronto, Canada}
@@ -49,6 +49,13 @@ To address these problems of adaptability, we present a model for software const
 We relate such systems to goal-directed resolution systems such as Prolog, and show that they have beneficial properties such as {\it homoiconicity}\cite{mcilroy} which have not been seen in a strong or widespread form since the days of LISP. We exhibit some cases to show how the framework enables, through a simple declarative syntax, types of adaptation and composition that are hard or impossible using traditional models of polymorphism. We also relate Infusion IoC to other software methodologies such as {\it Aspect-Oriented Programming} and {\it Context-Oriented Programming} which have been found to greatly increase flexibility and expressiveness of designs. We conclude with some remarks on the applicability of the system to the parallelisation of irregular algorithms, and its relationship to upcoming developments in the ECMAScript 6 language specification.
 
 \end{abstract}
+
+\terms
+Algorithms, Design, Human Factors, Languages
+
+\category{D.1.2}{Software}{Programming Techniques}[Automatic Programming]
+\category{D.3.3}{Software}{Programming Languages}[Polymorphism]
+\category{E.2}{Data}{Data Storage Representations}[Object Representation]
 
 \keywords
 JavaScript, Inversion of Control, Transparent State, Accessibility, JSON, Context-oriented Programming
@@ -218,7 +225,7 @@ Brooks accepts that the methods of his day (including the then still nascent obj
 
 The configuration for our IoC system is issued in two kinds of JSON structures, known as {\bf defaults} and {\bf demands blocks}. This configuration is {\it static}, in that it is issued directly upon loading of the containing JavaScript files, and does not change over the lifetime of the application. A different value for defaults/demands constitutes a different version of the application or framework in question. Defaults and demands blocks are governed by a well-defined grammar, although at various points in the ``syntax'', the content is unconstrained, to allow arbitrary application structure to be expressed. The named units of composition described by the grammar are named ``components'' although these need not correspond to the traditional concept of a ``UI component'' or ``widget''. 
 
-The examples presented here show the syntax supported by the version 1.4 release of Fluid Infusion, of August 2011. Since the Infusion IoC system is still under development, future versions of Infusion will feature different support, although the basic syntax presented here is expected to remain essentially stable. 
+The examples presented here show the syntax supported by the version 1.4 release of Fluid Infusion, of September 2011. Since the Infusion IoC system is still under development, future versions of Infusion will feature different support, although the basic syntax presented here is expected to remain essentially stable. 
 
 \subsection{Defaults and Components}
 \label{sec:defaults}
@@ -499,7 +506,7 @@ Component markup, similar to component state, is not locked up in implementation
 
 \section{Status and Trajectory of the Implementation}
 
-The Fluid group are currently working towards the 1.4 release of the Infusion system, which is targetted for the end of August 2011. This will be the first public release in which the described implementation of the IoC system (as well as the Uploader widget and other components not described here) will be available. This release is considered to be in a ``sneak peek'' mode where API and concepts are not fully stabilised. Although several of Fluid's production-ready components are implemented in terms of this system already, the IoC system and framework itself are not yet considered to have reached a production-worthy condition in terms of stable use by general users. Readers are invited to come along and inspect our progress, and even join in, at our github repository held at \url{https://github.com/fluid-project/infusion}\ . Overall documentation for the Infusion system, including the IoC implementation, is held at \url{http://wiki.fluidproject.org/display/fluid/Infusion+Documentation}\ . Future versions of Infusion are roadmapped at \url{http://wiki.fluidproject.org/display/fluid/Fluid+Community+Roadmaps} --- we will continue to stabilise and expand the capabilities of the IoC system as well as evolving previously implemented components to defer to it more for implementation. A crucially important, but still very early--stage work package involves our server-side implementation, Fluid {\bf Kettle}, an IoC-driven JavaScript implementation based on the rapidly developing {\tt Node.js} framework based on an asynchronous I/O model. A back-end based on Apache's CouchDB persistence technology using JavaScript as a query language will enable a homogeneous development model operating JavaScript at all tiers of the web application, which is hoped to bring developments of lowered barrier to entry by new developers as well as increased mobility of code and implementation algorithms between the layers. 
+The Fluid group are currently working towards the 1.4 release of the Infusion system, which is targetted for September 2011. This will be the first public release in which the described implementation of the IoC system (as well as the Uploader widget and other components not described here) will be available. This release is considered to be in a ``sneak peek'' mode where API and concepts are not fully stabilised. Although several of Fluid's production-ready components are implemented in terms of this system already, the IoC system and framework itself are not yet considered to have reached a production-worthy condition in terms of stable use by general users. Readers are invited to come along and inspect our progress, and even join in, at our github repository held at \url{https://github.com/fluid-project/infusion}\ . Overall documentation for the Infusion system, including the IoC implementation, is held at \url{http://wiki.fluidproject.org/display/fluid/Infusion+Documentation}\ . Future versions of Infusion are roadmapped at \url{http://wiki.fluidproject.org/display/fluid/Fluid+Community+Roadmaps} --- we will continue to stabilise and expand the capabilities of the IoC system as well as evolving previously implemented components to defer to it more for implementation. A crucially important, but still very early--stage work package involves our server-side implementation, Fluid {\bf Kettle}, an IoC-driven JavaScript implementation based on the rapidly developing {\tt Node.js} framework based on an asynchronous I/O model. A back-end based on Apache's CouchDB persistence technology using JavaScript as a query language will enable a homogeneous development model operating JavaScript at all tiers of the web application, which is hoped to bring developments of lowered barrier to entry by new developers as well as increased mobility of code and implementation algorithms between the layers. 
 
 \subsection{Directions for the System}
 
@@ -556,7 +563,7 @@ McIlroy, D.:
 Macro Instruction Extensions of Compiler Languages, 1960, Communications of the ACM, Volume 3 Issue 4
 
 \bibitem{inclusive-design}
-Chapter 15: ``Everyday inclusive design'', N. Warburton, {\it in} Inclusive Design: Design for the whole population: Edited by Clarkson, J. et al, Springer (2003)
+Chapter 15: ``Everyday Inclusive Design'', N. Warburton, {\it in} Inclusive Design: Design for the Whole Population: Edited by Clarkson, J. et al, Springer (2003)
 
 \bibitem{fowler}
 Fowler, M.:
@@ -571,19 +578,19 @@ Domain-Specific Languages, Addison-Wesley, 2010
 Douglas Crockford --- The JSON Saga: \url{http://developer.yahoo.com/yui/theater/video.php?v=crockford-json}
 
 \bibitem{cop2005}
-Pascal Costanza, Robert Hirschfeld, Language constructs for context-oriented programming: an overview of ContextL, in: DLS’05: Proceedings of the 2005 Symposium on Dynamic Languages, ACM, New York, NY, USA, 2005, pp. 1–10.
+Pascal Costanza, Robert Hirschfeld: Language Constructs for Context-oriented Programming: an Overview of ContextL, in: DLS'05: Proceedings of the 2005 Symposium on Dynamic Languages, ACM, New York, NY, USA, 2005, pp. 1–10.
 
 \bibitem{cop2009}
 Malte Appeltauer, et al.: A Comparison of Context-oriented Programming Languages. In Proceedings of the Workshop on Context-oriented Programming (COP) 2009 Genoa, Italy, July 7, 2009
 
 \bibitem{cop2010}
-J. Lincke, et al. An open implementation for context-oriented layer composition in ContextJS, Science of Computer Programming (2010), doi:10.1016/j.scico.2010.11.013
+J. Lincke, et al.: An Open Implementation for Context-oriented Layer Composition in ContextJS, Science of Computer Programming (2010), doi:10.1016/j.scico.2010.11.013
 
 \bibitem{functionpoints}
 A. J. Albrecht: ``Measuring Application Development Productivity,'' Proceedings of the Joint SHARE, GUIDE, and IBM Application Development Symposium, Monterey, California, October 14–17, IBM Corporation (1979), pp. 83–92.
 
 \bibitem{brooks86}
-Brooks, Fred P.: ``No Silver Bullet — Essence and Accident in Software Engineering''. Proceedings of the IFIP Tenth World Computing Conference (1986): 1069–1076.
+Brooks, Fred P.: ``No Silver Bullet --- Essence and Accident in Software Engineering''. Proceedings of the IFIP Tenth World Computing Conference (1986): 1069–1076.
 
 \bibitem{parnas79}
 D.L. Parnas: ``Designing Software for Ease of Extension and Contraction,'' IEEE Transactions on Software Engineering, Vol. 5, No. 2, March 1979, pp. 128-38.
@@ -594,6 +601,8 @@ ECMAScript 6 Proxy proposal:
 
 \bibitem{collectionspace}
 The CollectionSpace Project: \url{http://www.collectionspace.org/}
+
+\vfill\eject
 
 \bibitem{gpii}
 The Global Public Inclusive Infrastructure \url{http://www.gpii.org/}
@@ -612,7 +621,7 @@ Foundations for Bidirectional Programming, or: How To Build a Bidirectional Prog
 
 \bibitem{galois}
 Kulkarni, M., Carribault, P., Pingali, K., Ramanarayanan, G., Walter, B., Bala, K., Chew, L.P.:
-Scheduling strategies for optimistic parallel execution of irregular programs, SPAA '08 Proceedings of the {T}wentieth annual symposium on parallelism in algorithms and architectures
+Scheduling Strategies for Optimistic Parallel Execution of Irregular Programs, SPAA '08 Proceedings of the {T}wentieth Annual Symposium on Parallelism in Algorithms and Architectures
 
 \bibitem{spring}
 The Spring Framework, \url{http://www.springsource.org/about}
