@@ -1,0 +1,216 @@
+\documentclass{llncs}
+
+% The following \documentclass options may be useful:
+%
+% 10pt          To set in 10-point type instead of 9-point.
+% 11pt          To set in 11-point type instead of 9-point.
+% authoryear    To obtain author/year citation style instead of numeric.
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{fancyvrb}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{breakurl}
+\usepackage{caption}
+\DeclareCaptionType{copyrightbox}
+
+\begin{document}
+
+\title{Enabling Architecture: How the GPII Supports Inclusive Software Development}
+
+\author{Colin Clark\inst{1} \and Antranig Basman\inst{2} \and Simon Bates\inst{3} \and Kasper Galschi\o t Markus\inst{4}}
+
+\institute{OCAD University, Toronto, Canada,\\
+\email{cclark@ocad.ca}
+\and
+Raising the Floor - US
+\and
+Raising the Floor - International
+}
+
+\maketitle
+
+\begin{abstract}
+The Global Public Inclusive Infrastructure is an international effort to build tools, components, services and a sustainable community to support personalized digital inclusion\cite{gpii}. The GPII is building the critical infrastructure needed by developers to produce the next generation of low-cost assistive technology and highly flexible applications that can adapt to the needs and preferences of individuals across web, desktop, and mobile platforms.
+
+To deliver on these ambitious goals, the GPII architecture team has created an evolving suite of development tools, idioms, and resources to support the creation of an inclusive infrastructure.
+
+\end{abstract}
+
+
+\keywords
+Accessibility, Inclusive design, GPII, development tools, assistive technology, JavaScript, node.js, Inversion of Control
+
+\section{What is the GPII Development Platform?}
+
+The GPII Development Platform provides reusable frameworks that are employed extensively throughout the GPII ecosystem. These frameworks are designed to reduce the time, cost, and complexity of developing core services that conform to the GPII architecture, as well as ensuring that software is more easily testable, scalable, and capable of accommodating diverse user needs and preferences.
+
+Currently, the GPII Development Platform consists of the following core framework technologies:
+\begin{enumerate}
+\item {\bf Infusion}, a JavaScript application framework built by the Fluid Project to support highly flexible, model-driven, and personalizable applications and authoring environments on the web \cite{fluid-infusion}
+\item {\bf Kettle}, a companion framework to Infusion that supports the creation of RESTful, JSON-oriented server-side applications and services\cite{fluid-kettle}
+\item The {\bf real-time framework}, which provides the runtime lifecycle support for the GPII's ``personalization from preferences'' functionality\cite{cloud4all}
+\item The {\bf preferences framework} is built on top of Infusion and the real-time framework and supports the creation of diverse preferences editors and discovery tools that are tailored to users\cite{prefs-framework}
+\end{enumerate}
+
+\section{Overview of the Frameworks}
+\subsection{Infusion}
+Fluid Infusion is a JavaScript library which primarily comprises the Infusion IoC (Inversion of Control) system and the Fluid Renderer. It is portable to all current web browsers, in which environment it uses the popular jQuery library\cite{jQuery} as a foundation library. It is also portable to "headless" environments such as node.js\cite{node} where it is essentially standalone. Inversion of Control is a powerful and modern technique popularised by Martin Fowler\cite{fowler} and others, which helps to bridge between the worlds of developers, integrators and end users by deferring responsibility for wiring together parts of an architecture to documents which express these wiring intentions in a declarative form. Declarative programming as well as the related topic of aspect-oriented programming (AOP) will be discussed in sections \ref{sec:aop} and \ref{sec:declarative}.
+\subsection{Kettle}
+Kettle, another JavaScript library, lies one level above Infusion in the architectural stack. It is a piece of server-side infrastructure which makes use of Infusion's facilities for declarative programming to help developers express server applications in terms of easily authorable and sharable JSON documents. Kettle is capable of expressing server endpoints using the popular web protocols, including standard RESTful endpoints using HTTP as well as the more recently standardised WebSockets\cite{websockets} endpoints which are suitable for realtime, bidirectional communication between client and server. As well as being based on Infusion, Kettle makes use of the popular node.js server-side JavaScript platform\cite{node} and the express HTTP/WebSockets library\cite{express} for foundational protocol support.
+\subsection{The real-time framework}
+The ``real-time framework'' of the GPII is itself layered on Kettle and hence Infusion. It is the piece of infrastructure deployed on every client machine which is customisable via the GPII preferences system (both mobile and desktop) as well as suitable to be deployed in the cloud to provide mobility for a user's preferences as well as brokering access to web-based accessibility technologies. It is responsible for orchestrating the flow of data between the end user, the database of user preference sets, the database of available solutions, and other sources of data on the user's own system to ensure that appropriate solutions are configured when requested.
+\subsection{The preferences framework}
+The preferences framework is a further JavaScript library that occupies an intermediate position in the technology stack. It is layered on Infusion and is capable of interacting with the real-time framework in order to mediate support for the interpretation and modification of preferences. It includes browser-based UI components implemented using Infusion, which can be used both to visualise and adjust a user's preference set, as well as to store and retrieve it from various sources of storage, including browser cookies and persistent storage managed by the real-time framework. It also has the capability to allow the user or an integrator to author and aggregate their own preference editing interface from elements authored by others, rather than requiring the involvement of a developer to write a new application. In order to do this it makes crucial use of the declarative programming capabilities offered by Infusion's IoC.
+
+\section{Infusion and Architectural Flexibility}
+
+The GPII's architectural approach and philosophy is inspired by Infusion, which serves as the technical backbone on which the Development Platform is built. Infusion is an ongoing project of the Fluid community, a key contributor to the GPII effort.
+
+Infusion provides a comprehensive framework and Inversion of Control system that provides developers with a means to weave together many small, self-contained modules into a whole application without requiring hard-coded relationships between each module\cite{basman}. This helps to ensure:
+
+\begin{enumerate}
+\item a high degree of testability; each unit in a program can be tested in isolation, and mock objects can be inserted into a program to support integration testing
+\item maintainable long-term growth; individual modules can be changed or swapped out with alternative implementations without requiring an exponential explosion of changes throughout the code base as new features are added
+\item adaptability and reconfigurability; a program can be changed or modified freely by others simply by defining context-aware configuration that adds, removes, or overrides an application's functionality
+\end{enumerate}
+
+These values of testability, scalability, and end-user adaptability are foundational to the entire GPII Development Platform, and require a different mindset when writing code.
+Traditional object-oriented programming techniques and conventional web development frameworks are rarely capable of supporting software "ecosystems" in which others are free to adapt, configure, and modify an application without having to fork and change its inner workings. In contrast, we envision a world where programmers, integrators, and, most importantly, end-users are all able to:
+
+\begin{enumerate}
+\item modify existing software
+\item assemble new software from component pieces
+\item develop and share novel authoring and customization interfaces
+\end{enumerate}
+
+In other words, users should be able to make themselves "feel at home" in their digital environment by being able to adapt their environment to suit their needs, accessibility requirements, and personal habits. The history and motivations for this approach are described below.
+
+\section{The GPII Platform in Context of Software Development Trends}
+\label{sec:aop}
+Typical programming code is designed for a limited audience. Imperative programming of the '70s and '80s was designed primarily for the compiler. If you wanted to change the behaviour of a program, you needed to find its source code, modify it, and submit it to the compiler again. Object-orientation, a scheme for promoting ``code reuse'' that became popular in the '80s and '90s increased this audience marginally; it was possible to {\it derive} from the originator's implementation without necessarily having access to its source. However, this code still needed to be compiled and then submitted to the user in place of the originator's version.
+
+Later programming developments such as {\it aspect-oriented programming} (AOP) promised to lengthen the chain of possible creative networks by one more link\cite{aop}. With AOP, it was possible to {\it advise} an existing implementation from the outside in order to change its behaviour, making use of global specifications which match pieces of implementation wherever they may be, in order to modify them. However, these pieces of advice could not themselves easily be advised, creating yet another limitation for extensibility.
+
+We argue that in traditional development environments, users and integrators who want to modify an originator's implementation and are more than a certain critical distance from the originator's community are typically locked out of being able to assemble and distribute modified versions. In this situation, the only recourse is to make a {\it fork} --- to take the original implementation and create a copy that diverges from a snapshot taken of the original at a particular instance in time. The risk of forks in open source software is well-documented\cite{forks}. Although tools increasingly exist to reduce the costs of resolving such ``forks'', members of one community are cut off from the benefits of innovation in another. This causes a loss of effort which is proportional to the number of different communities involved. With the GPII, our goal is to enable a ``one size fits one'' model of accessible development that demands many different ``versions'' or adaptations of an application to be possible, but yet to coexist whilst remaining in contact. This requires a solution to the problems of large-scale reuse and forking.
+
+\section{Supporting User Creativity}
+
+With the GPII Development Platform, we imagine an unbounded sphere of creativity that stretches from the communities of our developers to the communities of our users. A crucial touchstone of our approach is that {\it any action performed by one creator should be undoable by another}. That is, there should be no limitations in the system that causes the intention of some creators to be privileged above the contributions of others. Some examples of privileged expression are: by being expressed in a privileged language, or being hidden behind an encapsulation boundary that cannot be breached. 
+
+Instead, the GPII Development Platform attempts to model applications as {\it documents} encoded as JSON-based {\it component trees} that can be shared, aggregated, modified, and re-shared without breaking the informational chains which link together the communities of interest.
+
+\section {Declarative Programming}
+\label{sec:declarative}
+Above, we described the GPII Development Platform as being declarative in nature. Although there is significant debate about what characteristics are intrinsic to a formally ``declarative'' system\cite{declarative-c2}, J.W. Lloyd's informal description of the approach is particularly useful. He states that declarative programming entails ``stating {\it what} is to be computed but not necessarily {\it how} it is to be computed'' \cite{declarative-lloyd}. The emphasis is on the logical or semantic aspects of computation, rather than on low-level sequencing and control flow. More importantly, Paul Graham identifies the essential characteristic of declarative programming as representing programs as data structures that can be manipulated by other programs. Discussing Lisp, he says that ``Lisp has no syntax. You write programs in the parse trees \ldots [that] are fully accessible to your programs. You can write programs that manipulate them \ldots programs that write programs''\cite{graham-lisp}. This characteristic is essential to Infusion and many other parts of the GPII Development Platform.
+
+Infusion's declarative programming idiom, specifically the JSON-based ``component trees'' that represent the structure and relationships of a program in a semantically meaningful way, supports the creation of authoring tools and flow-based or model-driven programming environments. Where typical programming code, as described above, is one-directional and opaque to third, fourth, and fifth parties (i.e. the developers, integrators, and end-users who will ultimately customize and adapt their software), the GPII Development Platform attempts to open up the meaning and structure of an application to be editable both by humans and authoring tools.
+
+This declarative approach is applied throughout the GPII Development Platform. For example, Kettle provides a declarative representation of the structure of server-side applications. A developer focuses on configuring her application and routing logic as trees of ``server'', ``app'', and ``data source'' components operated by a common framework based on Node.js\cite{node}, Express\cite{express}, and Infusion. Similarly, the Preferences Framework exposes a higher-level, schema-based representation of user preferences and how they should be bound to web user interface controls such as sliders, buttons, or select boxes. This makes it easier for other components of the GPII infrastructure, such as matchmakers, to automatically generate personal control panels that are optimized to the particular user.
+
+\section{Third-Party Support Libraries}
+
+In addition to the frameworks that comprise the GPII Development Platform, a collection of lower-level third-party libraries is also employed. These help to provide a solid foundation that is aligned with prominent tendencies in open source web development. Aside from saving time and effort while developing the core responsibilities of the GPII, the use of third-party libraries helps to ensure that the development platform is interoperable with other popular tools available to developers. These prominent third-party libraries include CouchDB, jQuery, Express, and others.
+
+{\bf CouchDB} is a document-oriented database that stores data natively in JSON\cite{couchdb}. Queries (or rather, {\it Views}) to a CouchDB database are expressed in JavaScript code and use a map/reduce approach to enable highly concurrent database indexing\cite{couchdb-views}. Data is saved and retrieved using a RESTful, HTTP-based API which makes CouchDB a effective fit for resource-oriented web applications such as those in the GPII architecture. Notably, storing data as JSON objects avoids common application architecture pitfalls such as the ``impedance mismatch'' problem common to most object/relational mapping libraries\cite{orm}. The Kettle framework provides built-in a {\it Data Source} for accessing data stored in CouchDB. Data Sources are an abstraction that represents an arbitrary source of data that implements the get, set, and delete semantics of HTTP while preserving a highly declarative interface for developers.
+
+{\bf jQuery} is a massively popular library for managing common front-end web development tasks such as Document Object Model (DOM) manipulation, rendering, and making network requests\cite{jQuery}. jQuery is employed by Infusion to provide a familiar interface for web developers who are developing dynamic HTML-based user interfaces. 
+
+\section{How Is the Development Platform Used?}
+
+\section{Results}
+
+\section{Community-Based Sustainability}
+
+The GPII Development Platform is open and evolving. It has benefitted from the more than six years of active development invested in frameworks such as Infusion and Kettle, and continues to grow under the stewardship of a federation of open source communities and funded projects such as Fluid, Cloud4All, Prosperity4All, Preferences for Global Access, Floe, and more. The software is available under an ``open/open'' license, and can be extended, modified, adapted, and commercialized freely.
+
+
+
+
+
+% We recommend abbrvnat bibliography style.
+
+\bibliographystyle{abbrvnat}
+
+% The bibliography should be embedded for final submission.
+
+\begin{thebibliography}{}
+\raggedright
+
+\bibitem{gpii}
+GPII: {\it The Global Public Inclusive Infrastructure}. \url{http://gpii.net/}
+
+\bibitem{cloud4all}
+Clark, Colin, et. al.:
+{\it A Detailed Tour of the Cloud4All Architecture}
+\url{http://wiki.gpii.net/index.php/A_Detailed_Tour_of_the_Cloud4all_Architecture}
+
+\bibitem{websockets}
+The Mozilla Foundation: {\it WebSockets}. \url{https://developer.mozilla.org/en-US/docs/WebSockets}
+
+\bibitem{basman}
+Basman, A., Lewis, C., Clark, C. {\it To Inclusive Design Through Contextually Extended IoC}. In C. Videira Lopes and K. Fisher (eds): Companion to the 26th Annual ACM SIGPLAN Conference on Object-Oriented Programming, Systems, Languages, and Applications, OOPSLA 2011. pp 237-256.
+
+\bibitem{fowler}
+Fowler, M.:
+Inversion of Control Containers and the Dependency Injection pattern,
+\url{http://martinfowler.com/articles/injection.html}
+
+\bibitem{prefs-framework}
+Clark, Colin, et. al.:
+{\it Preferences Framework Overview}
+\url{http://wiki.gpii.net/index.php/Preferences_Framework_Overview}
+
+\bibitem{fluid-infusion}
+Fluid Project:
+{\it Fluid Infusion combines JavaScript, CSS, HTML and user-centered design}:
+\url{http://fluidproject.org/products/infusion/}
+
+\bibitem{fluid-kettle}
+Fluid Project:
+{\it Kettle is a framework for building server-side Web applications using JavaScript and Node.js}
+\url{http://wiki.fluidproject.org/display/fluid/Kettle}
+
+\bibitem{forks}
+Viseur, R.: {\it Fork impacts and motivations in free and open source projects}. In: International Journal of Advanced Computer Science and Applications, Vol.~3, No.~2, 2012
+
+\bibitem{couchdb}
+The Apache Software Foundation: {\it Apache CouchDB is a database that uses JSON for documents, JavaScript for MapReduce queries,
+and regular HTTP for an API}. \url{http://couchdb.apache.org/}
+
+\bibitem{couchdb-views}
+CouchDB Wiki: {\it Introduction to CouchDB Views}. \url{https://wiki.apache.org/couchdb/Introduction_to_CouchDB_views}
+
+\bibitem{aop}
+Kiczales,  Gregor et. al.: {\it Aspect-oriented programming}. ECOOP Springer Verlag, 1997. \url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.115.8660&rep=rep1&type=pdf}
+
+\bibitem{declarative-c2}
+C2 Wiki: {\it Declarative Programming}.
+\url{http://c2.com/cgi/wiki?DeclarativeProgramming}. Accessed January 28, 2014.
+
+\bibitem{declarative-lloyd}
+Lloyd, J.: {\it Practical advantages of declarative programming}. In: Joint Conference on Declarative Programming, GULP-PRODE’94. (1994)
+
+\bibitem{orm}
+Neward, T.: {\it The Vietnam of Computer Science}. \url{http://blogs.tedneward.com/2006/06/26/The+Vietnam+Of+Computer+Science.aspx}
+
+\bibitem{node}
+Joyent: {\it {\tt Node.js} is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications}: 
+\url{http://nodejs.org/}
+
+\bibitem{express}
+Holowaychuk, T.J.: {\it Express is a minimal and flexible node.js web application framework},
+\url{http://expressjs.com/}
+
+\bibitem{graham-lisp}
+Graham, P: {\it Beating the Averages}
+\url{http://paulgraham.com/avg.html}
+
+\bibitem{jQuery}
+The jQuery Framework, \url{http://jquery.com}
+
+\end{thebibliography}
+
+\end{document}
