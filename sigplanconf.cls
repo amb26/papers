@@ -599,13 +599,15 @@
   \gdef \@permission {#1}}
 
 \permission{%
-  Permission to make digital or hard copies of all or
-  part of this work for personal or classroom use is granted without
-  fee provided that copies are not made or distributed for profit or
-  commercial advantage and that copies bear this notice and the full
-  citation on the first page.  To copy otherwise, to republish, to
-  post on servers or to redistribute to lists, requires prior specific
-  permission and/or a fee.}
+  \copyright\ ACM, 2011. This is the author's version of the work. It is posted here by permission of ACM for your personal use. Not for redistribution. 
+%  Permission to make digital or hard copies of all or
+%  part of this work for personal or classroom use is granted without
+%  fee provided that copies are not made or distributed for profit or
+%  commercial advantage and that copies bear this notice and the full
+%  citation on the first page.  To copy otherwise, to republish, to
+%  post on servers or to redistribute to lists, requires prior specific
+%  permission and/or a fee.
+  }
 
 % Here we have some alternate permission statements and copyright lines:
 
