@@ -90,7 +90,10 @@ Infusion, as the most mature framework in the GPII Development Platform, has als
 The following diagram illustrates the dependency relationships between components of the GPII Development Platform as well as applications that use it. Solid lines represent integral dependencies, while dashed line denote optional or ``soft'' dependencies that can be swapped out by specifying an alternative configuration. It is worth noting that all dependencies occur downward in a acyclic graph, illustrating the fact that the frameworks of the GPII Development Platform are effectively layered enabling a developer to use a lower-level framework without requiring a dependency on higher or more specific layers of the system.
 
 \begin{figure}[p]
-    \includegraphics{dependency-diagram.png}
+    \centering
+    \includegraphics[width=0.8\textwidth]{dependency-diagram.png}
+    \caption{The components and dependencies of the GPII Development Platform.}
+    \label{fig:dependencies}
 \end{figure}
 
 \section{Infusion and Architectural Flexibility}
