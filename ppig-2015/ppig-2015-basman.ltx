@@ -5,7 +5,8 @@
 \usepackage{apacite}
 \usepackage[hyphens]{url}
 \usepackage{fancyvrb}
-
+\usepackage{booktabs}
+\usepackage{array}
 
 \begin{document}
 
@@ -32,73 +33,22 @@ We describe the Infusion system, which is a library, language system or {\it int
 \section{Introduction} \label{sec:intro}
 Differing notations bring different affordances --- and are suited for different audiences and different tasks\cite{Blackwell03}. For example, notations with low {\it viscosity} might be appropriate during initial development of a new system, whilst others with few {\it hidden dependencies} might be more appropriate during maintenance. Those with powerful {\it abstractions}, might be suited for experts, whilst others with good {\it visibility} might be better suited to novices or end-users. Traditionally, the choice of notation for a particular task implies more than a skin-deep commitment to a particular style of representation and way of working. For example, the choice of a conventional programming language such as Java or Haskell, based on the core representation of a stream of textual characters forming its source code, strongly limits the kinds of alternative notation which can be provided for other tasks and audiences. Correspondingly, the choice of a visual programming idiom such as Scratch\cite{Scratch2010}, Blockly\cite{Blockly15}, or Max/MSP\cite{MaxMSP07}, cuts off the potential for engaging with audiences familiar with the power of traditional text editors and IDEs. 
 
-Our work for some years on the Fluid Project has been to construct a system, Infusion, which offers not just a single ``middle way'' between such extremes of notation, but also schemes for navigating between different notations in which ``the same artefact'' might be expressed. This will naturally involve some compromise between the needs of different audiences since, as in our examples above, the gap between the notational worlds of the visual and non-visual is not simply a matter of notation. The differences between the structure and referential style of, say, a Java program and a Scratch program are too profound to allow one to be usefully transformed and represented in the style of another. Every system constructed so far strongly betrays its heritage of having been initially conceived as a ``visual'' or ``textual'' system from the start, and no amount of tooling or authoring support can ever bridge such a divide.
+Our work for some years on the Fluid Project has been to build a system, Infusion, which aims to produce not just a single ``middle way'' between such extremes of notation, but also schemes for navigating between different notations in which ``the same artefact'' might be expressed. This will naturally involve some compromise between the needs of different audiences since, as in our examples above, the gap between the notational worlds of the visual and non-visual is not simply a matter of notation. The differences between the structure and referential style of, say, a Java program and a Scratch program are too profound to allow one to be usefully transformed and represented in the style of another.
 
-In development since 2007, Infusion still counts as a ``work in progress'', although several aspects of its nature have become clear over the years, and our group uses it every day for their real-world programming tasks. There is, however, a lot of ground still to cover in making its idiom consistent in all areas, and tackling the tough architectural challenges related to managing ``programs'' that can be authored live by a distributed group of authors using dissimilar representations. Work on visual and remote tooling for the system is only just beginning. Infusion is a system inspired by the web and designed for the web. It is a library of standard JavaScript that can be included in any modern browser, and harmoniously coexists with applications written in standard markup and widgets. It is also suitable for standalone JavaScript runtimes such as {\tt Node.js}.
+Infusion evolves through repeated cycles of experimentation, validation and rationalisation, guided by some core heuristics. We still can't clearly see the forms of notation that can deliver on the aims we have just described --- but we have made some crucial architectural decisions which put us at variance with existing popular notations, without which we believe that these aims cannot be achieved. These focus on the use of what we call {\it aligned, publically addressable state}, an idiom we will enlarge on in later sections.
 
-\subsection{Quick guide to the structure of an Infusion application} \label{sec:quick}
+A clear source of inspiration for Infusion is taken from the highly successful ``evolved'' solutions embodied in web technologies --- we claim both the document object model (DOM) and representational state transfer (REST) idioms as embodiments of the aligned state idiom just described. As well as being inspired by the web, Infusion is built for the web --- it is a library of standard JavaScript that can be included in any modern browser, and harmoniously coexists with applications written in standard markup and widgets. It is also suitable for standalone JavaScript runtimes such as {\tt Node.js}.
 
-An Infusion application consists of blocks of {\it configuration} expressed in the JSON serialization format, together with a collection of {\it globally namespaced}, ideally {\it pure function} expressed in the {\it base language}, which in our implementation is JavaScript. The configuration is organised as a set of globally named elements which are known as {\it \bf grades}, which fulfil a few of the traditional roles of {\it types} in other systems, but fail to qualify in other areas. The configuration part of the system, since it consists of pure {\it state} which comes with a natural coordinate system, is ripe for transforming, expressing, and authoring in a variety of forms. 
+\section{Short guide and example} \label{sec:example}
 
-\vspace*{-0.1cm}
-\subsection{The role of the ``base language''}
+We'll work through a simple application encoded by an Infusion {\it component tree}. This will be considered first from the point of view of a user (author) named User A, employing traditional text-based development tools, and then from the point of view of other participants, Users B, C and D. We'll then consider the kinds of interactions they might share through the application, and the potential lifecycles of these interactions.
 
-The part of the design expressed as code in the base language can only be authored by software experts using traditional software tools. In order to support authoring and visual programming by non-experts as well, we need to limit our exposure in the long run to a very finite collection of well-known and well-curated instances. The need to involve a software expert in any particular design must become increasingly rare. In parallel, as time passes, we expect the features used within the base language gradually become more limited. For example, at the earliest stage of developing applications with Infusion, we abandoned the features of JavaScript used for object formation using prototypal inheritance --- following that, the features used for forming closures for expressing higher-order functions --- and are in the process of abandoning those used to achieve side-effects through assignment and then finally those used to express looping and general control structures other than conditionals\footnote{``\ldots cursed their feet, cursed the ground, and vowed that none should walk on it again'' --- Douglas Adams, {\it The Restaurant at the End of the Universe}, Chapter 10}. The resulting ``reduced base language'' will then be far more amenable to novices, authoring using non-traditional tools and will in essence lose much claim to identity as being JavaScript at all --- the same core subset used for producing a limited range of expressions designating pure functions with no control structures beyond conditionals and structural recursion might as well be taken from any language. We expect that any dialect used for expression of actual {\it computations} will be ejected from the system and be treated with the same caution that is currently applied in pure functional languages for code with side-effects or performing I/O in general. We'll talk more about the {\it avoidance of computation} in section \ref{sec:compute}.
+\subsection{Brief guide to the structure of an Infusion application} \label{sec:quick}
 
-\vspace*{-0.2cm}
-\subsection{``One person's excess intention is another person's secondary notation''}
+An Infusion application consists of blocks of {\it configuration} expressed in the JSON serialization format, together with a collection of {\it globally namespaced}, ideally {\it pure function} expressed in the {\it base language}, which in our implementation is JavaScript. The configuration is organised as a set of globally named elements which are known as {\it \bf grades}, which fulfil a few of the traditional roles of {\it types} in other systems, but fail to qualify in other areas. The configuration part of the system, since it consists of pure {\it state} aligned with a natural coordinate system, is ripe for transforming, expressing, and authoring in a variety of forms. 
 
-A crucial requirement in order to meet our goal of harmonious authorship from different notations, is the construction of notations that are as free as possible from the expression of \textbf{\textit{excess intention}}. Excess intention results when the notation we have available unavoidably captures more than what we intend to express in our design. Traditional programming languages, especially procedural ones, are famously rich in excess intention --- some of which are being recognised and combatted by newer notations, others of which are not. Here are two examples we have characterised:
-\vspace*{-0.1cm}
-\begin{description}
-\item{\bf Sequential Intention} --- Imperative programming languages unnecessarily force the creator to commit to an exact sequence of executed instructions, which is usually far in excess of the real requirements underlying the goals they are interested in. This is a criticism that is broadly acknowledged, and some responses to it are becoming widespread --- for example, as expressed in the model of {\it dataflow programming}, or in {\it monadic} styles of packaging control flow.
-
-\item{\bf Artefact Boundary Intention} --- Object-oriented languages force the designer into a single, exhaustive decomposition of their domain of interest into a non-overlapping collection of {\it objects} with well-defined names, properties, relations and contracts. However, another view of exactly the same domain by a creator with different aims, skills or preoccupations might very well decompose it into an entirely different set of entities --- which, with luck, at least bear a strict hierarchical relationship with those from the first view, but perhaps may not. One answer to this kind of of issue is named within the Design Patterns community as the {\it Facade Pattern}\cite{Gamma94} --- however, such Facades not only require new application code, but must respect existing boundaries --- one cannot construct a Facade which encloses ``half an object''.
-\end{description}
-\vspace*{-0.1cm}
-
-There are other intention excesses we could talk about, but each raises the same issue. In transforming from one notation to another, one must somehow capture all that is ``excess'' from one viewpoint with respect to another, and store it somewhere as an annotation to the structure --- in exactly the same way one would be required to capture a {\it secondary notation} that had been attached in a notation, to preserve it during a stage of processing that was blind to it. This hugely complicates the design of tools manipulating such notations, because such notation is not in fact truly secondary. Even though the author was uninterested in it, this fact cannot be deduced from the notation, and the artefact cannot function without some expression of it. The lines of code in a function body must be supplied in {\it some} order --- some of which are invalid, some of which are valid but don't capture the author's intention, and only a few of which are actually permissible equivalent expressions.
-
-\vspace*{-0.2cm}
-\subsection{The historical and methodological process of constructing Infusion}
-
-The bipartite model consisting of ``configuration over a base language'' is also crucial to the methodology by which Infusion was developed and will continue to be developed. Initially, Infusion applications consisted of standard JavaScript code, loosely organised around records containing ``options'', of which the JSON configuration simply represented {\it default values}. This historical structure gave rise to the name by which the directives holding configuration were and still are issued to the system, {\tt fluid.defaults}. As year succeeded to year, the power and capability of the configuration system steadily increased, and the number, diversity and complexity of the functions that required application code steadily decreased. At any time, the space of possible application functionality consisted of an ``explained portion'' which could be expressed as configuration, and the unknown ``unexplained portion'' which still required conventional code. Development of the framework proceeded by a scientific process whereby a generalisation was proposed that might move part of the ``unexplained portion'' to configuration --- and was validated if we found that future designs that had not been anticipated could productively make use of the feature or configuration style. Features which were found to be used only in one or few designs --- the ones that prompted the invention of the feature --- were pruned from the framework.
-
-\vspace*{-0.2cm}
-\section{Theoretical underpinning and links to existing paradigms}
-\vspace*{-0.2cm}
-
-\subsection{The role of programming languages and computational power}\label{sec:compute}
-It is arguable whether the system we will present here is best described as a ``programming language'', a ``framework'' or some other thing. It shares clear characteristics of both. The best designation that we have found so far is that of an {\it integration domain} \cite{Kell09}, which is an arena for the naming and scheduling of effects, computations and their units of organisation, rather than an system in which computation is expressed directly. This issue, we feel, has long misdirected the field --- since every notation which has been put into the role of ``programming language'' has been put under immediate pressure to demonstrate that it can express any computation (``is Turing-complete'') in order to qualify for this role. On the contrary, an integration domain, as noted by Kell, can easily be endowed with lesser computational power, and we argue, should be so. It is crucial, for example, for the transparency and responsiveness of authoring tools, that relationships between parts of a program can be determined by the exercise of limited computational power. The Self family of languages emphasise the importance of such responsiveness for the feeling of authors that ``the thing on the screen is the thing itself''\cite{Ungar13}. A system or language whose structure implies the potential for unbounded computations (for example, those of a complex type system such as ML or Haskell) directly fights this aim. Such type systems, if provided, should be an optional addition to the system just for the use of a particular audience. Recent work on ``gradual typing''\cite{Siek06} has tended in this direction, but so far there is little work on systems promising multiple independent, completely optional type systems for the same artefacts.
-
-\vspace*{-0.2cm}
-\subsection{The first-class role of state, and transparent access to it}
-
-We promote the use of {\it transparent, publically addressible state}. The Infusion system should maintain all state --- not just that of its users, but any that it maintains for its own book-keeping --- in public view, with each piece of state available through an utterable public address. This is at odds with both {\it object-oriented} and {\it functional} programming, which insist that the state which the application manages on behalf of users must be hidden from view, either through {\it data hiding} in the former paradigm, or {\it prohibition of side-effects} in the latter.
-
-Firstly, publically addressable state is the touchstone of the prevalent REST\cite{Fielding2000} style of conversation or API for web applications, and this analogy has guided our development since the start. REST stands for {\it \bf representational state transfer}, and each of these words carries crucial and essential meaning. Firstly, that {\it state is represented} in the conversation, rather than opaque tokens representing mere {\it behaviour} or {\it methods} as is common in procedural or object-oriented API contracts, and secondly that it is {\it transferred} --- that is, that the representation is an {\it exhaustive} summary of the state that can be used to moved it from place to place.
-
-Secondly, such {\it exhaustive representation} is crucial for the {\it perceived liveness} of any proposed system. In terms of our discussion of the Self language\cite{Self14}, for example, one fault possessed by Self as well as systems influenced by it, such as JavaScript, is the divergence between what could be called {\it constructional type} and {\it live type}. This is exemplified in JavaScript, for example, by the non-identity between the object property named {\tt constructor}, holding the name of the creator function used to instantiate an object, and the one named {\tt \_\_proto\_\_} which identifies its prototype chain. Therefore, the in-memory representation of an object incorporates many hidden pieces of bookkeeping information ({\it hidden dependencies}) which guarantee that the object can never be made straightforwardly equivalent with a particular serialisation of itself. Self provides the {\it Transporter} which exports objects to an essentially opaque format only readable by another Transporter, whilst JavaScript provides natively only for serialisation to JSON, which can't represent either variety of type information.
-
-Thirdly, the manifest nature of public state is crucial for many of the most successful embodiments of end-user programming. For example, in the spreadsheet paradigm, the programming surface consists purely of values in a grid. Each grid element has a well-known and mostly stable {\it public address} which can be used to access its value. Unfortunately from here on, the spreadsheet idiom starts to fall down, since any programming directives which are issued must skulk in a ``hidden world'' behind each cell, unaddressable either as a whole or in part. There have been efforts to address this deficiency within the spreadsheet paradigm in particular\cite{Burnett01}. In general, we conclude that public addressibility of all design elements is completely crucial in order for a design to be able to exhibit good {\it visibility} and a lack of {\it hidden dependencies} when required. One can always choose to hide what might be visible in contexts where it is undesirable, but one cannot chose to make visible that which does not even have an utterable address.
-
-
-\subsection{A system inspired by the web, and built for the web --- IoCSS selectors} \label{sec:iocss}
-
-The web represents the most highly successful ``evolved strategy'' for dealing with the problem of distributed and shared authorship. Whilst it appears to fall short of what are claimed as its antecedent blueprints, for example, in Ted Nelson's elaborate hypertext system Project Xanadu\cite{Nelson83}, as well as being regularly claimed as a deficient abstraction by object-oriented and functional programmers alike, we feel that there is a great deal to study, admire, and learn from the solutions and strategies that it embodies. 
-
-We referred in the previous section to the importance of the REST idiom, first used to describe the stateless and resource-oriented nature of web protocols, to the design of our system. Another successful idiom that is essential for the day-to-day running of the web is CSS, the scheme familiar to designers and developers alike for describing the styling information applied to web pages. This scheme fills a crucial role in brokering between distributed authors of ``the same document'' who live in different communities, with differing workflows and tools. The space of DOM elements in a web page is a shared authorial space that must be malleable in the face of demands of varying strength from different ends of the process (design and logic). The space of CSS selectors can be ``negotiated'' in that the requirement to identify a particular piece of the document could be met ``opportunistically'' by choosing a selector which matches it contingently and unstably, or by arranging/negotiating to alter the document structure to allow a selector to match it more stably and semantically.
-
-Analogously, Infusion implements a selector system that can be used to flexibly refer to components within an application's component tree. We refer to this system as \textbf{\textit{IoCSS}}, named after the framework's role as an ``Inversion of Control'' system. This implies that what has been previously thought of as ``an application'' has been endowed with a regular but free-form {\it cellular} structure. In the case of an Infusion application, the {\it cellular unit} is the {\it component}, rather than as it is with an HTML document the {\it DOM node}. The affordances of an Infusion component are unusual set against those of typical units of software designs, given that they may be freely embedded recursively, and that further subcomponents may be injected into existing parents without their ``knowledge'' or disturbing the design. In object terms, Infusion components offer the possibility for {\it containment without dependency}, which is not possible in an object-oriented system.
-
-Once we have the cellular structure in place, we now need some {\it landmarks}. In the DOM, these are provided by {\it CSS class names}, {\it tag names} and other well-known DOM attributes. In an Infusion application, these are provided by the {\it context names} which can be derived from the {\it grade names} attached to a component (which we first met in section \ref{sec:quick}) and the {\it member name} used to embed it in its parent.
-
-IoCSS selectors are most often used with the {\tt distributeOptions} construction which forms the framework's ``polymorphism at a distance'' scheme. Options material can be routed from any one source in the tree to any number of targets elsewhere in it. This scheme can be seen as similar both to {\it advice} offered in an {\it Aspect-Oriented Programming}, as well as encodings of a {\tt diff} between values of state held within a revision control system.
-\vspace*{-0.3cm}
-\section{Examples}
-\vspace*{-0.2cm}
 \subsection{A small example involving relay}
-The {\it model relay system} is the configuration used to set up permanent, possibly transforming, relationships between different bodes of state. This kind of capability is also currently comprised under today's descriptions of {\it reactive systems}, particularly seen in the so-called {\it functional reactive programming} (FRP). In Figure \ref{fig:relay}, we'll set up a small system consisting of two pieces of state linked by a transforming relay, held in two different components, and then show how we can interact with it from the base language (JavaScript).
+The {\it model relay system} is the configuration used to set up permanent, possibly transforming, relationships between different bodies of state. This kind of capability is also currently comprised under today's descriptions of {\it reactive systems}, particularly seen in the so-called {\it functional reactive programming} (FRP). In Figure \ref{fig:relay}, we'll set up a small system consisting of two pieces of state linked by a transforming relay, held in two different components, and then show how we can interact with it from the base language (JavaScript).
 
 \renewcommand{\theFancyVerbLine}{%
 {\fontsize{4}{6}\selectfont\arabic{FancyVerbLine}}}
@@ -135,12 +85,12 @@ fluid.defaults("examples.simpleRelay", {
     }
 });            
 \end{Verbatim}
-		\vspace*{-1cm}\caption{Short example showing a transforming relay}\vspace*{-1cm}
+		\vspace*{-1cm}\caption{Short example showing a transforming relay from view of User A -- temperature conversion}\vspace*{-1cm}
 		\label{fig:relay}
 	\end{center}
 \end{figure}
 
-To start with, it's worth noting that so far our design consists of no base language code whatever. A single function call, {\tt fluid.defaults}, is necessary to register the configuration with the system, but in other styles of interaction, for example the {\it Nexus} described in section \ref{sec:nexus} even this can be dispensed with. We'll need to execute some further base language code to create an instance of this system and experiment with it, but one can imagine that this also could be dispensed with in other visual/non-visual authoring environments which might feature, for example, a graphical ``playground'' in which instances can be set up and torn down by direct manipulation.
+To start with, it's worth noting that so far our design consists of no base language code whatever. A single function call, {\tt fluid.defaults}, is necessary to register the configuration with the system, but in other styles of interaction, for example the {\it Nexus} described in section \ref{sec:nexus} even this can be dispensed with. We'll need to execute some further base language code to create an instance of this system and experiment with it, but one can imagine that this also could be dispensed with in other visual/non-visual authoring environments which might feature, for example, a graphical ``playground'' in which instances can be set up and torn down by direct manipulation (see Figure \ref{fig:temperature-B}).
 
 In Figure \ref{fig:relayuse} follows a sample conversation that we will have with the system. To start with, we will ``decorate'' the base system with some {\it model listeners} which will react to changes in the model values and report on them. We can do this i) without further application code, and ii) without needing to modify the above definitions. After that, we will use the language-level API to trigger modifications to the values and hence the reports.
 
@@ -179,18 +129,155 @@ tree.fahrenheitHolder.applier.change("fahrenheit", 451);
   // Celsius value has changed to 232.7777777777778
 \end{Verbatim}
 	\vspace*{-0.6cm}
-		\caption{Example of operating a transforming relay - output is shown in comments}
-		\vspace*{-1cm}
+		\caption{Example of operating a transforming relay by User A - output is shown in comments}
+		\vspace*{-0.3cm}
 		\label{fig:relayuse}
 	\end{center}
 \end{figure}
 
 This shows that the relay has set up a {\it lens} between the state held in the two components. The relay operates from the point of construction onwards --- and ensures that the model constraint is satisfied by the initial system as well as with respect to modifications at either end of the relay. This relationship will persist until one or other of the related components is destroyed --- which they might be, for example, with a call to {\tt tree.celsiusHolder.destroy()}. As well as tearing down all relationships, this will also remove the instance from its parent, as required by the {\it cellular model} described in section \ref{sec:iocss}.
+
+\subsection{The application from different points of view} \label{sec:views}
+
+The presentation of the application above is most suitable for a particular category of user, User A, who finds it convenient to use traditional software development tools based on text buffers and function calls. We'll now explore how we envisage this short application snippet could be shared with users of other kinds --- for example, User B, who prefers a visual "boxes and wires" environment (mocked up in Figure \ref{fig:temperature-B}) allowing development using direct manipulation by mouse, and the closely related User C, who would prefer a topologically identical environment, but instead mediated by speech and keyboard, in the style of the ``nonvisual visual programming'' environment presented in \cite{Lewis14}. Finally, we imagine User D who is cast in the traditional role of an ``end user'' --- they simply use the provided functionality of the app, with the simple interface shown in Figure \ref{fig:temperature-D}.
+
+\begin{figure}[!h]
+\begin{center}
 \vspace*{-0.2cm}
+\includegraphics[width=\textwidth]{Visual-Temperature.png}
+\vspace*{-0.5cm}
+\caption{Mockup of visual editing environment for authoring temperature conversion tree shown in Figure \ref{fig:relay}}
+\label{fig:temperature-B}
+\end{center}
+\end{figure}
+
+
+\begin{figure}[!h]
+\begin{center}
+\vspace*{-0.1cm}
+\includegraphics[width=2in]{temperature-app.png}
+\vspace*{-0.5cm}
+\caption{Simple HTML GUI for end user of temperature conversion tree shown in Figure \ref{fig:relay}}
+
+\label{fig:temperature-D}
+\end{center}
+\end{figure}
+
+\begin{figure}[!h]
+	\begin{center}
+	\vspace*{-0.5cm}
+\begin{Verbatim}[numbers=left,fontsize=\tiny]
+// Designate a "decorated variety" of our simpleRelay type which produces a live HTML interface
+fluid.defaults("examples.relayApp", {
+    gradeNames: ["fluid.viewComponent", "examples.simpleRelay"],
+    components: {
+        celsiusField: {
+            type: "fluid.uiInput",
+            options: {
+                model: {
+                    value: "{celsiusHolder}.celsius"
+                }
+            },           
+        fahrenheitField: {
+            type: "fluid.uiInput",
+            options: {
+                model: {
+                    value: "{fahrenheitHolder}.fahrenheit"
+                }
+            }
+        }
+    }
+});
+// Construct an instance of the application bound to the current HTML document's body element
+var app = examples.relayApp("body");
+\end{Verbatim}
+	\vspace*{-0.6cm}
+		\caption{Decorating the model skeleton from Figure \ref{fig:relay} to produce a simple HTML interface (markup not shown)}
+		\vspace*{-1cm}
+		\label{fig:temperature-D-code}
+	\end{center}
+\end{figure}
+
+The notation/interface shown in Figure \ref{fig:temperature-B} contains the same information as that in Figure \ref{fig:relay} (as would user C's hypothetical non-visual representation). Since this information has been expressed in the form of {\it aligned state}, we can directly correlate parts of these interfaces together, as well as user actions directed at them --- we speak more about this kind of alignment in section \ref{sec:state}. Because of this correlation, we plan for these interfaces to be usable simultaneously, to author one and the same underlying ``application''. Another result from this correlation is for user D's view, ``the actual application itself'' to be the target of authoring actions, in the style of Self's ``the thing on the screen is the thing itself''\cite{Ungar13} model. This could be enabled by a ``progressive disclosure'' UI exposed, perhaps, to only some users in some contexts, allowing access to a progressively rich set of editing primitives drawn from the worlds of users C, B and A. The underlying application would be ``live'', to the extent that any of the participating authors introducing, say, a fresh temperature field showing values in Kelvin, all views would update to show it (user D's only if a matching UI component were provided for it) --- as well as, through the same underlying state-directed idiom, the current temperature value that a user had entered into any live embodiment of the application (for example, user B or D) would be preserved, and shown in the new temperature scale too.
+
+\subsection{The link to Inclusive Design}
+
+Our work on Infusion has been inspired the requirements of Inclusive Design, which requires applications to be freely adaptible to meet the requirements of users with different notational requirements, whether these are prompted by cognitive, physical, interactional or other differences. It's crucial that this can be done in an aligned way, such that the complete community of users sharing a particular requirement can share a particular coordinate, relating their embodiment of the notation to that used by another community. Our simple application can be seen as a direct example of such notational accommodation, in that a value (attached to a source of state in the world) is rendered to one user in one scale (Celsius), and another user in another (Fahrenheit). New adaptations can be freely introduced and removed from individual systems, without disturbing the wider community of cooperating users.
+
+\vspace*{-0.2cm}
+\subsection{``One person's excess intention is another person's secondary notation''} \label{sec:intention}
+
+A crucial requirement in order to meet our goal of harmonious authorship from different notations, is the construction of notations that are as free as possible from the expression of \textbf{\textit{excess intention}}. Excess intention results when the notation we have available unavoidably captures more than what we intend to express in our design. Traditional programming languages, especially procedural ones, are famously rich in excess intention --- some of which are being recognised and combatted by newer notations, others of which are not. Here are two examples we have characterised:
+\vspace*{-0.1cm}
+\begin{description}
+\item{\bf Sequential Intention} --- Imperative programming languages unnecessarily force the creator to commit to an exact sequence of executed instructions, which is usually far in excess of the real requirements underlying the goals they are interested in. This is a criticism that is broadly acknowledged, and some responses to it are becoming widespread --- for example, as expressed in the model of {\it dataflow programming}, or in {\it monadic} styles of packaging control flow.
+
+\item{\bf Artefact Boundary Intention} --- Object-oriented languages force the designer into a single, exhaustive decomposition of their domain of interest into a non-overlapping collection of {\it objects} with well-defined names, properties, relations and contracts. However, another view of exactly the same domain by a creator with different aims, skills or preoccupations might very well decompose it into an entirely different set of entities --- which, with luck, at least bear a strict hierarchical relationship with those from the first view, but perhaps may not.
+\end{description}
+\vspace*{-0.1cm}
+
+There are other intention excesses we could talk about, but each raises the same issue. In transforming from one notation to another, one must somehow capture all that is ``excess'' from one viewpoint with respect to another, and store it somewhere as an annotation to the structure --- in exactly the same way one would be required to capture a {\it secondary notation} that had been attached in a notation, to preserve it during a stage of processing that was blind to it. This hugely complicates the design of tools manipulating such notations, because such notation is not in fact truly secondary. Even though the author was uninterested in it, this fact cannot be deduced from the notation, and the artefact cannot function without some expression of it. The lines of code in a function body must be supplied in {\it some} order --- some of which are invalid, some of which are valid but don't capture the author's intention, and only a few of which are actually permissible equivalent expressions.
+
+There is a link between this observation on secondary notation, and the concept already established in the literature of {\it redundant recoding}. \cite{Fitter79} observe that the information encoded in a notation can be more easily grasped if it is encoded redundantly, and preferably in dissimilar modalities --- for example colour or indentation as a perceptual mode, as opposed to textual structures or correspondances as a symbolic mode. Our focus on elimination of excess intention, in favour of expressions in an {\it aligned core} of state indirectly improves the scope for redundant recoding. Each of the styles of notation in section \label{sec:views}, given they can be interconverted, provides a source of redundant coding either within the same notation, or else by highlighting the corresponding elements in a different notation in an interface where more than one is presented at the same time.
+
+\vspace*{-0.2cm}
+\section{Theoretical underpinning and links to existing paradigms}
+\vspace*{-0.2cm}
+
+\subsection{The role of programming languages and computational power}\label{sec:compute}
+It is arguable whether the system we will present here is best described as a ``programming language'', a ``framework'' or some other thing. It shares clear characteristics of both. The best designation that we have found so far is that of an {\it integration domain} \cite{Kell09}, which is an arena for the naming and scheduling of effects, computations and their units of organisation, rather than an system in which computation is expressed directly. This issue, we feel, has long misdirected the field --- since every notation which has been put into the role of ``programming language'' has been put under immediate pressure to demonstrate that it can express any computation (``is Turing-complete'') in order to qualify for this role. On the contrary, an integration domain, as noted by Kell, can easily be endowed with lesser computational power, and we argue, should be so. It is crucial, for example, for the transparency and responsiveness of authoring tools, that relationships between parts of a program can be determined by the exercise of limited computational power. The Self family of languages emphasise the importance of such responsiveness for the feeling of authors that ``the thing on the screen is the thing itself''\cite{Ungar13}. A system or language whose structure implies the potential for unbounded computations (for example, those of a complex type system such as ML or Haskell) directly fights this aim. Such type systems, if provided, should be an optional addition to the system just for the use of a particular audience. Recent work on ``gradual typing''\cite{Siek06} has tended in this direction, but so far there is little work on systems promising multiple independent, completely optional type systems for the same artefacts.
+
+\vspace*{-0.2cm}
+\subsection{The first-class role of state, and transparent access to it}\label{sec:state}
+
+We promote the use of {\it transparent, publically addressable state}. The Infusion system should maintain all state --- not just that on behalf of its users, but any that it maintains for its own book-keeping --- in public view, with each piece of state available through an utterable\footnote{All state in a system has some kind of address, but in practice not all such addresses are {\it utterable} by ordinary (that is, not specially privileged through forming part of the compiler, runtime or operating system) users or authors. For example, state held in a {\it function closure} is held at an address that cannot be named from programming language code. This implies that intentions held by users about such state cannot be encoded and acted upon.} public address. This is at odds with both {\it object-oriented} and {\it functional} programming, which insist that the state which the application manages on behalf of users must be hidden from view, either through {\it data hiding} in the former paradigm, or {\it prohibition of side-effects} in the latter.
+
+Publically addressable state is the touchstone of the prevalent REST\cite{Fielding2000} style of conversation or API for web applications, and this analogy has guided our development since the start. REST stands for {\it \bf representational state transfer} --- describing a conversation where {\it state is represented}, rather than opaque tokens representing mere {\it behaviour} or {\it methods} as is common in procedural or object-oriented API contracts, and also where {\it state is transferred} --- that is, that the representation is an {\it exhaustive} summary of the state that can be used to moved it from place to place.
+
+The manifest nature of public state is crucial for many of the most successful embodiments of end-user programming. For example, in the spreadsheet paradigm, the programming surface consists purely of values in a grid. Each grid element has a well-known and mostly stable {\it public address} which can be used to access its value. Unfortunately from here on, the spreadsheet idiom starts to fall down, since any programming directives which are issued must skulk in a ``hidden world'' behind each cell, unaddressable either as a whole or in part. There have been efforts to address this deficiency within the spreadsheet paradigm in particular\cite{Burnett01}. In general, we conclude that public addressability of all design elements is crucial in order for a design to allow good {\it visibility} and a lack of {\it hidden dependencies} when required.
+
+
+\subsection{A system inspired by the web, and built for the web --- IoCSS selectors} \label{sec:iocss}
+
+The web represents the most highly successful ``evolved strategy'' for dealing with the problem of distributed and shared authorship. Whilst it appears to fall short of what are claimed as its antecedent blueprints, for example, in Ted Nelson's elaborate hypertext system Project Xanadu\cite{Nelson83}, as well as being regularly claimed as a deficient abstraction by object-oriented and functional programmers alike, we feel that there is a great deal to study, admire, and learn from the solutions and strategies that it embodies. 
+
+Together with REST, discussed in section \ref{sec:state}, another successful idiom that is essential for the day-to-day running of the web is CSS, the scheme familiar to designers and developers alike for describing the styling information applied to web pages. CSS fills a crucial role in brokering between distributed authors of ``the same document'' who live in different communities, with differing workflows and tools. The space of DOM elements in a web page is a shared authorial space that must be malleable in the face of demands of varying strength from different ends of the process (design and logic). The space of CSS selectors can be ``negotiated'' in that the requirement to identify a particular piece of the document could be met ``opportunistically'' by choosing a selector which matches it contingently and unstably, or by arranging/negotiating to alter the document structure to allow a selector to match it more stably and semantically.
+
+Analogously, Infusion implements a selector system that can be used to flexibly refer to components within an application's component tree. We refer to this system as \textbf{\textit{IoCSS}}, named after the framework's role as an ``Inversion of Control'' system. This implies that what has been previously thought of as ``an application'' has been endowed with a regular but free-form {\it cellular} structure. In the case of an Infusion application, the {\it cellular unit} is the {\it component}, rather than as it is with an HTML document the {\it DOM node}. The affordances of an Infusion component are unusual set against those of typical units of software designs, given that they may be freely embedded recursively, and that further subcomponents may be injected into existing parents without their ``knowledge'' or disturbing the design. In object terms, Infusion components offer the possibility for {\it containment without dependency}, which is not possible in an object-oriented system.
+
+Once we have the cellular structure in place, we now need some {\it landmarks}. In the DOM, these are provided by {\it CSS class names}, {\it tag names} and other well-known DOM attributes. In an Infusion application, these are provided by the {\it context names} which can be derived from the {\it grade names} attached to a component (which we first met in section \ref{sec:quick}) and the {\it member name} used to embed it in its parent.
+
+IoCSS selectors are most often used with the {\tt distributeOptions} construction which forms the framework's ``polymorphism at a distance'' scheme. Options material can be routed from any one source in the tree to any number of targets elsewhere in it. This scheme can be seen as similar both to {\it advice} offered in an {\it Aspect-Oriented Programming}, as well as encodings of a {\tt diff} between values of state held within a revision control system.
+
+
+\subsection{Guide to Terminology}
+
+\begin{table}[!h]
+\begin{center}
+\vspace*{-0.5cm}
+    \begin{tabular}{p{1.6cm}>{\raggedright}p{3cm}>{\raggedright}p{5.5cm}>{\raggedright\arraybackslash}p{5.5cm}}
+      \toprule
+      Term & Correlates & Distinction and Similarities & Intention and Advantages\\
+      \midrule
+      Grade & Type/Class & Rather than establishing {\it contracts} or describing {\it storage}, a grade is a block of (JSON) configuration with a globally-qualified name which is merged in an aligned way with others to produce a description from which component instances can be built. Grade names can also be used as {\it landmarks} ({\it context names}) in order to bind segments of IoCSS selectors. & The use of grade-based descriptions reduces {\it excess intention} in descriptions of parts of implementations. The run-time structure of an instance is much more closely tied to the authoring-time structure, allowing for the ``notation'' of authors and users to be directly corresponded. \\
+      Model & Model (MVC Programming) / Model (Model-based development/MBD) / Behaviour (Functional Reactive Programming/FRP) & Infusion {\it models} encode mutable state in a JSON-equivalent form. Taken together with the associated model relay rules, these can constitute a model from the MBD point of view, since the space of model states can be deduced. Finally, the stream of values of a model over time can be compared to an FRP {\it behaviour}, transduced into other streams via transforming relay rules. & Similar to the use of grades, Infusion models minimise {\it divergence} between run-time and authoring structures. They also aid liveness and transportation of applications --- it should be possible to effectively move an application between systems or users by transmitting just its models. \\
+      Options Distributions & Advice (AOP)/Diff (VCS) & An options distribution, like an aspect-oriented programming ``advice'', allows an existing application (component tree) to be modified by an author from the outside - that is, they can derive a variant application without modifying the expression of the original author. Unlike an advice, distributions have the same structure and syntax as ordinary configuration. & Since options distributions form a closed system, it is clear how multiple authors can collaborate on the same system, and multiple modifications competing to target the same piece of the design can have their relative priorities negotiated. This also implies that the same authoring tools can be used to write and check distributions as well as ordinary configuration. \\
+      \bottomrule
+    \end{tabular}
+
+\caption{Guide to terms used in this paper and relation to common forms}
+\label{fig:terminology}
+\end{center}
+\end{table}
+
+
+\vspace*{-0.3cm}
+\section{Current Work and Future Developments}
+\vspace*{-0.3cm}
 \subsection{The Preferences Editing Framework}
 As an example of a real-life view application built using Infusion, Figure \ref{fig:prefs-docs} shows an instance of our {\it User Interface Options tool}, itself an instance of our {\it Preferences Editing Framework}. This application can be dropped into any web page to allow the user to customise the presentation of the page --- for example, by selecting a custom font size, line spacing, contrast colour scheme or other accessibility adaptations.
 
-Rather than being constructed from raw JavaScript code, this UI and its substructure are composed using Infusion's model-based approach. The raw materials for such a UI consist of a {\it Primary Schema}, which is a standard JSON schema (see \url{http://json-schema.org}) describing the data types of the preferences being edited, and an {\it Auxiliary Schema} which is essentially a dehydrated form of Infusion component tree. This implies that integrators can mix and match different panels into their UI, and customise all aspects of the existing ones, by editing JSON documents rather than writing code. Our plan is eventually to build a direct-manipulation style self-editing view that will allow end-users and integrators to achieve this directly, in the style of the Morphic user interface tool for the Self language described in \cite{Ungar13}.
+This UI and its substructure are composed using Infusion's model-based approach from declarative materials similar to those in section \ref{sec:example}.  This implies that integrators can mix and match different panels into their UI, and customise all aspects of the existing ones, by editing JSON documents rather than writing code. We will build a self-editing view that will allow end-users and integrators to achieve this directly, in the style of the Morphic user interface tool for the Self language described in \cite{Ungar13}.
 
 \begin{figure}[!h]
 \begin{center}
@@ -203,12 +290,10 @@ Rather than being constructed from raw JavaScript code, this UI and its substruc
 \end{center}
 \end{figure}
 \vspace*{-0.3cm}
-\section{Current Work and Future Developments}
-\vspace*{-0.3cm}
 \subsection{The Nexus - Support for Live and Distributed Authoring}\label{sec:nexus}
-For the EU project ``Prosperity4All'' (P4A - see \url{http://www.prosperity4all.eu/}), part of the overall Global Public Inclusive Infrastructure project (GPII - see \url{gpii.net}), we will be developing a portable and self-contained embodiment of the framework's facility as an integration domain named the {\it Nexus}. A Nexus consists of a standard instance of the Infusion system, supplied with HTTP and WebSockets endpoints which allow all of the core lifecycle actions to be operated remotely as well as via local function calls. For example, fresh defaults can be issued into the system by an HTTP PUT to {\tt defaults/<component.name>}, or a fresh instance constructed at a particular path by an HTTP POST to {\tt construct}. Also, one can enter into a persistent conversation with any model in the tree by opening a WebSockets connection to start a bidirectional flow in which outgoing model changes are reported in a live stream, with the system responding to incoming change notifications on the other leg of the connection.
+For the EU project ``Prosperity4All'' (P4A - see \url{http://www.prosperity4all.eu/}), part of the overall Global Public Inclusive Infrastructure project (GPII - see \url{gpii.net}), we will be developing a portable and self-contained embodiment of the framework's facility as an integration domain named the {\it Nexus}. A Nexus consists of a standard instance of the Infusion system, supplied with HTTP and WebSockets endpoints which allow all of the core lifecycle actions to be operated remotely as well as via local function calls. 
 
-Since new ``types'', instances, and their relationships can be introduced into the system by pure web conversations with payloads of pure state, we have an ideal environment for sources and sinks of state to discover each other and to set up (possibly transforming) relationships between their respective bodies of state. To the extent that this can be done without application code, this can be done freely by all kinds of citizens, although it requires that the sources and sinks themselves have been provided with relevant adaptors of their behaviour to the {\it integral state model} as well as the system to have all the relevant transformers already built into it.
+Since new ``types'', instances, and their relationships can be introduced into the system by pure web conversations with payloads of pure state, we have an ideal environment for sources and sinks of state to discover each other and to set up (possibly transforming) relationships between their respective bodies of state. 
 
 We plan to use this system to construct novel aggregations of raw devices to form {\it assistive technologies} (ATs), that will be able to adapt any means of input that a user finds appropriate onto any addressable target ``application'' or other sink of state such as an output device. The decomposition of updates from a text buffer into constituent Nexus messages will also be useful in other environments. In working with the Flocking\cite{clark2014flocking} system for audio synthesis on the web, we plan to produce a system which will close up the gap between the nature of {\it performance} and {\it score} by treating both as harmoniously cooperating elements on a common footing in a sea of state.
 \vspace*{-0.3cm}
