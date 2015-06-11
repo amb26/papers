@@ -489,7 +489,7 @@ to0pt{\kern0.55\wd0\vrule height0.45\ht0\hss}\box0}}}}
 \renewenvironment{thebibliography}[1]
      {\section*{\refname}
       \def\@biblabel##1{##1.}
-      \small
+      \footnotesize
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\settowidth\labelwidth{\@biblabel{#1}}%
             \leftmargin\labelwidth
@@ -540,7 +540,7 @@ to0pt{\kern0.55\wd0\vrule height0.45\ht0\hss}\box0}}}}
 \else
 \renewenvironment{thebibliography}[1]
      {\section*{\refname}
-      \small
+      \footnotesize
       \list{}%
            {\settowidth\labelwidth{}%
             \leftmargin\parindent
