@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>PPIG Temperature Conversion Sample</title>
+
+    <!--  These are the required javascript modules  -->
+    <script type="text/javascript" src="lib/jQuery/jquery.js"></script>
+    <script type="text/javascript" src="lib/infusion/Fluid.js"></script>
+    <script type="text/javascript" src="lib/infusion/FluidDebugging.js"></script>
+    <script type="text/javascript" src="lib/infusion/FluidIoC.js"></script>
+    <script type="text/javascript" src="lib/infusion/DataBinding.js"></script>
+    <script type="text/javascript" src="lib/infusion/FluidView.js"></script>
+    <script type="text/javascript" src="lib/infusion/FluidDocument.js"></script>
+    <script type="text/javascript" src="lib/infusion/ModelTransformation.js"></script>
+    <script type="text/javascript" src="lib/infusion/ModelTransformationTransforms.js"></script>
+    
+    <script type="text/javascript" src="lib/binder/binder.js"></script>
+    
+    <script type="text/javascript" src="js/example.js"></script>
+<head>
+<style>
+.label {
+    width: 11rem;
+    display: inline-block;
+    }
+</style>
+<title>Temperature Conversion App</title>
+</head>
+<body>
+<p>
+<label for="celsius" class="label">Temperature in Celsius: </label><input id="celsius" type="text" value="22"/>
+</p>
+<p>
+<label for="fahrenheit" class="label">Temperature in Fahrenheit: </label><input id="fahrenheit" type="text" value="71.6"/>
+</p>
+<script>
+var that = examples.relayApp("body", {
+    gradeNames: "examples.reportingRelay",
+});
+</script>
+</body>
+</html>
