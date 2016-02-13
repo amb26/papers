@@ -1,0 +1,149 @@
+\documentclass{llncs}
+
+% The following \documentclass options may be useful:
+%
+% 10pt          To set in 10-point type instead of 9-point.
+% 11pt          To set in 11-point type instead of 9-point.
+% authoryear    To obtain author/year citation style instead of numeric.
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{fancyvrb}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{breakurl}
+\usepackage{caption}
+\DeclareCaptionType{copyrightbox}
+
+\begin{document}
+
+\title{About Us, With Us: The Fluid Project's Inclusive Design Tools}
+
+\author{Colin Clark\inst{1} \and Dana Ayotte\inst{1} \and Antranig Basman\inst{2}}
+
+\institute{OCAD University, Toronto, Canada,\\
+\email{cclark@ocad.ca}
+\and
+Raising the Floor - International
+}
+
+\maketitle
+
+\begin{abstract}
+Since 2007, the Fluid Project has been developing an integrated set of inclusive design methods and software tools to support personalization, authoring, and software creation by users within the context of a participatory, open source community. In this paper, we position the Fluid Project's inclusive design practice within the context of interaction, participatory, and universal design methods, We examine and contrast these approaches from the perspective of supporting user creativity throughout the process of designing and using software. The Fluid Project is an open source community of designers, developers, testers, users, and other diverse contributors who might not otherwise fit into the highly technical and exclusive culture of conventional open source software communities. 
+\end{abstract}
+
+
+\keywords
+Accessibility, Inclusive design, Fluid Project, development tools, assistive technology, design methods, user creativity
+
+\section {Design Methods}
+\subsection {Interaction Design}
+Industry-driven interaction design methods such as those of Cooper \cite{cooper2007}, Beyer et. al \cite{beyer1997}, and IDEO \cite{IDEO} primarily look inward; they are created by professionals and intended for an audience of like-minded designers and managers. These methods aim to provide prescriptive, generalized, and reproducible techniques for managing teams who design commercial software products or offer design consulting services. The emphasis is on ``modelling'' users, their goals, and their work or organizational processes (Beyer et. al \cite{beyer1997}). 
+
+Despite an increased focus on user-centered design, which often invites users into the fold of research in a more active way (as with the human-centric design methods of \cite{IDEO}), such industrial modelling methods maintain the user in a passive role as ``consumer'' or ``customer'', often advocating for a rigid design focus on typical or mainstream requirements while explicitly de-prioritizing the ``edge cases'' of outlying, marginal needs %\cite{Cooper80}. - can't find this reference
+While this approach works to simplify product requirements and focus designers on the most popular features, it also risks excluding the crucial features and customizations that enable people with disabilities to use a software product, and which ultimately contribute to greater innovation and the overall usability of a system \cite{treviranus2014}.
+
+Moreover, interaction design advocates often argue that their subjects (i.e. the individuals who use their software on a daily basis) are unable to be articulate or self-aware about their own technology needs, and that only industry can provide design innovation, not users themselves \cite{skibsted2007}. User input gathered through human-centered design methods provide a means for end-users to inspire the creative process of the ``real'' designers; the result is that there are few opportunities for individuals to actively contribute to the design process and work alongside professional designers, except as consumers or research subjects.
+\subsection{Universal Design}
+
+Universal design, with an explicit emphasis on meeting the needs of all individuals, including those with disabilities, substantially expands a designer's creative remit and responsibilities. However, the challenge of universal design is in its emphasis on a single product or design that aims to fit the needs of all users without adaptation or personalization. Ron Mace describes universal design as ``the design of products and environments to be usable by all people, to the greatest extent possible, {\it without the need for adaptation or specialized design}'' [our italics] \cite{mace97}. As the complexity and diversity of today's software grows, we argue that it is no longer practical for designers to plan for every user and every feature within a single piece of software, nor to be able to fully understand and obtain expertise in the infinite variety of creative, serendipitous, and unexpected uses that software can be subjected to. Instead, the design process needs to be supported by technologies that provide users with a means to materially change, personalize, specialize, and extend their software environments.
+
+\subsection{Participatory Design}
+Participatory design, in contrast to many interaction design methods, offers the potential for users to more actively engage in the design process. This often takes the form of workshops and scenario-building exercises where users are invited to explore design strategies alongside professional designers \cite{wakkary2007}. While participatory and ``co-design'' techniques play a foundational role in the Fluid Project's inclusive design methods, particularly the concept of experienced designers working in harmony with users and other non-designers, we argue that workshops and other ``before-the-fact'' design methods alone are insufficient for three primary reasons:
+
+\begin{enumerate}
+
+\item Participatory design methods don't explicitly provide a means for ongoing community ``stewardship'' or ``curation'' of the software product after the initial participatory methods have been completed
+\item Additional technological tools are needed in order support ongoing or user-continued design, including the ability for individuals to customize, adapt, and modify a ``finished'' software product
+\item Most user-centered or participatory methods aren't inclusive in that they don't fully support the participation of users ``at the margins'' or with a wide range of needs
+
+\end{enumerate}
+
+\section{Fluid's Design and Technological Tools}
+
+Taking up the participatory design position that ``all people have something to offer to the design process and that they can be both articulate and creative when given appropriate tools with which to express themselves'' \cite{sanders2002}, the Fluid Project has been developing design and technological tools to support user creativity. We aim to extend the design process into the designed artifact itself --- to give users the ability to continue the design process themselves, after the specialized design effort has been finished and the product has shipped. This approach to ``adaptation as design'' extends from creating tools that allow users to configure their own interfaces, to technologies that support remixing, repurposing and sharing.
+
+Designing inclusively, we argue, requires more than just design processes, but also new technologies. This is the motivation for technologies such as Fluid Infusion, a software development framework that enables applications to be reconfigured in context and preference-sensitive ways, and the GPII Nexus\cite{gpii-nexus}, which provides a means to integrate diverse software components together in a way that can be supported by graphical authoring and programming tools accessible to non-developers. 
+
+Fluid's software and design tools are rooted in open community practices that emphasize the role of users --- especially users with disabilities --- as co-designers, ``gardeners'', and ongoing caretakers of the project's outcomes. Fluid's approach emphasizes the importance of non-prescriptive design methods and self-organizing collaborative teams who freely draw from a toolbox of design approaches (such as those documented in Fluid's Design Handbook \cite{fluid-design-handbook} and the Inclusive Learning Design Handbook \cite{ildh}) based on the design context and the needs of participants and project stakeholders. Some of Fluid's community-driven design methods include:
+
+\begin{enumerate}
+\item {\bf UX Walkthroughs}, a hybrid technique based on heuristic evaluation and cognitive walkthroughs, which emphasizes paired or collaborative evaluation of user interfaces by designers and non-designers alike, and which serves to bring a diversity of perspectives to bear on the design process
+\item {\bf User States and Contexts}, which serve to ``de-centre'' and ``multiply'' personas, reducing the risk of stereotyping with personas by emphasizing the dynamic nature of a user and their needs across different contexts of use. This tool offers a way to represent and ``query'' or visualize a diversity of user needs and perspectives individually or in aggregate.
+\item {\bf Community design crits}, which bring together designers, developers, and users to discuss and critique design artifacts --- including ideas, scenarios, mockups, and in-development software
+\item {\bf Open, transparent sharing} of design artifacts and discussion on mailing lists and other community forums based on lazy consensus governance principles \cite{capra2008}, which support community-based decision-making processes.
+\end{enumerate}
+
+These design and development techniques have been used with some success on a number of software design projects, and have been extended to other communities and open source projects such as the Global Public Inclusive Infrastructure \cite{vanderheiden2011}. However, there are significant challenges to designing within the context of open communities, many of which we are still exploring. In particular, meritocratic governance runs the risk of being exclusive and dominated by contributors in privileged positions (socially, culturally, technologically, and economically) if a system isn't in place to ensure that diverse contributions, especially those by non-coders, are recognized and promoted (Emke \cite{emke2015}). Access to open source collaborative forums, which are sometimes synchronous, require high bandwidth, or which privilege text-based communication over verbal or visual means, can limit diverse contributions. We continue to experiment with, evaluate, and test new social and technical methods for supporting ongoing engagement by individuals with disabilities, non-technical contributors, and those who might otherwise be excluded from conventional open source culture. 
+
+ 
+
+
+
+% We recommend abbrvnat bibliography style.
+
+\bibliographystyle{abbrvnat}
+
+% The bibliography should be embedded for final submission.
+
+\begin{thebibliography}{}
+\raggedright
+
+\bibitem{beyer1997}
+Beyer, Hugh and Karen Holtzblatt. {\it Contextual Design: Defining Customer-Centered Systems}. San Francisco: Morgan Kaufmann Publishers, 1998. 
+
+\bibitem{capra2008}
+Capra, Eugenio and Anthony I. Wasserman. {\it A Framework for Evaluating Managerial Styles in Open Source Projects}. Open Source Development, Communities and Quality. Ed. Barbara Russo, et al. IFIP International Federation for Information Processing, Volume 27. Boston: Springer, 2008. pp. 1-14. 
+
+\bibitem{cooper2007}
+Cooper, Alan and Reimann, Robert and Cronin, Dave: {\it About Face 3: The Essentials of Interaction Design}. Indianapolis: Wiley, 2007.
+
+\bibitem{emke2015}
+Emke, Coraline Ada. {\it The Dehumanizing Myth of the Meritocracy}. Model View Culture (21), 2015. 
+\url{https://modelviewculture.com/pieces/the-dehumanizing-myth-of-the-meritocracy}
+
+\bibitem{IDEO} "Methods." {\it Design Kit}. \url{http://www.designkit.org/methods}
+
+\bibitem{gpii-nexus}
+The GPII Nexus API \url{https://wiki.gpii.net/w/Nexus_API}
+
+\bibitem{ildh}
+The FLOE Project, {\it The Inclusive Learning Design Handbook} \url{http://handbook.floeproject.org/}
+
+\bibitem{fluid-design-handbook}
+The Fluid Design Handbook \url{https://wiki.fluidproject.org/display/fluid/Design+Handbook}
+
+\bibitem{mace97}
+Mace, R. et al {\it The Principles Of Universal Design} \url{https://www.ncsu.edu/ncsu/design/cud/about_ud/udprinciplestext.htm}
+
+\bibitem{prefs-framework}
+Clark, Colin, et. al.:
+{\it Preferences Framework Overview}
+\url{http://wiki.gpii.net/index.php/Preferences_Framework_Overview}
+
+\bibitem{fluid-infusion}
+Fluid Project:
+{\it Fluid Infusion combines JavaScript, CSS, HTML and user-centered design}:
+\url{http://fluidproject.org/products/infusion/}
+
+\bibitem{sanders2002}
+Sanders, Elizabeth B.N. {\it From User-Centered to Participatory Design Approaches}. Design and the Social Sciences. Ed. Jorge Frascara. London: Taylor and Francis, 2002. 
+
+\bibitem{skibsted2007}
+Skibsted, Jens Martin and Rasmus Bech Hansen. {\it User-Led Innovation Can't Create Breakthroughs; Just Ask Apple and Ikea}. Fast Company, March 3, 2007. \url{http://www.fastcodesign.com/1663220/user-led-innovation-cant-create-breakthroughs-just-ask-apple-and-ikea}
+
+\bibitem{treviranus2014}
+Treviranus, Jutta. {\it Leveraging the Web as a Platform for Economic Inclusion}. Behavioural Sciences and the Law 32: 94-103 (2014). 
+
+\bibitem{vanderheiden2011}
+Vanderheiden, Gregg, and Jutta Treviranus. {\it Creating a Global Public Inclusive Infrastructure}. Universal Access in Human-Computer Interaction Design for All and eInclusion. Berlin: Springer, 2011. pp. 517-526. 
+
+\bibitem{wakkary2007}
+Wakkary, Ron. {\it A Participatory Design Understanding of Interaction Design}. Science of Design Workshop, CHI 2007. 
+
+
+\end{thebibliography}
+
+\end{document}
