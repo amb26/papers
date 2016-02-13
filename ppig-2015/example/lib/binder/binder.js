@@ -32,7 +32,7 @@
 
             // Update the model when the form changes
             element.change(function () {
-                var elementValue = Number(fluid.value(element)); // TODO: botched conversion
+                var elementValue = (fluid.value(element)); // TODO: botched conversion
                 fluid.log("Changing model at path " + path + " to value " + elementValue + " based on element update.");
                 that.applier.change(path, elementValue);
             });
