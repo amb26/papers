@@ -65,7 +65,9 @@ Participatory design, in contrast to many interaction design methods, offers the
 
 Taking up the participatory design position that ``all people have something to offer to the design process and that they can be both articulate and creative when given appropriate tools with which to express themselves'' \cite{sanders2002}, the Fluid Project has been developing design and technological tools to support user creativity. We aim to extend the design process into the designed artifact itself --- to give users the ability to continue the design process themselves, after the specialized design effort has been finished and the product has shipped. This approach to ``adaptation as design'' extends from creating tools that allow users to configure their own interfaces, to technologies that support remixing, repurposing and sharing.
 
-Designing inclusively, we argue, requires more than just design processes, but also new technologies. This is the motivation for technologies such as Fluid Infusion, a software development framework that enables applications to be reconfigured in context and preference-sensitive ways, and the GPII Nexus\cite{gpii-nexus}, which provides a means to integrate diverse software components together in a way that can be supported by graphical authoring and programming tools accessible to non-developers. 
+Designing inclusively, we argue, requires more than just design processes, but also new technologies. This is the motivation for technologies such as Fluid Infusion\cite{fluid-infusion}, a software development framework that enables applications to be reconfigured in context and preference-sensitive ways, and the GPII Nexus\cite{gpii-nexus}, which provides a means to integrate diverse software components together in a way that can be supported by graphical authoring and programming tools accessible to non-developers. 
+
+\subsection{Design Tools}\label{section:design-tools}
 
 Fluid's software and design tools are rooted in open community practices that emphasize the role of users --- especially users with disabilities --- as co-designers, ``gardeners'', and ongoing caretakers of the project's outcomes. Fluid's approach emphasizes the importance of non-prescriptive design methods and self-organizing collaborative teams who freely draw from a toolbox of design approaches (such as those documented in Fluid's Design Handbook \cite{fluid-design-handbook} and the Inclusive Learning Design Handbook \cite{ildh}) based on the design context and the needs of participants and project stakeholders. Some of Fluid's community-driven design methods include:
 
@@ -78,8 +80,54 @@ Fluid's software and design tools are rooted in open community practices that em
 
 These design and development techniques have been used with some success on a number of software design projects, and have been extended to other communities and open source projects such as the Global Public Inclusive Infrastructure \cite{vanderheiden2011}. However, there are significant challenges to designing within the context of open communities, many of which we are still exploring. In particular, meritocratic governance runs the risk of being exclusive and dominated by contributors in privileged positions (socially, culturally, technologically, and economically) if a system isn't in place to ensure that diverse contributions, especially those by non-coders, are recognized and promoted (Emke \cite{emke2015}). Access to open source collaborative forums, which are sometimes synchronous, require high bandwidth, or which privilege text-based communication over verbal or visual means, can limit diverse contributions. We continue to experiment with, evaluate, and test new social and technical methods for supporting ongoing engagement by individuals with disabilities, non-technical contributors, and those who might otherwise be excluded from conventional open source culture. 
 
- 
+\subsection{Technological Tools}
 
+Technological tools to support such open and interactive design processes are thin on the ground. This is not just because of the rarity of the processes they would be designed to support --- we argue that the underpinning is for them is missing even at the technological level. It's worth surveying a parallel story of technologies designed to support the technical elites --- software developers --- in order to get a flavour of what support we imagine there could be for the design process.
+
+\subsubsection{Distributed Version Control for Software Developers}
+
+Distributed version control systems (DVCS) gradually took over at the expense of traditional centralised version control systems during the 2000s. These emphasise a more democratic, `peer to peer' model for managing community assets, rather than the previous authoritarian model whereby the definitive version of a community asset was stored in a nominated central repository. The system currently with the greatest mindshare is git\cite{git}, designed by Linux architect Linus Torvalds in response to problems he faced managing a very large source code base of millions of lines of code shared amongst thousands of contributors. Especially as hosted by the hugely popular infrastructure site GitHub, this creates hugely important new affordances for software developers, above those directly implied by adopting an open source contribution model.
+
+Amongst the most interesting for our purposes is GitHub's {\it review model}. This allows a suggested contribution to a project to enter a rich interactive lifecycle centred around a git artefact known as a {\it pull request} --- a request by the contributor that their work is accepted (pulled) into the community's shared project. GitHub's pull request review interface provides the following facilities to contributors:
+
+\begin{enumerate}
+\item {\bf Difference focused} The interface highlights the differences between the project's state before and after the contribution is accepted. It's possible to navigate to complete views of project artefacts before and after the contribution.
+\item {\bf A Content-focused discussion} Comments can be attached to particular parts of the contribution. These can start off a dialogue between the contributor and other project members which remains attached to the particular content it is relevant to.
+\item {\bf An archived record} Even after the contribution is accepted into the project (or, perhaps rejected) the pull request interface remains permanently available in the archive, making it easy to revisit and understand previous discussions
+\end{enumerate}
+
+It's worth noting that this pull request workflow is particularly a facility of GitHub rather than simply git itself --- although it is crucially enabled by the core technology of git. Unlike git itself, GitHub is not an open source project and its free-tier facilities are provided to the open source community as part of a wider commercial offering by the GitHub corporation. However, alternatives to Git and free alternatives to GitHub exist, such as Gitorius on git, or the darcs hub\cite{darcshub} on darcs (although this currently has no pull request UI).
+
+\subsubsection{Nothing for Designers}
+
+Nothing similar to GitHub's pull request UI and workflow exists to facilitate contributions to open source culture from non-developers. Our design teams currently exchange designs as binary files (Adobe Illustrator files, Adobe Photoshop files and PDFs) deposited in dropbox\cite{dropbox}, as attachments to wiki pages, or sometimes using the non-distributed SVN version management system. Comments and discussion must be separated from the design artefacts and occur in side-channels such as emails, IRC chats and Skype messages. Not all of this discussion can be easily archived, and when it is, it is still very easy for it to become separated from the design artefacts in question. None of the design tools most commonly in use have accessibility features to facilitate contributions from individuals with disabilities. This huge discrepancy between the quality of tools provided to different kinds of contributors makes a further nonsense of the commonly bandied ideology of a ``meritocracy'' in open source communities.
+
+\subsubsection{Fluid's Dream of an Inclusive Tool Chain}
+
+We dream that the same community affordances can be extended to all kinds of contributors. The barriers to this are formidable, both technical, economic, and social. Providing, for example, an accessible equivalent to Adobe's Illustrator or similar visual design tools is a prohibitive task. Even where open source alternatives exist to popular corporate visual design tools, they are no more likely to provide accessibility features, and the space of collaborative vector-based design tools integrated with robust, decentralised version management is virtually empty even in the corporate space. It is clear that such tools can never be developed unless there can be a fundamental change to the economics of software development. Such a collaborative, accessible design tool could never stand alone as a single product, but could only be viable as the pinnacle to a broad pyramid of inclusive tools meeting a spectrum of similar needs, and meeting the broader needs of inclusion and collaboration at each infrastructural level.
+
+\section{Building an Inclusive Tool Chain}
+
+Forming the basis of such an inclusive tool chain is the core aim of Fluid's core framework, Infusion. The needs of inclusion and collaboration both induce similar kinds of requirements on software and content creation processes. 
+
+\subsection{Working with Design Landmarks}
+
+A crucial way of organising such requirements is in terms of {\bf landmarks} in a design --- named architectural points which can be used to focus discussion as well as used to target further design. We take our inspiration from the kinds of landmarks visible in HTML documents which can be successfully referenced by means of a vocabulary of {\it CSS selectors} \cite{css}. Landmarks can, for example, take the form of {\it tag names}, {\it CSS class names} or other attributes of a document node. By means of targetting these landmarks with CSS selectors, designers can meet both the needs of styling (using CSS rules), as well as further authoring (by using document-oriented manipulation tools such as the jQuery library). Landmarks are also a crucial requirement for a collaborative design process, in order to attach comments and document-directed discussion on the design. Such CSS rules have been an early, basic success for inclusive design, allowing designers and developers to share access to a design space in a harmonious way.
+
+Infusion aims to bring the affordance of these selectors and rules to the software creation process, by organising software in {\it cellular units} named {\it components} which are analogous to the DOM nodes underlying an HTML document, and targetting them by means of {\it\bf IoCSS rules}, analagous to the CSS rules used for styling and editing HTML documents. This casts the world of software development more in terms of document authoring than source code editing, and its final artifacts taking the form of structured trees with landmarks rather than binary opaque blobs. By creating an infrastructure which is suitable for authoring such trees, and for casting designs both visual and architectural in terms of them, we will support the creation of inclusive, collaborative workflows for designers of all kinds. 
+
+\subsection{Requirements Beyond Frameworks}
+
+However, not all such needs can be met simply through the means of a development framework --- other requirements need to be met through 
+\begin{itemize}
+\item Building up hosting infrastructure for applications and data, and the tools and infrastructure needed to manage it
+\item Building up community structures and workflows for welcoming, supporting and reviewing contributions
+\item Building up and curating shared understanding of productive ways of casting and solving design and implementation problems, organised, for example, in ``handbooks'' of design guidelines, ``bestiaries'' of problems and their solutions or other approaches like those listed in section \ref{section:design-tools}
+\end{itemize}
+
+\section{Conclusion}
+
+We will build marvellous things that will support inclusive, collaborative design processes that will allow users, designers, developers and other contributors to take control of their artefacts and the tools they use to create them.
 
 
 % We recommend abbrvnat bibliography style.
@@ -100,11 +148,28 @@ Capra, Eugenio and Anthony I. Wasserman. {\it A Framework for Evaluating Manager
 \bibitem{cooper2007}
 Cooper, Alan and Reimann, Robert and Cronin, Dave: {\it About Face 3: The Essentials of Interaction Design}. Indianapolis: Wiley, 2007.
 
+\bibitem{css}
+Mozilla Developer Network - Getting Started with CSS Selectors \url{https://developer.mozilla.org/en/docs/Web/Guide/CSS/Getting_started/Selectors}
+
+\bibitem{darcshub}
+darcs hub - simple version control and collaboration \url{http://hub.darcs.net/}
+
+\bibitem{dropbox}
+Dropbox works the way you do \url{https://en.wikipedia.org/wiki/Dropbox_(service)}
+
 \bibitem{emke2015}
 Emke, Coraline Ada. {\it The Dehumanizing Myth of the Meritocracy}. Model View Culture (21), 2015. 
 \url{https://modelviewculture.com/pieces/the-dehumanizing-myth-of-the-meritocracy}
 
 \bibitem{IDEO} "Methods." {\it Design Kit}. \url{http://www.designkit.org/methods}
+
+\bibitem{gimp} GNU Image Manipulation Prograsm \url{https://www.gimp.org/}
+
+\bibitem{git}
+The {\tt git} project {\tt --distributed-is-the-new-centralized} \url{https://git-scm.com/}
+
+\bibitem{github}
+The {\tt GitHub} project \url{https://en.wikipedia.org/wiki/GitHub}
 
 \bibitem{gpii-nexus}
 The GPII Nexus API \url{https://wiki.gpii.net/w/Nexus_API}
