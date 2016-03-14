@@ -1,0 +1,340 @@
+%-----------------------------------------------------------------------------
+%
+%               Template for sigplanconf LaTeX Class
+%
+% Name:         sigplanconf-template.tex
+%
+% Purpose:      A template for sigplanconf.cls, which is a LaTeX 2e class
+%               file for SIGPLAN conference proceedings.
+%
+% Guide:        Refer to "Author's Guide to the ACM SIGPLAN Class,"
+%               sigplanconf-guide.pdf
+%
+% Author:       Paul C. Anagnostopoulos
+%               Windfall Software
+%               978 371-2316
+%               paul@windfall.com
+%
+% Created:      15 February 2005
+%
+%-----------------------------------------------------------------------------
+
+
+\documentclass[preprint,10pt]{sigplanconf}
+
+% The following \documentclass options may be useful:
+
+% preprint      Remove this option only once the paper is in final form.
+% 10pt          To set in 10-point type instead of 9-point.
+% 11pt          To set in 11-point type instead of 9-point.
+% numbers       To obtain numeric citation style instead of author/year.
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{array}
+
+%\newcommand{\cL}{{\cal L}}
+
+\begin{document}
+
+\special{papersize=8.5in,11in}
+\setlength{\pdfpageheight}{\paperheight}
+\setlength{\pdfpagewidth}{\paperwidth}
+
+\conferenceinfo{CONF 'yy}{Month d--d, 20yy, City, ST, Country}
+\copyrightyear{2016}
+\copyrightdata{978-1-nnnn-nnnn-n/yy/mm}
+\copyrightdoi{nnnnnnn.nnnnnnn}
+
+% Uncomment the publication rights you want to use.
+%\publicationrights{transferred}
+%\publicationrights{licensed}     % this is the default
+%\publicationrights{author-pays}
+
+\titlebanner{A new open/closed principle}        % These are ignored unless
+\preprintfooter{Additive Supports for Networks of Creators}   % 'preprint' option specified.
+
+\title{A New Open/Closed Principle}
+\subtitle{Additive Supports for Networks of Creators}
+
+\authorinfo{Name1}
+           {Affiliation1}
+           {Email1}
+\authorinfo{Name2\and Name3}
+           {Affiliation2/3}
+           {Email2/3}
+
+\maketitle
+
+\begin{abstract}
+We introduce a new {\it open/closed principle} which establishes desirable design characteristics of languages and configuration systems supporting networks of creators. We survey the growth in power in authorial systems, situating them in a progression starting with traditional object-orientation, continuing with aspect-oriented, context-oriented, and dependency injection systems, and concluding with the most recent generation of ``freely dimensioned'' systems such as Korz and Fluid Infusion. We rework an example originally developed for Korz into Infusion's configuration system, and discuss how multiple authors can contribute fresh implementation dimensions into the same artefact, and how priority amongst their contributions can be resolved. We exhibit a working system that allows adaptations to be dynamically contributed into a video processing pipeline, and conclude by discussing how systems may be designed to facilitate the provision of ``avatars'', replicating the function of a (spatial) segment of an implementation for a bounded period of time.
+\end{abstract}
+
+%\category{CR-number}{subcategory}{third-level}
+
+% general terms are not compulsory anymore,
+% you may leave them out
+%\terms
+%term1, term2
+
+\keywords
+context awareness, declarative configuration
+
+\section{Networks of Creators}
+
+Successive developments in the structure of programming idioms appear to be aimed at granting increasingly powerful capabilities to those seeking to reuse and repurpose the artefacts of others. The original open/closed principle\cite{Meyer88}\footnote{To paraphrase, ``A module should be available for extension ({\it open}) but available for use ({\it closed})'' --- where Meyer connoted availability for use with the fact that a module's content should not be modifiable, promoting uses such as caching, verification, etc.} , founding the idiom of object-orientation, allowed for what could be described as a form of ``first-order reuse''. This provides only for reuse of single implementation elements at a time (classes/objects), and does nothing to facilitate reuse across a design or with larger aggregations --- in fact, it could be argued that object-orientation actively impedes this form of wider reuse. 
+
+To situate this discussion we will examine scenarios of repeated reuse within the context of a {\it network of creators}. Such a network is a directed graph with creators or sites of reuse at the nodes. Two creators $A$, $B$ are connected by an arc if a tool or other community channel of reuse allows $B$ to base his/her artefact on $A$'s artefact. One example of such a connection is whereby $A$ writes source text which is processed by a compiler lying along the arc, resulting in an executable used by $B$. Another is if $A$ writes a base class which is imported by $B$ in order to produce a derived class by the addition of source text. 
+
+We will enumerate increasingly sophisticated reuse scenarios in a numbered sequence, starting with level 1 reuse representing that enabled by Meyer's principle. As wider networks of creators attempt to collaborate and share authorial access to the same, increasingly rich, artefacts, the reusability requirements on the language and authoring infrastructure increase in level.
+
+In this presentation of reuse levels, we'll avoid the use of idiom-specific terminology for naming implementation units such as ``object'', ``class'', ``module'', ``type'' and so on, to avoid biasing the discussion. 
+
+\section{Meyerian Reuse - Level 1}
+
+In Meyer's presentation, there are morally creators, $A$, $B$, $E$\footnote{Meyer does not explicitly assemble this named network of creators --- we reconstruct it from the needs that object-orientation are exhibited to meet in his presentation. Also, we use Meyer as a standin for the much wider community sharing the same reuse model, such as the Smalltalk/Self communities tracing lineage to Kay and the mainstream Java/C++/C\# communities, etc.}. $A$ has created an implementation unit named $\alpha$. $B$ wishes to refine $\alpha$ to $\alpha'$, and share this with $E$ as a substitutable replacement for $\alpha$. $B$ is assisted in doing this by a language feature of an object-oriented language granting the ability to explicitly or implicitly create an artefact taking the form of a {\it base class} or {\it interface} $\aleph$ which expresses some of content of the contract $A$ and $B$ advertise to $C$. When $E$'s use of $\alpha$ or $alpha'$ is confined at the language level to the scope of $\aleph$, $B$'s provision can be swapped for $A$ ``without $E$'s awareness''. Note that this swap can only be made in terms of already constructed instances of $\alpha$. If the construction point for $\alpha$ lies within E's code, in a traditional object-oriented language, it is impossible to hide the $E$'s knowledge of whether they are dealing with $\alpha$ or $\alpha'$. Typical solutions in object-oriented frameworks to this problem of constructional dependency resolve around the use of one or more varieties of ``factory pattern'' which we will return to when we start to treat more profound incarnations of reuse problems in the the following section \ref{sec:factory}.
+
+\section{A Basic Reuse Scenario - Level 2}\label{sec:basic}
+In this section, we'll explore the most basic elaboration of the Meyerian (level 1) reuse scenario that exposes the limitations of object-orientation and other contemporary idioms. Creator $A$ has created an implementation unit named $\alpha$ which contains a subunit named $\beta$. Creator $B$ has refined $\beta$ to $\beta'$, and wants to create $\alpha'$ which is $\alpha$ with its $\beta$ replaced by $\beta'$. $B$ would like to share $\alpha'$ with creator $E$ as a substitute for $\alpha$.
+
+\subsection{Containment through aggregation}\label{sec:factory}
+
+There are several possible embodiments of the ``containment'' relation here, even within the same idiom, which lead to somewhat different fates for $B$'s plan. Firstly, containment may be aggregation --- $\alpha$ is a class which has a member $b$ of type $\beta$. In unadorned object-orientation, we are already out of luck. Without access to the implementation point within $\alpha$ where $b$ is declared, we have no alternative but to ``fork'' $\alpha$ to rewrite it --- ``open to extension but closed for modification'' has failed. Some traditional responses to this problem require one or more varieties of ``factory pattern''\cite{Gamma94} --- the creation of an ``intermediary artefact'' we might name $\beth$ whose purpose is to abstract over the construction point of $\beta$. This is obviously unsatisfactory \footnote{``{\it “entitia non sunt multiplicanda praeter necessitatem''} as Occam observed} since we have a whole extra class of entity to design in the system, in practice with its own type hierarchy to be maintained in parallel with the base artefacts --- as well as a wholly unmanageable ``regress'' problem of how the same problem with respect to the factories is to be resolved. Other responses to this problem require a fresh language feature, orthogonal to the classically object-oriented ones, allowing the expression of ``parameterized'' or ``generic'' types --- we'll return to this possibility in section \ref{sec:inherit}.
+
+As an observation on design patterns in general, we follow \cite{patterns} in considering the entire catalogue of design patterns as representing language pathologies rather than admirable forms of expression worthy of being emulated. If a language is so constituted as to favour a collection of ``clich\'es'' for problem-solving, it is a signal that the language should be reformed, rather than that the clich\'es should be mastered.
+
+\subsection{Containment through private use}
+Another possibility for the meaning of ``containment'' is that the point within $\alpha$ where $\beta$ is used lies simply within implementation code --- for example, the body of a method, and the $\beta$ instance does not appear within the class definition. This situation is yet worse than the one before, since we not only have to refactor $\alpha$ but also rewrite it to include some point where parameterisation by $\beth$ may be expressed.
+
+\subsection{Containment through inheritance}\label{sec:inherit}
+
+A final possibility relates to strategies for ``self-aggregation'' which in object-orientation are embodied as the inheritance relation where we might say that $\beta$ ``IS-A'' $\alpha$ through including its entire definition into its own. Our reuse problem is particularly recalcitrant via this relation in O-O and essentially forces the requirement for parameterised types to be added to the system. 
+
+\subsubsection{Reuse through parameterised types}
+In C++, creator A, perhaps trying to address the reuse situation of section \ref{sec:inherit} would have had to have {\it already written}
+
+\begin{verbatim}
+template <class beth> class alpha: public beth {}
+\end{verbatim}
+
+so that they themselves could then write
+
+\begin{verbatim}
+alpha<beta> myBeta;
+\end{verbatim}
+
+and that creator B could write
+
+\begin{verbatim}
+alpha<beta1> myBeta1;
+\end{verbatim}
+
+Because of the proliferation of reuse strategies in the system, this requires remarkable foresight from creator A to have selected one which will serve the needs of their reuse community --- as well as, in the long-term, creating increasing confusion as type signatures become longer and more involved. The name of a $alpha$ simply cannot be mentioned without also bringing the requirement to mention the particular $\beth$ it involves.
+
+\subsection{Aspect-Oriented Programming}
+
+Aspect-oriented programming\cite{Kiczales97} is a popular solution to level 2 reuse problems which has appeared in some object-oriented languages - most notably as a decoration to mainstream object-oriented programming languages such as Java and C++. It provides clear native mechanisms for solving reuse level 2 problems as presented in the previous section. A facility is extended to creator $B$ to allow them to name the point in $A$'s design where they refer to $\beta$ with a symbolic expression known as a {\it joinpoint}. A further expression known as {\it advice} encodes the modification of the design where $\beta$ is substituted by $\beta'$. AOP addresses this and numerous other reuse cases, but unfortunately in a wide category of reuse scenarios creates unsolvable problems for further creators, which we will discuss in following sections on level 3 and level 4 reuse. The fundamental design flaw in AOP is that the space of {\it aspects} encoding {\it joinpoints} and {\it advice} is expressed with respect to an entirely different grammar to the base language. The authorial problem left for a creator $C$ who wishes to perform a further refinement of $\beta'$ to $\beta''$, interposing between $B$ and $E$, is unmanageable, appealing to an impossible dialect of ``meta-aspects'' acting on $B$'s aspects. In the terminology where we present our new open/closed principle in section \ref{sec:principle}, the space of AOP expressions {\it fails to be closed}
+
+\section{More Demanding Reuse Scenarios - Levels 3 and 4}\label{sec:demanding}
+
+The simple scenario in section \ref{sec:basic}, solved by AOP, COP and similar formalisms, only represents level 2 reuse (with classic Meyerian inheritance solving the 1st-order scenario). In practice, much more demanding scenarios arise quite regularly. For example
+\begin{itemize}
+\item Multiple sources of parameterisation may be competing to advise the same point in the structure, with the possibility that a ``winner'' creates a design structure which is no longer capable of matching the intention of the ``runner up'' (through, for example, having been renamed, or moved from its location in the containment structure). Resolving such a requirement entails  {\bf\it level 3 reuse} in our taxonomy. We will return to this possibility, a crucial paradigm use case, in our section \ref{sec:context} on freely dimensioned context awareness.
+\item The point of required parameterisation may be deeply nested within the containment structure of the host artefact, or may consist of several widely scattered such points without a common proper ancestor in the containment structure - resolving this entails {\bf \it level 4 reuse} in our taxonomy. 
+\end{itemize}
+
+[The point of required parameterisation may not correspond to a namable implementation unit (``type'', ``class'', etc.) of the host language - TODO - not an explicit reuse level but a ``quality of implementation'' issue much like avatarism]
+
+The difficulty of addressing such reuse scenarios create {\it horizons} in the graph of creators. Some creators end up having their expressions privileged with respect to those of others --- those downstream of the privileged must make increasingly tortured re-expressions of their intentions in order to accommodate the prior privileged intentions. Eventually the economy breaks down and requires that the original expressions be modified or refactored. This can only be done by commissioning expensive efforts from the upstream elites. Whilst the dynamics of open source projects are a partial answer to these punishing economics, they cannot accommodate scenarios in which the downstream creators are not developers at all, and/or lack the resources to become full participants in the communities of the privileged. Thus the graph of creators fails to be {\it open} --- the horizon induced by the faulty language system provides it with a boundary beyond which it cannot be extended.
+
+
+\section{A New Open/Closed Principle}\label{sec:principle}
+
+Here we present a central motivating principle which summarises the complete intent behind a system which addresses all the reuse scenarios in the previous sections, as well as delineating the boundary of a much wider category of scenarios. What we seek is a {\it closed algebra of expressions} which will enable an {\it open graph of creators}. To unpack this formulation --- what we imagine is that, given any two expressions (programs) $\alpha$ and $\alpha_1$ that are very similar in intention (and, hopefully, thus, in expression), that there exists a third expression $\delta_1$ that is also a valid program, such that adding $\delta_1$ to the expression $\alpha$ (via whatever mechanism for ``reuse'' allows the program of one creator to be affixed to another) produces a program identical in its effects (and close in its expression) to $\alpha_1$.
+\subsection{Relationship to diffs and patches}
+This implies an unusual characteristic for the language system we are interested in, which is usually reserved only for artefacts processed by the tooling systems which work on them, such as version control systems. The difference between two valid programs is typically named a {\it diff} or a {\it patch} in such systems, and is almost universally not a valid program in its own right. What we seek is a language or dialect in which representatives of such differences can be moderately compactly and validly encoded within the language itself.
+
+\subsection{This property cannot be provably or fully satisfied}
+Naturally such a property is not susceptible to perfect verification or definition. Not {\it all} such differences could correspond to valid programs --- we expect, rather, that given the majority of situations in which creators realistically encounter such requirements for verification, that they {\it can find} without undue effort {\it some} representative of the difference they require within the space of valid programs. This property should be considered alongside another such ``soft property'' of languages, that of {\it homoiconicity}. Whilst, by suitably torturing the definition, practically every programming language could be considered homoiconic in some usage, there is a clearly evident scale of programming languages which are significantly homoiconic in practical effect, stretching, say, from Lisp enjoying the property strongly, and C enjoying the property weakly.
+
+Satisfaction of our open/closed principle could only be verified by a real community creating software artefacts in the pursuit of real ends. To be more clear --- adequate satisfaction of this principle could not be {\it proved} from an axiomatic basis. It could only be experienced in practice.
+
+\subsection{Relationship to Meyer's Principle}
+
+Meyer's open/closed principle is a good foundation for ours. We believe strongly in its primitives and ends --- especially in the possibility that an expression may be ``closed'' in the sense that it may be ``closed over'' by further creators as a result of being ``relatively constant''. This allows a form of ``referential transparency'' in design --- the use of the name of an implementation unit can be safely substituted for its referent, allowing for the possibility of caching, memoisation, etc. and similar desirable affordances. The fundamental problems with Meyer's principle lie along two principal axes:
+
+\begin{description}
+\item[Failure to account for composite structure in the reused artefacts] Meyer's formulation, problematically, only refers to the status (open/closed) of a single artefact at a time. As we outline in section \ref{sec:basic}, this actively fights against the desired reuse characteristics when considered in a wider design where the reuse point is embedded in a larger aggregate.
+\item[Failure to account for repeated reuse] Meyer's formulation only considers a single exercise of the faculty of reuse. In practice, creative networks spread wider, and the action of reuse must not degrade the potential for further reuse by more distant creators. This leads to our reformulation of the nature of {\it openness}.
+\end{description}
+
+\section{Fluid's Infusion System}
+
+In this section we will describe the design and motivation of the {\it Infusion} configuration system, which has been under development in the {\it Fluid} community for some years. There is not space here to cover many of its features, but comprehensive documentation is available at \cite{Infusion16} and it has been described previously in \cite{Basman15} which includes a treatment of its support for networks of creators collaborating on a simple application, and \cite{Basman11}, an older paper which describes some obsolete features but includes a rationale for configuration systems promoting end-user design.
+
+We hesitate to name Infusion a {\it language} since it has been explicitly designed to omit several of the characteristics considered traditional amongst programming languages --- most notably that of being {\it Turing complete}. Infusion has been designed to be incapable of computation per se --- with a design goal that it fails to consume time and space greater than $O(n \log n)$ when given input of size $n$\footnote{The current implementation fails to meet this criterion by a ways, probably consuming $O(n^3)$ time and $O(n^2)$ space or so, but we hope/believe only through faults in implementation rather than underlying design or strategy errors. The point remains that with any polynomial bounds on its resource usage, it fails to qualify as a traditional programming language}. Infusion is explicitly designed to preside over elements of code written in a {\it base language} (and so has some of the characteristics of a {\it library}) which in our current implementation is JavaScript, but may in practice be any traditional programming language which allows for the expression of free functions which are ``morally'' side-effect free. Our aim is to steadily increase the power of the overlying Infusion system at the expense of the expressive power of the base language --- which we hope to also impoverish, for a wide range of use cases, below the threshold allowing it to qualify as a progamming language by virtue of being Turing complete.
+
+\subsection{A ``good function''}
+
+We hope to isolate, amongst the base language, a dialect capable of expressing only what we term ``good functions''. A good function
+
+\begin{itemize}
+\item Is a pure function (free of side-effects on the environment)
+\item Can consume resources no greater than $O(n \log n)$ when given input of ``size'' $n$
+\item Can only apply the control primitives of {\it conditional execution} and {\it structural recursion} --- that is, control structures such as generalised looping ({\tt for} or {\tt while} loops) or arbitrary recursion do not occur
+\end{itemize}
+
+Whilst arbitrary progamming language structures {\it can} appear in the base language, we would like to highlight them during the authoring process as a form of {\it taint} --- similar to the way in which Perl language elements may be declared {\it tainted} through having processed unchecked user input data, or C\# language elements may be considered {\it unmanaged} as a result of having accessed machine resources such a memory or threads in an unchecked way.
+
+These taints may infect the authorial process in a variety of ways. Firstly, if a base language expression is tainted through possible excess resource consumption, it might impact the {\it liveness} of the authoring process, which we would want to remain highly responsive in typical situations. Secondly, if an expression is tainted through committing side-effects, it would interfere with the authorial process by taking the user/designer through transitions which could not easily be reversed. Both of these kinds of taints mark out a code block as being suitable for being provided with accompanying {\it mock} or {\it null} implementations which would abridge its operation in typical design situations.
+
+\subsection{A Variant Cellular Model}
+
+The organisation of a Smalltalk application into insulated units named ``objects'' was inspired by the subdivision of biological entities into cells \cite{Kay13}. This is good engineering for systems which must be self-assembling and self-managing, but is a poor fit for systems which must place all of their resources for adaptibility at the disposal of the user --- or a wider network of creators. Our cellular units are named ``components'', and rather than serving to insulate parts of the implementation one from the other, they serve the converse end of maximally advertising the structure of the application via a transparent addressing scheme. Infusion components have a further vital role in structuring an application, in that their lifecycle points are used to structure the lifetimes of relationships and adaptations in the component tree.
+
+Our inspiration is taken from a very popular and successful idiom for end-user programming --- the Document Object Model (DOM - \cite{W3C02}) mediating access to the rendered contents of web pages. A crucial affordance which has emerged from applications based on the DOM is the use of CSS selectors to stably represent selections of the tree of DOM nodes. The original use case for CSS selectors allowed
+designers to target styling rules at parts of a web interface, which rules could expect some stability of reference as the content was designed. Over time, as web interfaces became more dynamic, CSS selectors became a vital part of the implementation design as well, as mediated by popular frameworks such as jQuery.
+
+Our cellular model, thus, imports two vital elements from the idiom of DOM-based programming:
+
+\subsubsection{Transparent, selector-based addressing}
+
+A selection of tree nodes which is to be targetted with some effect or predicate can be stably identified by means of a pattern encoded into a string, with clauses representing intermediate match sites in the tree combining to represent the final match. In Infusion, our selector dialect is \textbf{\textit{IoCSS}}, named after one of the framework's original roles as an ``Inversion of Control'' system. It is structured very similarly to the CSS system, only with a greatly reduced set of predicates and combining rules.
+
+\subsubsection{Coordinated lifecycles with peers}
+
+The DOM is an environment where elements may unpredictably come and go. It's crucial for application integrity that any effects associated with the existence of a node are banished along with its demise. As well as simple examples such as event handlers attached to a DOM node itself, there are more subtle possibilities such as programming language (JavaScript) code which has ``closed over'' a reference to a DOM element which has been destroyed. It's crucial that the system behave gracefully in such mixed authorial scenarios. 
+
+In Infusion, there are yet more complex possibilities of multilateral relationships amongst component nodes. For example, one component may bind an event listener on behalf of another, set up a dataflow relationship between itself and other components, or broadcast options distributions into the tree at large. All of these relationships must be cleanly torn down when the component is destroyed.
+
+The lifecycle of components also provides crucial landmarks in {\it time} whereby the scope of dynamic adaptations can be demarcated. We will see examples of this in our worked context awareness example in section \ref{sec:korz}.
+
+
+\subsection{Grades are not Types}
+
+[TO APPEAR]
+
+\setlength{\extrarowheight}{2pt}
+
+\begin{table*}[t]
+\begin{center}
+\scriptsize
+\makebox[\linewidth][c]{%
+    \begin{tabular}{p{1.6cm}>{\raggedright}p{2.5cm}>{\raggedright}p{6cm}>{\raggedright\arraybackslash}p{6cm}}
+      \toprule
+      Term & Correlates & Distinction and Similarities & Intention and Advantages\\
+      \midrule
+      Grade & Type/Class & Rather than establishing {\it contracts} or describing {\it storage}, a grade is a block of (JSON) configuration with a globally-qualified name which is merged in an aligned way with others to produce a description from which component instances can be built. Grade names can also be used as {\it landmarks} ({\it context names}) in order to bind segments of IoCSS selectors. & The use of grade-based descriptions reduces {\it excess intention} in descriptions of parts of implementations. The run-time structure of an instance is much more closely tied to the authoring-time structure, allowing for the ``notation'' of authors and users to be directly corresponded. \\
+      Model & Model (MVC Programming) / Model (Model-based development/MBD) / Behaviour (Functional Reactive Programming/FRP) & Infusion {\it models} encode mutable state in a JSON-equivalent form. Taken together with the associated model relay rules, these can constitute a model from the MBD point of view, since the space of model states can be deduced. Finally, the stream of values of a model over time can be compared to an FRP {\it behaviour}, transduced into other streams via transforming relay rules. & Similar to the use of grades, Infusion models minimise {\it divergence} between run-time and authoring structures. They also aid liveness and transportation of applications --- it should be possible to effectively move an application between systems or users by transmitting just its models. \\
+      Options Distributions & Advice (AOP)/Diff (VCS) & An options distribution, like an aspect-oriented programming ``advice'', allows an existing application (component tree) to be modified by an author from the outside - that is, they can derive a variant application without modifying the expression of the original author. Unlike an advice, distributions have the same structure and syntax as ordinary configuration. & Since options distributions form a closed system, it is clear how multiple authors can collaborate on the same system, and multiple modifications competing to target the same piece of the design can have their relative priorities negotiated. This also implies that the same authoring tools can be used to write and check distributions as well as ordinary configuration. \\
+      \bottomrule
+\end{tabular}%
+}
+\small
+\caption{Guide to terms used in this paper and relation to common forms}
+\label{fig:terminology}
+\end{center}
+\end{table*}
+
+\section{Freely Dimensioned Context Awareness}\label{sec:context}
+
+In this section we will rework an example from Ungar et al's Korz system\cite{Ungar14} which demonstrated how fresh ``dimensions'' of adaptibility can be contributed into a target artefact from multiple sources. This represents a high-order case of reusability (in terms of section \ref{sec:demanding}, and exhibiting the use case in two systems will shed light on both systems as well as on the nature of the problem space. 
+
+Despite both being rare examples of systems in which such a high-order reuse case can be met, the architectures of Korz and Infusion are extremely different. To start with, Korz can function as a general-purpose programming language, whilst Infusion cannot. Further more, the differences in the {\it dispatch model} of the two systems are profound. Korz is a language with highly dynamic dispatch, descended in a direct lineage from Smalltalk via the Self language, inheriting these languages' conceptions of ``slots'', named entries within an implementation unit (an {\it object}) where a runtime computation occurs in order to locate a particular concrete implementation in response to a message. In contract, Infusion has no dynamic dispatch whatsoever --- the dispatch choices to be made by an implementation unit (a {\it component}) are built into it at its point of instantiation. As we will see as we elaborate our example, this lack of dynamic dispatch does not limit the dynamism a runtime Infusion system, and in fact makes it easier to quantify and bound this dynamism and hence export it into other environments. In our example we will show how the dynamic content of part of an Infusion component tree can be easily exported into an environment traditionally very hostile to dynamism, the implementation of a WebGL shader operating a live filter of a video stream, written in the GLSL shader language.
+
+\subsection{Korz Adaptation Example}\label{sec:korz}
+
+The example presented in \cite{Ungar14} demonstrates how fresh adaptations can be contributed to a target implementation, without either a change in its implementation or a change in the type name consumed by its users. This represents a modern, high level of adaptibility, which is also present in such environments as Newspeak \cite{Bracha10}. We will work through this example using Infusion's context awareness facility.
+[TO APPEAR]
+
+\section{A Real-World Example of Type 4 Reuse}
+
+The Global Public Inclusive Infrastructure (GPII) is an ambitious project whose aim is to implement an auto-personalisation system which makes the resources of operating system and application-level adaptation available to users across all applications and platforms. A core architectural component is the {\it flow manager} which coordinates the workflow of assembling information about the user's needs and preferences, the capabilities of the local device and relevant privacy policies, and orchestrating the capabilities of the device to bring it to an inferred condition meeting the needs and preferences. As such it represents a moderately deeply nested containment structure of the types we have discussed in \ref{sec:demanding} in which more advanced reuse requirements have arisen in real practice. However, we should all the same stress that this still represents an architecture only at modest rather than extreme scale, currently comprising thousands rather than millions of lines of code. Therefore we feel justified in positioning even level 4 reuse as a standard, everyday level of reusability that every competent architecture should aspire to.
+
+In table \ref{fig:gpii} is a section of configuration for a ``driver'' of this system, meeting the needs of a particular integrator who wishes to make choices about configuration of a storage engine in one of the several deployment scenarios of the application, one where a particular set of components of the flow manager are deployed locally on the user's local machine, and others are deployed remotely ``in the cloud'' (other such scenarios position these component differently --- for example, all locally, or almost all remotely, etc., this flexibility of deployment scenario being one of the main drivers of the requirement for reusability.
+
+\begin{table*}[t]
+\begin{center}
+\scriptsize
+
+\begin{verbatim}
+{
+    "type": "untrusted.development.all.local",
+    "options": {
+        "gradeNames": ["kettle.multiConfig.config"],
+...
+        "distributeOptions": {
+            "untrusted.development.port": {
+                "record": 8088,
+                "target": "{that cloudBasedConfig}.options.mainServerPort"
+            },
+            "untrusted.development.prefs": {
+                "record": "http://localhost:8088/preferences/%userToken",
+                "target": "{that cloudBasedConfig flowManager preferencesDataSource}.options.url",
+                "priority": "after:flowManager.development.prefs"
+            },
+...
+    }
+}
+\end{verbatim}
+\caption{Example of GPII FlowManager configuration showing resolution of level 4 reuse}
+\label{fig:gpii}
+\end{center}
+\end{table*}
+
+On line 12, we see an IoCSS selector with 4 components {\tt \{that cloudBasedConfig flowManager preferencesDataSource\}}, selecting by path a particular subcomponent of just {\it one} instantiation of a {\tt flowManager} component for ``advice''. This full specification is necessary because in this configuration, {\it two} such instances exist along different containment paths, representing the traditionally local and remote functions of the system, and we wish to advise only one of them. This clearly represents level 4 reuse, since in any traditionally constructed system, the ``substitutability'' of these two instances via their common inheritance from a base grade (in this case, {\tt gpii.flowManager'}) would render them indistinguishable from the point of view of a consumer of the design.
+
+\section{Conclusion}
+
+We have presented a tower of increasingly sophisticated scenarios of reuse, stretching from classical object-orientation's reuse at level 1 as ``Meyerian Reuse'' up to more demanding requirements characterised as level 4, which we nonetheless argue represent everyday levels of reuse that arise frequently in real architectures (whether characterised or not). We have assigned popular language and tool idioms to particular levels of this tower according to the sophistication of reuse requirements which can be natively met by their means, showing that no popular systems are capable of meeting the requirements of level 4 reuse. We have argued that fundamentally different architectural strategies, those informing our design of Fluid's Infusion system, are required to meet such requirements, and that several other ``quality of implementation'' issues such as straightforward interactions with external systems implemented in different processes, languages and idioms, are also met by them.
+
+We have produced a compact new principle, our new open/closed principle, which summarises the requirements of all 4 levels of this tower in a straightforward, transparently motivated statement, as well as encompassing a much wider terrain of as yet unarticulated reuse requirements. We explain that meeting this principle perfectly is impossible even in principle, but instead represents a constant cycle of implementation, self-observation and refinement that will steadily increase the terrain of expressions which can usefully be subsumed under the principle in a realistic space of user designs. We devote ourselves to this struggle.
+
+%\acks
+
+%Acknowledgments, if needed.
+
+% We recommend abbrvnat bibliography style.
+
+\bibliographystyle{abbrvnat}
+
+% The bibliography should be embedded for final submission.
+
+\begin{thebibliography}{}
+\softraggedright
+
+\bibitem[Basman(2015)]{Basman15}
+Basman, A. et al. {\it Harmonious Authorship from Different Representations}, Proceedings of the 26th Annual PPIG Workshop, 2015
+
+\bibitem[Basman(2011)]{Basman11}
+Basman, A. et al. {\it 
+To inclusive design through contextually extended IoC}, Proceedings of the ACM OOPSLA Companion (Wavefront), 2011
+
+\bibitem[Bracha(2010)]{Bracha10}
+Bracha, Gilad et al. {\it Modules as Objects in Newspeak}. Proceedings of the 24th ECOOP, June 21-25 2010. Springer Verlag LNCS 2010.
+
+\bibitem[W3C(2002)]{W3C02}
+Le H\'egaret, Philippe. "The W3C Document Object Model (DOM)". World Wide Web Consortium, 2002 \url{http://www.w3.org/2002/07/26-dom-article.html}
+
+\bibitem[Infusion(2016)]{Infusion16}
+Fluid Infusion Documentation \url{http://docs.fluidproject.org/infusion/development/}
+
+\bibitem[Kay(2013)]{Kay13}
+Kay, Alan {\it ``E-Mail of 2003-07-23''. Dr. Alan Kay on the Meaning of ``Object-Oriented Programming''.} \url{http://www.purl.org/stefan_ram/pub/doc_kay_oop_en}
+
+\bibitem[Kiczales(1997)]{Kiczales97}
+Kiczales, G. et al. {\it Aspect-oriented programming}. Proceedings of the 11th ECOOP (1997).
+
+\bibitem[Meyer(1988)]{Meyer88}
+Meyer, Bertrand. {\it Object-Oriented Software Construction}, Prentice-Hall, 1988
+
+\bibitem[Gamma(1994)]{Gamma94}
+Gamma, E. et al. {\it Design Patterns: Elements of Reusable Object-Oriented Software}, Addison-Wesley, 1994
+
+\bibitem[Ungar(2014)]{Ungar14}
+Ungar, D. et al {\it Korz: Simple, Symmetric, Subjective, Context-Oriented Programming}, Proceedings of the Fourth Symposium on New Ideas in Programming and Reflections on Software (Onward), ACM, 2014
+
+\end{thebibliography}
+\end{document}
