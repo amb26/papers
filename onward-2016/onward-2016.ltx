@@ -86,17 +86,17 @@ context awareness, declarative configuration
 
 \section{Networks of Creators}
 
-Successive developments in the structure of programming idioms appear to be aimed at granting increasingly powerful capabilities to those seeking to reuse and repurpose the artefacts of others. The original open/closed principle\cite{Meyer88}\footnote{To paraphrase, ``A module should be available for extension ({\it open}) but available for use ({\it closed})'' --- where Meyer connoted availability for use with the fact that a module's content should not be modifiable, promoting uses such as caching, verification, etc.} , codifying what is now accepted as one of the core principles of object-orientation. Meyer's principle allows for what could be described as a form of ``first-order reuse''. This provides only for reuse of single implementation elements at a time (classes/objects), but does little to facilitate reuse across a design or with larger aggregations --- in fact, it could be argued that object-orientation actively impedes this form of wider reuse, as we discuss below.
+Successive developments in the structure of programming idioms appear to be aimed at granting increasingly powerful capabilities to those seeking to reuse and repurpose the artefacts of others. The original open/closed principle\cite{Meyer88}\footnote{To paraphrase, ``A module should be available for extension ({\it open}) but available for use ({\it closed})'' --- where Meyer connoted availability for use with the fact that a module's content should not be modifiable, promoting uses such as caching, verification, etc.} , codifying what is now accepted as one of the core principles of object-orientation. Meyer's principle allows for what could be described as a form of ``first-order reuse''. It is possible for one creator to inherit the definition of an implementation unit and use it to derive an elaborated definition from which elaborated artefacts can be instantiated without requiring the original creator to modify their definition. This provides only for reuse of single implementation elements at a time (classes/objects), but does little to facilitate reuse across a design or of larger aggregations --- in fact, it could be argued that object-orientation actively impedes this form of wider reuse, as we discuss below.
 
 To situate this discussion we will examine scenarios of repeated reuse within the context of a {\it network of creators}. Such a network is a directed graph with creators or sites of reuse at the nodes. Two creators $A$, $B$ are connected by an arc if a tool or other community channel of reuse allows $B$ to base his/her artefact on $A$'s artefact. One example of such a connection is whereby $A$ writes source text which is processed by a compiler lying along the arc, resulting in an executable used by $B$. Another is if $A$ writes a base class which is imported by $B$ in order to produce a derived class by the addition of source text. 
 
 We will enumerate increasingly sophisticated reuse scenarios in a numbered sequence, starting with level 1 reuse representing that enabled by Meyer's principle. As wider networks of creators attempt to collaborate and share authorial access to the same, increasingly rich, artefacts, the reusability requirements on the language and authoring infrastructure increase in level.
 
-In this presentation of reuse levels, we'll avoid the use of idiom-specific terminology for naming implementation units such as ``object'', ``class'', ``module'', ``type'' and so on, to avoid biasing the discussion. 
+In this presentation of reuse levels, we'll try to simply use the term ``implementation unit'' rather than idiom-specific terminology such as ``object'', ``class'', ``module'', ``type'' etc.\ for naming units, to avoid biasing the discussion. 
 
 \section{Meyerian Reuse - Level 1}
 
-In Meyer's presentation, there are implicitly creators, $A$, $B$, $E$. Note that Meyer does not explicitly assemble this named network of creators --- we reconstruct it from the needs that object-orientation are exhibited to meet in his presentation\footnote{We use Meyer as a standin for the much wider community sharing the same reuse model, such as the Smalltalk/Self communities tracing lineage to Kay and the mainstream Java/C++/C\# communities, etc.}. $A$ has created an implementation unit named $\alpha$. $B$ wishes to refine $\alpha$ to $\alpha'$, and share this with $E$ as a substitutable replacement for $\alpha$. $B$ is assisted in doing this by a language feature of an object-oriented language granting the ability to explicitly or implicitly create an artefact taking the form of a {\it base class} or {\it interface} $\aleph$ which expresses some of content of the contract $A$ and $B$ advertise to $E$. When $E$'s use of $\alpha$ or $\alpha'$ is confined to the scope of $\aleph$, $B$'s modified code providing $\alpha'$ can be swapped for $A$'s providing $\alpha$ without $E$ needing to know about the change. Note that this swap can only be made in terms if $E$ is using a $\alpha$ that already exists; their code can equally well use an $\alpha'$. But if $E$'s code creates an $\alpha$, it can't instead create an $\alpha'$ without being modified. Typical solutions in object-oriented frameworks to this problem of constructional dependency resolve around the use of one or more varieties of ``factory pattern'' which we will return to when we start to treat more profound incarnations of reuse problems in the the following section \ref{sec:factory}.
+In Meyer's presentation, there are implicitly creators, $A$, $B$, and (at least one) end user $E$. Note that Meyer does not explicitly assemble this named network of creators --- we reconstruct it from the needs that object-orientation are exhibited to meet in his presentation\footnote{We use Meyer as a standin for the much wider community sharing the same reuse model, such as the Smalltalk/Self communities tracing lineage to Kay and the mainstream Java/C++/C\# communities, etc.}. $A$ has created an implementation unit named $\alpha$. $B$ wishes to refine $\alpha$ to $\alpha'$, and share this with $E$ as a substitutable replacement for $\alpha$. $B$ is assisted in doing this by a language feature of an object-oriented language granting the ability to explicitly or implicitly create an artefact taking the form of a {\it base class} or {\it interface} $\aleph$ which expresses some of the content of the contract $A$ and $B$ advertise to $E$. When $E$'s use of $\alpha$ or $\alpha'$ is confined to the scope of $\aleph$, $B$'s modified code providing $\alpha'$ can be swapped for $A$'s providing $\alpha$ without $E$ needing to know about the change. Note that this swap can only be made in terms if $E$ is using a $\alpha$ that already exists; their code can equally well use an $\alpha'$. But if $E$'s code creates an $\alpha$, it can't instead create an $\alpha'$ without being modified. Typical solutions in object-oriented frameworks to this problem of constructional dependency resolve around the use of one or more varieties of ``factory pattern'' which we will return to when we start to treat more profound incarnations of reuse problems in the the following section \ref{sec:factory}.
 
 \section{A Basic Reuse Scenario - Level 2}\label{sec:basic}
 In this section, we'll explore the most basic elaboration of the Meyerian (level 1) reuse scenario that exposes the limitations of object-orientation and other contemporary idioms. Creator $A$ has created an implementation unit named $\alpha$ which contains a subunit named $\beta$. Creator $B$ has refined $\beta$ to $\beta'$, and wants to create $\alpha'$ which is $\alpha$ with its $\beta$ replaced by $\beta'$. $B$ would like to share $\alpha'$ with creator $E$ as a substitute for $\alpha$.
@@ -110,7 +110,7 @@ There are several possible embodiments of the ``containment'' relation here, eve
 %TODO: Flag use of containment as confusing
 \subsection{Containment through inheritance}\label{sec:inherit}
 
-Another possibility relates to strategies for ``self-aggregation'' which in object-orientation are embodied as the inheritance relation where we might say that $\alpha$ ``IS-A'' $\beta$ through including its entire definition into its own. Our reuse problem is particularly recalcitrant via this relation in O-O and essentially forces the requirement for parameterised types to be added to the system. 
+Self-aggregation via inheritance is another strategy for reuse in object-orientation. With inheritance,  we might say that $\alpha$ ``IS-A'' $\beta$ through including its entire definition into its own. Our reuse problem is particularly recalcitrant via this relation in O-O and essentially forces the requirement for parameterised types to be added to the system. Parameterised types allow a definition to be generalised over all values of a type which appears in it.
 
 \subsubsection{Reuse through parameterised types}
 In C++, creator A, perhaps trying to address the reuse situation of section \ref{sec:inherit} would have had to have {\it already written}
@@ -133,6 +133,8 @@ alpha<beta1> myBeta1;
 
 Creating a template like this requires foresight from $A$: they need to anticipate that someone in their community may wish to modify $\beta$. It also adds complexity, as type signatures become longer and more involved. The name of an $\alpha$ simply cannot be mentioned without also bringing the requirement to mention the particular $\beth$ it involves.
 
+An elegant solution to this ``foresight'' problem is comprised in solutions such as \cite{Bracha10}'s Newspeak, in which every type name is implicitly parameterised --- at every point of consuming a type name, a user has the facility to rebind it to one resolvable in their context. Newspeak resolves not only reuse problems at this level but also at the following level 3.
+
 Parameterised types are a sufficiently powerful reuse mechanism that they also resolve the aggregation variant of this problem in \ref{sec:factory}.
 
 \subsection{Containment through private use}
@@ -148,12 +150,14 @@ As we will argue, the key limitation of AOP in these further scenarios is that t
 
 The simple scenario in section \ref{sec:basic}, solved by AOP, COP and similar formalisms, only represents level 2 reuse (with classic Meyerian inheritance solving the 1st-order scenario). In practice, much more demanding scenarios arise quite regularly. For example
 \begin{itemize}
-\item Level 3 reuse scenarios involve two creators, $B$ and $C$, both wishing to modify the same part (e.g. $\beta$) of $A$'s work. While one response to this situation would be to require that $B$ and $C$ create completely separate versions of $A$'s work, this is clearly less desirable than an approach that allows these differing changes to be managed within a single framework. Thus a reuse facility for level 3 scenarios needs some way to manage multiple, potentially conflicting, modifications of the same structure. We will return to this requirement in our section \ref{sec:context} on freely dimensioned context awareness.
+\item Level 3 reuse scenarios involve two creators, $B$ and $C$, both wishing to modify the same part (e.g. $\beta$) of $A$'s work. While one response to this situation would be to require that $B$ and $C$ create completely separate versions of $A$'s work, this is clearly less desirable than an approach that allows these differing changes to be managed within a single framework. If $B$ and $C$ have to work with separate artefacts, they have become disconnected in the graph of creators. Thus a reuse facility for level 3 scenarios needs some way to manage multiple, potentially conflicting, modifications of the same structure. We will return to this requirement in our section \ref{sec:context} on freely dimensioned context awareness.
 %TODO: This sort of seems like the point at which "failure of closure" emerges but we should note that it also emerges at level 1->level2, from the requirement that the maker of a derived class needs to pick a new name which can't be constructionally or nestedly embedded, etc.
 \item Level 4 reuse scenarios involve the location of to-be-changed $\beta$s within $A$'s work. If $\beta$ occurs inside many layers of structure, introducing a template or other parameterisation point to support the modification will require a good deal of rework. Worse, if there are several $\beta$s in $A$'s work, but only some of these should be changed, there may be no suitable point at which one can introduce a template. New facilities are needed to respond to these situations.
 \end{itemize}
 
 %[The point of required parameterisation may not correspond to a namable implementation unit (``type'', ``class'', etc.) of the host language - TODO - not an explicit reuse level but a ``quality of implementation'' issue much like avatarism]
+
+\cite{Bracha10} names a variety of level 3 reuse as the ``class hierarchy inheritance'' problem. In the formulation there, creator $A$ has created a base class {\tt Shape}, creator $B$ a {\tt ShapeLibrary} deriving {\tt Rectangle}, {\tt Circle}, etc. and creator $C$ has created a hierarchy of colorable things, and wishes to make all the contents of $B$'s library of shapes available to $E$ as coloured shapes without having to do work proportional to the size of the library. Another popular system resolving level 3 is Korz from \cite{Ungar14}, appearing again in section \ref{sec:context}.
 
 %Want to mention that Korz deals with level 3 and that Newspeak probably deals with 3 and a part of 4 too - can't deal with the part of 4 unless these things have been given separate names at different points in the tree. Although it's not clear that Newspeak does allow reuse "from the outside" - you'd have to build up the whole tree again if you wanted to change a name at one part in it
 
@@ -184,7 +188,7 @@ We might write mathematically, describing the scenario of the previous section,
 \end{equation}
 where $\simeq$ represents two programs with the same behaviour, and $\boldsymbol{\oplus}$ represents the {\it program addition operator} which is used by creators in any network to combine programs together. Note that $\boldsymbol{\oplus}$ is rarely defined as part of a language definition, since its use appears at the tooling level of a system. For example, in a compiled language, $\boldsymbol{\oplus}$ requires the addition of command-line arguments to the compiler, specifying source files which should be compiled together, whereas in JavaScript written for the web, $\boldsymbol{\oplus}$ requires the specification of {\tt <script>} tags at the head of the page referencing JavaScript source files which should be fetched and interpreted. It's a prerequisite for meeting the openness requirement that the system's facility for addressing $\boldsymbol{\oplus}$ should be available with respect to the particular form in which a program is delivered to a creator in the network --- not likely the case if they are delivered in an executable binary form\footnote{It is this additive operator which gives rise to the subtitle of our paper, promising ``additive supports''}.
 
-\cite{Gabriel02} observes that an important schism that has opened up in the community is between those working on ``systems'' and ``languages''. We observe that it will be impossible to meet the highest levels of reuse in languages which maintain this separation between semantics (studied by language theorists) and runtime behaviour (measured by the systems community). The protrusion of the program addition operator $\boldsymbol{\oplus}$ outside the space traditionally considered interesting by language theorists is an important evidence of this. Similar to CLOS, \cite{Gabriel02}'s paradigm example, a description of Infusion, our proposed non-language, will be impossible without also describing how to observe and influence a particular running system containing a program written with it\footnote{Further, following \cite{Gabriel02}, we observe that Infusion itself is a clear example of the engineering process preceding the scientific one, whilst still proceeding on a principled basis}
+\cite{Gabriel12} observes that an important schism that has opened up in the community is between those working on ``systems'' and ``languages''. We observe that it will be impossible to meet the highest levels of reuse in languages which maintain this separation between semantics (studied by language theorists) and runtime behaviour (measured by the systems community). The protrusion of the program addition operator $\boldsymbol{\oplus}$ outside the space traditionally considered interesting by language theorists is an important evidence of this. Similar to CLOS, \cite{Gabriel12}'s paradigm example, a description of Infusion, our proposed non-language, will be impossible without also describing how to observe and influence a particular running system containing a program written with it\footnote{Further, following \cite{Gabriel12}, we observe that Infusion itself is a clear example of the engineering process preceding the scientific one, whilst still proceeding on a principled basis}
 
 \subsection{Relationship to diffs and patches}
 The principle implies an unusual characteristic for the language system we are interested in, which is usually reserved only for artefacts processed by the tooling systems which work on them, such as version control systems. The difference between two valid programs is typically named a {\it diff} or a {\it patch} in such systems, and is hardly ever a valid program in its own right. What we seek is a language or dialect in which representatives of such differences can be moderately compactly and validly encoded within the language itself.
@@ -215,7 +219,7 @@ Meyer's open/closed principle is a good foundation for ours. We believe strongly
 
 In this section we will describe the design and motivation of the {\it Infusion} configuration system, which has been under development in the {\it Fluid} community for some years. Many of Infusion's features were designed around the need to meet the open/closed principle\footnote{In fact, the open/closed principle only emerged partway through the design process of Infusion, as it became clear that a fundamental flaw in an older implementation (the one described in \cite{Basman11}) was that while apparently meeting all four levels of reuse, it still contained user expressions, {\it demands blocks}, which could not effectively be additively rewritten by others.}, but it also aims to meet many other needs (dataflow programming, live programming, multi-paradigm collaborative authoring, etc.), which will not be described here.
 
-We hesitate to name Infusion a {\it language} since it has been explicitly designed to omit several of the characteristics considered traditional amongst programming languages --- most notably that of being {\it Turing complete}. Our favorite designation for the class in which Infusion fits is an {\it integration domain} \cite{Kell09}. We'll return to a discussion of some of these omittied characteristics of a language in \ref{sec:compute}. In fact, Infusion attempts to attack the the intractible space of language design by factoring the problem --- the comprehended part of the problem is described within Infusion's configuration system, expressed in a dialect of JSON, and the uncomprehended part, still requiring the expression of arbitrary progamming language code, is left behind in the {\it base language} which is currently JavaScript. As the design of Infusion progresses, the balance shifts in favour of the former.
+We hesitate to name Infusion a {\it language} since it has been explicitly designed to omit several of the characteristics considered traditional amongst programming languages --- most notably that of being {\it Turing complete}. Our favorite designation for the class in which Infusion fits is an {\it integration domain} \cite{Kell09}. Infusion attempts to attack the the intractable space of language design by factoring the problem --- the comprehended part of the problem is described within Infusion's configuration system, expressed in a dialect of JSON, and the uncomprehended part, still requiring the expression of arbitrary programming language code, is left behind in the {\it base language} which is currently JavaScript. As the design of Infusion progresses, the balance shifts in favour of the former.
 
 \subsection{Infusion's problem domain} 
 Infusion itself is not designed to permit the expression of arbitrary computations, and so there is by design a large variety of tasks to which it is unfitted. It could not be used to write a compiler, an operating system, or indeed even itself. The design space of Infusion is the space of {\it user programs} --- those which mediate some access to state on behalf of an end user, an ordinary member of society, through some form of user interface, most typically a visual one. Paradigm examples of this class of application are office applications or web applications.
@@ -224,6 +228,12 @@ We argue that what users require from such applications is not {\it computation}
 \subsection{The constituents of an Infusion program}
 
 Designs expressed in Infusion are structured, at runtime, into a single-rooted tree of implementation units (instances) named {\it components}. Each component takes its nature from one or more definitions named {\it grades}. A {\it grade} is a block of JSON configuration with a globally namespaced name. With a loose analogy, components and grades can respectively be corresponded to the objects and classes of an object-oriented design. We have chosen different names for our units to avoid confusing Infusion users with the very different behaviour and affordances of their equivalents from OO. Table \ref{fig:terms} shows a correspondence between some Infusion terms/primitives and some analogous equivalents in traditional usage, together with some commentary on the differences in intention and expected benefits of the Infusion primitives.
+
+Infusion grades more closely resemble ``mixins'' seen in some object-oriented traditions (for example, the Flavors/CLOS/etc. lineages discussed in \cite{Gabriel12}) than simple classes, since they multiple grades may be listed for inheritance at each level of the hierarchy, and each may appear multiple times along the paths to root. Resolution of a grade hierarchy is handled by similar algorithms as those seen in other multiple inheritance traditions (e.g.\ the C3 linearisation algorithm). An important difference in Infusion is that the results of grade resolution themselves take the form of a JSON document, a component's {\it merged options}, which are attached in immutable form to an instantiated component's top-level property named {\tt options}. This allows for the results of the merging and expansion process to be interpreted and consumed by other authors and tools in the system rather than simply the system's own runtime, and is an important example of the idiom whereby Infusion disintermediates traditionally privileged authors in the ecosystem, those of the system's compiler/interpreter, tools and runtime.
+
+A component's merged defaults represent the final output of the process where all sources of component option definitions targetted at the component are taken into account, not just those from the hierarchical resolution process itself, but also those from resolving {\it IoC references} which allow options to be pulled from different locations around the component tree (seen in section \ref{sec:reference}) and also those from {\it options distributions} which allow options to be broadcast (pushed) around the tree (seen in section \ref{sec:distributions}). As well as simply coding for plain values, component options are interpreted by the runtime into specialised kinds of entities which appear as top-level elements on the component after constructions, such as events and their listeners, dataflow-driven models and constraints on these, bound functions (invokers), etc.\ which there is not room to describe here.
+
+Ordinarily, multiple sources of component options are simply superimposed as JSON structures using an algorithm very similar to that seen in many popular utilities, for example, jQuery's {\tt extend} algorithm --- however, the user can specify schematic material in the {\tt mergePolicy} option of the structure in order to operate custom semantics for the fold/reduce algorithm operating the collection process. We will see an example of this in our context adaptation sample in section \ref{sec:korz}.
 
 \setlength{\extrarowheight}{3pt}
 
@@ -249,7 +259,7 @@ Designs expressed in Infusion are structured, at runtime, into a single-rooted t
 \end{center}
 \end{table*}
 
-\subsection{A minimal Infusion program}
+\subsection{A minimal Infusion program}\label{sec:minimal}
 
 Figure \ref{fig:minimal} shows a minimal Infusion program. It registers a grade named {\tt examples.minimalGrade} derived from just the  core framework grade {\tt fluid.component}, constructs an instance of it, and destroys it.
 
@@ -268,7 +278,7 @@ minimalInstance.destroy();
 \end{center}
 \end{table}
 
-This example might suggest that the usage of Infusion is necessarily tied to the use of the base language (JavaScript) but this is not necessarily the case. By means of the {\it externalization} provided by, for example, the {\it\bf Nexus} component implemented as part of the GPII's Prosperity4All Program, all of the facilities used in \ref{fig:minimal} could be addressed from outside the process using standard HTTP endpoints. For example, the following sequence of HTTP requests would have the same effect as in listing \ref{fig:minimal}:
+This example might suggest that the usage of Infusion is necessarily tied to the use of the base language (JavaScript) but this is not necessarily the case. By means of the {\it externalization} provided by, for example, the {\it\bf Nexus} component implemented as part of the GPII's Prosperity4All Program \cite{Nexus16}, all of the facilities used in \ref{fig:minimal} could be addressed from outside the process using standard HTTP endpoints. For example, the following sequence of HTTP requests would have the same effect as in listing \ref{fig:minimal}:
 
 \begin{table}[t]
 \begin{center}
@@ -279,13 +289,13 @@ HTTP POST /components/minimalInstance {type: "examples.minimalGrade"}
 HTTP DELETE /components/minimalInstance
 \end{Verbatim}
 \caption{A minimal Infusion program issued over the Nexus HTTP protocol}
-\label{fig:minimal}
+\label{fig:minimalNexus}
 \end{center}
 \end{table}
 
-\subsection{A little Infusion program showing context-based reference}
+\subsection{A little Infusion program showing context-based reference}\label{sec:reference}
 
-We move to a slightly higher level of complexity in order to exhibit how Infusion's context-based reference resolution system functions. We will construct a small tree of three components, the root, a child, and a sibling, and a reference from the child to a value held by the sibling. This shows Infusion's {\it structural scoping} model.
+We move to a slightly higher level of complexity in order to exhibit how Infusion's context-based reference resolution system functions. In listing \ref{fig:minimalRef} we will construct a small tree of three components, the root, a child, and a sibling, and a reference from the child to a value held by the sibling. This shows Infusion's {\it structural scoping} model.
 
 \begin{table}[t]
 \begin{center}
@@ -313,11 +323,11 @@ var that = examples.refRoot();
 console.log("Resolved value from child is ", that.child.options.siblingValue);
 \end{Verbatim}
 \caption{A small Infusion example showing reference resolution}
-\label{fig:minimal}
+\label{fig:minimalRef}
 \end{center}
 \end{table}
 
-An expression of the form {\tt \{sibling\}.options.value} is known as an IoC reference, named after Infusion's role as an Inversion of Control framework. The portion {\tt \{sibling\}} of the reference is the {\it context expression}. In this form of reference, this matches upwards through the tree of instantiated components, looking for any parent or sibling of a parent matching the context name. A context name matches in three cases:
+An expression of the form {\tt \{sibling\}.options.value} as appearing at line 7 in listing \ref{fig:minimalRef} is known as an IoC reference, named after Infusion's role as an Inversion of Control framework. The portion {\tt \{sibling\}} of the reference is the {\it context expression}. In this form of reference, this matches upwards through the tree of instantiated components, looking for any parent or sibling of a parent matching the context name. A context name matches in three cases:
 \begin{itemize}
 \item It matches any full grade name that the component is derived from
 \item It matches the last path segment of any grade name that the component is derived from
@@ -330,44 +340,23 @@ The aim of Infusion's resolution system is for all references of this kind to re
 \subsection{Further Information on Infusion}
 There is not space here to cover many features of Infusion, but comprehensive documentation is available at \cite{Infusion16} and it has been described previously in \cite{Basman15} which includes a treatment of its support for networks of creators collaborating on a simple application, and \cite{Basman11}, an older paper which describes some obsolete features but includes a rationale for configuration systems promoting end-user design.
 
-\section{Further Infusion Topics}
-In this section we'll cover some aspects of Infusion's design which may initially appear extrinsic to the core topic of reusability. Whilst it is possible to imagine alternative systems which meet our reusability principle with divergent viewpoints on these topics, we will produce some indirect arguments which relate these design properties back to the core topic. These areas are:
+\section{Addressibility and Externalisability}
+In this section we'll discuss two closely related properties of Infusion's design which we argue emerge from the reusability principle. 
 
 \begin{description}
-\item[Avoidance of Computation] - We prohibit general computations from being expressed in Infusion's core, in aid of liveness and transparent authoring
+\item[Free Addressibility] - Every part of every Infusion component can be referenced using a global path expression, encoding its path as descended from the global component tree root.
 \item[Externalisability] - Infusion artefacts and state can be externalised naturally and directly --- aiding cooperation with artefacts in other languages and processes.
 \end{description}
 
-Related to both of these areas comes Infusion's lack of {\it dispatch} --- Infusion does not have any concept of a {\it slot} or any kind of computed property access as is considered essential in most lineages of OO, especially those descended in the Smalltalk lineage. An Infusion component simply has concrete {\it members}, properties whose value at any time is straightforwardly derivable from looking into state by means of the base language's member access operator. 
 
-\subsection{Infusion and Computation}
+\subsection{A New Cellular Model}\label{sec:dom}
 
-Infusion has been designed to be incapable of computation per se --- with a design goal that it fails to consume time and space greater than $O(n \log n)$ when given input of size $n$\footnote{The current implementation fails to meet this criterion by a ways, probably consuming $O(n^3)$ time and $O(n^2)$ space or so, but we hope/believe only through faults in implementation rather than underlying design or strategy errors. The point remains that with any polynomial bounds on its resource usage, it fails to qualify as a traditional programming language.}. 
-
-Infusion is explicitly designed to preside over elements of code written in a {\it base language} (and so has some of the characteristics of a {\it library}) which in our current implementation is JavaScript, but may in practice be any traditional programming language which allows for the expression of free functions which are ``morally'' side-effect free. Our aim is to steadily increase the power of the overlying Infusion system at the expense of the expressive power of the base language --- which we hope to also impoverish, for a wide range of use cases, below the threshold allowing it to qualify as a progamming language by virtue of being Turing complete.
-
-\subsection{A ``good function''}
-
-We hope to isolate, amongst the base language, a dialect capable of expressing only what we term ``good functions''. A good function
-
-\begin{itemize}
-\item Is a pure function (free of side-effects on the environment)
-\item Can consume resources no greater than $O(n \log n)$ when given input of ``size'' $n$
-\item Can only apply the control primitives of {\it conditional execution} and {\it structural recursion} --- that is, control structures such as generalised looping ({\tt for} or {\tt while} loops) or arbitrary recursion do not occur
-\end{itemize}
-
-Whilst arbitrary progamming language structures {\it can} appear in the base language, we would like to highlight them during the authoring process as a form of {\it taint} --- similar to the way in which Perl language elements may be declared {\it tainted} through having processed unchecked user input data, or C\# language elements may be considered {\it unmanaged} as a result of having accessed machine resources such a memory or threads in an unchecked way.
-
-These taints may infect the authorial process in a variety of ways. Firstly, if a base language expression is tainted through possible excess resource consumption, it might impact the {\it liveness} of the authoring process, which we would want to remain highly responsive in typical situations. Secondly, if an expression is tainted through committing side-effects, it would interfere with the authorial process by taking the user/designer through transitions which could not easily be reversed. Both of these kinds of taints mark out a code block as being suitable for being provided with accompanying {\it mock} or {\it null} implementations which would abridge its operation in typical design situations.
-
-\subsection{A New Cellular Model}
-
-The organisation of a Smalltalk application into insulated units named ``objects'' was inspired by the subdivision of biological entities into cells \cite{Kay13}. This is good engineering for systems which must be self-assembling and self-managing, but is a poor fit for systems which must place all of their resources for adaptibility at the disposal of the user --- or a wider network of creators. Our cellular units are named ``components'', and rather than serving to insulate parts of the implementation one from the other, they serve the converse end of maximally advertising the structure of the application via a transparent addressing scheme. Infusion components have a further vital role in structuring an application, in that their lifecycle points are used to structure the lifetimes of relationships and adaptations in the component tree.
+The organisation of a Smalltalk application into insulated units named ``objects'' was inspired by the subdivision of biological entities into cells \cite{Kay13}. This is good engineering for systems which must be self-assembling and self-managing, but is a poor fit for systems which must place all of their resources for adaptability at the disposal of the user --- or a wider network of creators. Our cellular units are named ``components'', and rather than serving to insulate parts of the implementation one from the other, they serve the converse end of maximally advertising the structure of the application via a transparent addressing scheme. Infusion components have a further vital role in structuring an application, in that their lifecycle points are used to structure the lifetimes of relationships and adaptations in the component tree.
 
 Our inspiration is taken from a very popular and successful idiom for end-user programming --- the Document Object Model (DOM - \cite{W3C02}) mediating access to the rendered contents of web pages. A crucial affordance which has emerged from applications based on the DOM is the use of CSS selectors to stably represent selections of the tree of DOM nodes. The original use case for CSS selectors allowed
 designers to target styling rules at parts of a web interface, which rules could expect some stability of reference as the content was designed. Over time, as web interfaces became more dynamic, CSS selectors became a vital part of the implementation design as well, as mediated by popular frameworks such as jQuery.
 
-%TODO: cite Clockmouse
+As a result of the DOM's huge currency at the core of the world's web browsers, DOM implementations have become extremely robust and performant platforms for shared authorship of a space of user interface elements, inspiring such implementations as \cite{Klokmose15}'s {\it Webstrates}, a highly interesting embodiment of a collaborative authoring environment where the state of the DOM itself corresponds to the authorial shared state.
 
 Our cellular model, thus, imports two vital elements from the idiom of DOM-based programming:
 
@@ -377,30 +366,265 @@ A selection of tree nodes which is to be targetted with some effect or predicate
 
 \subsubsection{Coordinated lifecycles with peers}
 
-The DOM is an environment where elements may unpredictably come and go. It's crucial for application integrity that any effects associated with the existence of a node are banished along with its demise. As well as simple examples such as event handlers attached to a DOM node itself, there are more subtle possibilities such as programming language (JavaScript) code which has ``closed over'' a reference to a DOM element which has been destroyed. It's crucial that the system behave gracefully in such mixed authorial scenarios. 
+The DOM is an environment where elements may unpredictably come and go. It's crucial for application integrity that any effects associated with the existence of a node are banished along with its demise. As well as simple examples such as event handlers attached to a DOM node itself, there are more subtle possibilities such as programming language (JavaScript) code which has ``closed over'' a reference to a DOM element which has been destroyed. It's crucial that the system behave gracefully in such mixed authorial scenarios. A typical behaviour is to in some form ``neuter'' an element which has passed into this condition, such that it is prevented from participating in making any further side effects visible to the user. In the DOM parlance, it is ``detached from the document'', and further operations with it remain valid, but have no further impact on the browser's rendering process. In Infusion, we act similarly, and prevent any further event listeners from being serviced on a component which has been destroyed. This is quite at odds with a typical OO approach, in which there is not intended to be any distinct lifecycle state in which an object reference is visible to referrers and in which the object is not considered ``live''. 
 
 In Infusion, there are yet more complex possibilities of multilateral relationships amongst component nodes. For example, one component may bind an event listener on behalf of another, set up a dataflow relationship between itself and other components, or broadcast options distributions into the tree at large. All of these relationships must be cleanly torn down when the component is destroyed.
 
 The lifecycle of components also provides crucial landmarks in {\it time} whereby the scope of dynamic adaptations can be demarcated. We will see examples of this in our worked context awareness example in section \ref{sec:korz}.
 
-%TODO: talk about REST and externalisability - especially with respect to Self/Smalltalks' "hermeticism".
-%TODO: talk about NEUTERING etc. as a crucial requirement 
+\subsection{Externalisability and REST}\label{sec:rest}
 
+A systematic failure of object-oriented environments is their tendency to be ``hermetic'' --- the semantic is defined in great detail of the behaviour of an implementation within a particular ``walled garden'': the language itself and its virtual machine, and only limited thought is given to how this implementation is expected to coexist in a busy mixture of distributed elements written in a mixture of implementation technologies and idioms. The only common model for application distribution in the OO community is the ``proxy'' model, where a local agent (an ``object'') is considered to be a proxy for a remote one, fielding local messages, converting them into messages to the remote part of the system, awaiting a response and then issuing that response locally on behalf of the local client of the proxy. This is part and parcel of the ``message passing'' model of distribution on which object orientation is founded.
+
+This model is sometimes highly appropriate --- especially when the messages passed are small and relatively infrequent, and/or the network has high bandwidth, reliability and low latency with respect to the application's requirements. However, it is not appropriate for applications where the throughput of such messages would be extremely high, or the application is extremely widely distributed over a collection of nodes joined by a network which is neither hugely reliable or capacious.
+
+As we identified in section \ref{sec:dom}, the web is a highly evolved and successful emergent architecture devoted to solving the problems of distributed application development, although it is frequently not recognised as such by computer scientists. The DOM idiom that we praise in section \ref{sec:dom} is part of a wider engineering idiom named REST by \cite{Fielding2000}. In this idiom, the response to a remote endpoint is not merely a message responding to an arbitrary query, but an exhaustive summary of the state of a {\it resource}. The acronym REST denotes {\it representational state transfer}, indicating that {\it state} is moved from place to place, rather than merely the answers to limited questions as in the message passing idiom. Infusion, similarly, places state at its architectural core and facilitates architectures that work with it. 
+
+Transferring application state in bulk (externalising sections of an application) has been noted by some authors as highly desirable for many authorial tasks - for example, \cite{Kell12} notes that several changes in JVM design would be desirable in order to make it more ``observable'' for debugging purposes.
+
+%Related to both of these areas comes Infusion's lack of {\it dispatch} --- Infusion does not have any concept of a {\it slot} or any kind of computed property access as is considered essential in most lineages of OO, especially those descended in the Smalltalk lineage. An Infusion component simply has concrete {\it members}, properties whose value at any time is straightforwardly derivable from looking into state by means of the base language's member access operator. 
+
+\subsection{A simple example showing an options distribution}\label{sec:distributions}
+
+{\it options distributions} are the key feature through which Infusion designs enable the solution of level 4 reuse problems. They loosely correspond to {\it aspects} as seen in aspect-oriented programming systems, in that they allow a part of a design to be marked out for a change and ``advised'' in order to encode the change. As with all Infusion elements, these take the form of JSON-encoded options supplied to a grade. Each Infusion component may accept an options area named {\tt distributeOptions}, which may hold multiple, freely addressed distributions. Each distribution must contain an element {\tt target} encoding an IoCSS selector identifying, relative to the component's current location in the tree, where in the tree the distribution is to be targetted. It must then include either an element {\tt record} holding literal options material to be distributed, or else an element {\tt source} holding a further IoCSS selector signifying that the distributed material should be sourced from existing material in the tree.
+
+For a familiar example, we'll show Newspeak's level 3 coloured shape being resolved (as in the original sample, we'll omit the actual definitions of shapes, colours, etc.):
+
+\begin{table}[t]
+\begin{center}
+\begin{Verbatim}[numbers=left,fontsize=\tiny]
+fluid.defaults("examples.shape", {
+    gradeNames: "fluid.component",
+... 
+});
+fluid.defaults("examples.shapeLibrary", {
+    gradeNames: "fluid.component",
+... 
+});
+fluid.defaults("examples.coloured", {
+    gradeNames: "fluid.component",
+... 
+});
+fluid.defaults("examples.colouredShapes", {
+    gradeNames: "fluid.component",
+    components: {
+        colourizer: {
+            type: "fluid.component",
+            options: {
+                distributeOptions: {
+                    target: "{colouredShapes > shapeLibrary examples.shape}.options.gradeNames"
+                    record: "examples.coloured"
+                }
+            }
+        },
+        shapeLibrary: {
+            type: "examples.shapeLibrary",
+            options: {
+                components: {
+                    shape: {
+                        type: "examples.shape"
+                    }
+                }
+            }
+        }
+    }
+});
+
+var that = examples.colouredShapes();
+// Next line logs: "shapeLibrary's shape is coloured: true"
+console.log("shapeLibrary's shape is coloured ", 
+    fluid.componentHasGrade(that.shapeLibrary.shape, "examples.coloured"));
+\end{Verbatim}
+\caption{A small Infusion example showing options distribution resolving a level 3 reuse problem}
+\label{fig:coloured}
+\end{center}
+\end{table}
+
+Here, creator $C$ is embodied in the component defined at line 16, wishes to advise all shapes produced within creator $B$'s {\tt shapeLibrary} hosted at line 25 that they should have the {\tt examples.coloured} grade mixed in to them. It does this by targetting via the IoCSS selector at line 20, whose effect reads, "For all instances of {\tt examples.shape} nested anywhere below the {\tt shapeLibrary} held at the top level of containment in the overall colouredShapes tree, contribute the grade name {\tt examples.coloured} to their grade list".
+
+\subsubsection{Options distributions as encoding of ``diff''s}\label{sec:diff}
+
+It is through options distributions that differences between designs are encoded and transmitted around the system. The two parts of the IoCSS selector held in the {\tt target} field, the context portion, and the path portion, allow the {\it address} of the portion of the design to be advised to be compactly encoded. This means that diffs which should be small, for example, those that simply override a single deeply nested value in a single component, have small encodings. For encoding bigger differences, it is more economical for the author to package up a set of related changes to be made in a target component into a (possibly ad hoc) grade, and to distribute that grade name to an entire target component, rather than attempt to account for all the design changes individually. The use of a grade in this case increases the chances that a further author may in the future successfully reuse this difference itself in order to target it to make further changes. We'll see a real-world example of such a grade broadcast meeting a level 4 reuse problem in section \ref{sec:level4}.
+
+%TODO Give example of non-grade distribution
 
 \section{Freely Dimensioned Context Awareness}\label{sec:context}
 
-In this section we will rework an example from Ungar et al's Korz system\cite{Ungar14} which demonstrated how fresh ``dimensions'' of adaptibility can be contributed into a target artefact from multiple sources. This represents a high-order case of reusability (in terms of section \ref{sec:demanding}, and exhibiting the use case in two systems will shed light on both systems as well as on the nature of the problem space. 
+In this section we will rework an example from Ungar et al's Korz system\cite{Ungar14} which demonstrated how fresh ``dimensions'' of adaptability can be contributed into a target artefact from multiple sources. This represents a high-order case of reusability (level 3 in terms of section \ref{sec:demanding}), and exhibiting the use case in two systems will shed light on both systems as well as on the nature of the problem space. 
 
-Despite both being rare examples of systems in which such a high-order reuse case can be met, the architectures of Korz and Infusion are extremely different. To start with, Korz can function as a general-purpose programming language, whilst Infusion cannot. Further more, the differences in the {\it dispatch model} of the two systems are profound. Korz is a language with highly dynamic dispatch, descended in a direct lineage from Smalltalk via the Self language, inheriting these languages' conceptions of ``slots'', named entries within an implementation unit (an {\it object}) where a runtime computation occurs in order to locate a particular concrete implementation in response to a message. In contract, Infusion has no dynamic dispatch whatsoever --- the dispatch choices to be made by an implementation unit (a {\it component}) are built into it at its point of instantiation. As we will see as we elaborate our example, this lack of dynamic dispatch does not limit the dynamism a runtime Infusion system, and in fact makes it easier to quantify and bound this dynamism and hence export it into other environments. In our example we will show how the dynamic content of part of an Infusion component tree can be easily exported into an environment traditionally very hostile to dynamism, the implementation of a WebGL shader operating a live filter of a video stream, written in the GLSL shader language.
+Despite both being rare examples of systems in which such a high-order reuse case can be met, the architectures of Korz and Infusion are extremely different. To start with, Korz can function as a general-purpose programming language, whilst Infusion cannot. Furthermore, the differences in the {\it dispatch model} of the two systems are profound. Korz is a language with highly dynamic dispatch, descended in a direct lineage from Smalltalk via the Self language, inheriting these languages' conceptions of ``slots'', named entries within an implementation unit (an {\it object}) where a runtime computation occurs in order to locate a particular concrete implementation in response to a message. In contrast, Infusion has no dynamic dispatch whatsoever --- the dispatch choices to be made by an implementation unit (a {\it component}) are built into it at its point of instantiation. As we will see as we elaborate our example, this lack of dynamic dispatch does not limit the dynamism of a runtime Infusion system, and in fact makes it easier to quantify and bound this dynamism and hence export it into other environments. In our example we will show how the dynamic content of part of an Infusion component tree can be easily exported into an environment traditionally very hostile to dynamism, the implementation of a WebGL shader operating a live filter of a video stream, written in the GLSL shader language.
 
-\subsection{Korz Adaptation Example}\label{sec:korz}
+\subsection{Context Adaptation Example}\label{sec:korz}
 
-The example presented in \cite{Ungar14} demonstrates how fresh adaptations can be contributed to a target implementation, without either a change in its implementation or a change in the type name consumed by its users. This represents a modern, high level of adaptibility, which is also present in such environments as Newspeak \cite{Bracha10}. We will work through this example using Infusion's context awareness facility.
-[TO APPEAR]
+The example presented in \cite{Ungar14} demonstrates how fresh adaptations can be contributed to a target implementation, without either a change in its implementation or a change in the type name consumed by its users. This represents a modern, high level of adaptability, which is also present in such environments as Newspeak \cite{Bracha10}. We will work through this example using Infusion's {\tt contextAwareness} facility \cite{ContextAwareness16}.
 
-\section{A Real-World Example of Type 4 Reuse}
+The example application in \cite{Ungar14} represents a rendered image with an operation named {\tt drawPixel}, accepting three arguments, x and y coordinates and a colour pixel to be plotted at those coordinates' position. The user on whose behalf the image is to be rendered is considered to have some ``context'' accompanying them, which is expected to allow the details of the image rendering process to be modified in order to meet the needs implied by their context. The examples provided in \cite{Ungar14} of such contextual requirements include:
+\begin{itemize}
+\item A ``colorBind'' user on whose behalf the image will be rendered in grayscale rather than in colour
+\item An ``Australian'' user on whose behalf the image will be rendered upside down
+\item A user from Antarctica on whose behalf the image should be rendered at double size as well as upside down
+\end{itemize}
 
-The Global Public Inclusive Infrastructure (GPII) is an ambitious project whose aim is to implement an auto-personalisation system which makes the resources of operating system and application-level adaptation available to users across all applications and platforms. A core architectural component is the {\it flow manager} which coordinates the workflow of assembling information about the user's needs and preferences, the capabilities of the local device and relevant privacy policies, and orchestrating the capabilities of the device to bring it to an inferred condition meeting the needs and preferences. As such it represents a moderately deeply nested containment structure of the types we have discussed in \ref{sec:demanding} in which more advanced reuse requirements have arisen in real practice. However, we should all the same stress that this still represents an architecture only at modest rather than extreme scale, currently comprising thousands rather than millions of lines of code. Therefore we feel justified in positioning even level 4 reuse as a standard, everyday level of reusability that every competent architecture should aspire to.
+The central point this example was crafted to exhibit was that these contexts, conceived to inhabit more or less ``orthogonal'' dimensions of adaptability that the target application is to be endowed with, should be contributable to the target application without interfering either with its implementation or unduly with each other. As examples of interactions \cite{Ungar14} consider a user who is both colorBlind and an Australian, who should receive an image which is both grayscale and upside down, and also generalises the image inversion condition for Antarcticans and Australians to derive from the fact that they both belong to the ``Southern Hemisphere''. This structure of contextual adaptations, with multiple sources of context all competing to advise the same target implementation which must remain ``closed'' in the Meyerian sense clearly makes out this example as an instance of level 3 reuse in our taxonomy of section \ref{sec:demanding}.
+
+\subsection{Reworking this example in Infusion}
+
+Our reworking of this example in Infusion will differ in many ways from the original sample. We will demonstrate a fully working application for the web, which will show the image rendering process applied to a full framerate video stream, in order to highlight design issues which emerge from treating extremely high-performance use cases which cannot be met without the use of specific external languages and technologies --- in this case, a ``shader'' written in the GLSL shader language of the HTML5 technology WebGL. 
+
+\subsubsection{State transfer in the application}
+
+Following our discussion in section \ref{sec:rest} on state transfer, we will organise our application's adaptation functions not around an individual function call {\tt drawPixel} as in the original, but around the transfer of two matrices, one mapping the colour space of the renderer and one mapping the pixel space. There are strong practical as well as design incentives for this --- if rendering a 1080p video at 60Hz, our {\tt drawPixel} function would have to completely dispatch within 8ns even for a system fully saturating a core on this task, and we would naturally seek to defer to the GPU's own highly performant drawing loop rather than pushing it through an expensive dispatch process on the main core. 
+
+\subsubsection{Factorising the example using context awareness}
+
+Infusion contains dedicated features for handling context-aware scenarios of this type, involving the use of the framework grade {\tt fluid.contextAware} in the target grade, allowing configuration to be built up in an options section named {\tt contextAwareness} by means of some framework utilities, {\tt fluid.contextAware.makeAdaptation}, for example, and responding to context features marked to the current user by utilities such as {\tt fluid.contextAware.makeChecks} and {\tt fluid.contextAware.forgetChecks}. Full documentation is provided for these features at \cite{ContextAwareness16}. Note that all of these framework utilities represent ``user-mode'' convenience functions, which all factorise in practice down to Infusion primitive operations of the types seen in \ref{sec:minimal} --- that is, registration of defaults holding options distributions, construction and destruction of components --- they are thus equally well addressable over a remote HTTP Nexus API targetted at the runtime as well as over this local function call API.
+
+On the JavaScript side we will maintain an ``avatar'' representing the state of the rendering process in a component of type {\tt onward.imageRenderer} onto which we'll target our adaptations. Our adaptations will target the {\tt imageRenderer} with various additional mixin grades which will contribute matrices into its lists when certain contexts match. Part of the definition of the renderer is shown in figure \ref{fig:renderer} --- this encodes that it accepts two options named {\tt coordinateMatrix} and {\tt colourMatrix} which will simply be accumulated rather than merged during the options merging process. These give rise to two top-level options of the same names holding the accumulated matrix product of the constituent elements, by means of the expander definitions on lines 8-10.
+
+\begin{table}[t]
+\begin{center}
+\begin{Verbatim}[numbers=left,fontsize=\tiny]
+
+fluid.defaults("onward.imageRenderer", {
+    gradeNames: ["fluid.component", "fluid.contextAware", "fluid.createOnContextChange"],
+    mergePolicy: {
+        coordinateMatrix: fluid.arrayConcatPolicy,
+        colourMatrix: fluid.arrayConcatPolicy
+    },
+    coordinateMatrix: "@expand:onward.multiplyMatrices({that}.options.coordinateMatrix, \
+        onward.mat2ToMat3)"
+    colourMatrix: "@expand:onward.multiplyMatrices({that}.options.coordinateMatrix)"
+});
+
+onward.mat2toMat3 = function (mat2) {
+    return [mat2[0], mat2[1], 0,  mat2[2], mat2[3], 0,   0, 0, 1];
+};
+
+onward.multiplyMatrices = function (matrices, transformSpec) {
+    var transform = transformSpec ? fluid.getGlobalValue(transformSpec) : fluid.identity;
+    return fluid.accumulate(function (accum, extra) {
+        return mat3.multiply(accum, transform(extra));
+    }, mat3.identity(mat3.create()));
+};
+
+\end{Verbatim}
+\caption{Matrix accumulation for image renderer}
+\label{fig:renderer}
+\end{center}
+\end{table}
+
+Let's first deal with the ``southern Hemisphere'' family of adaptations --- a base context {\tt o.c.southernHemisphere} encoding the common inversion context, {\tt o.c.antarctica} which in addition encodes doubling of size, and {\tt o.c.australia} which simply derives from {\tt o.c.southernHemisphere} (first path segments {\tt onward.contexts} abbreviated to aid line breaking). These adaptations appear in figure \ref{fig:hemisphere}.
+
+\begin{table}[t]
+\begin{center}
+\begin{Verbatim}[numbers=left,fontsize=\tiny]
+// Firstly, the context marker grades themselves
+fluid.defaults("onward.contexts.southernHemisphere", {
+    gradeNames: "fluid.component"
+});
+fluid.defaults("onward.contexts.antarctic", {
+    gradeNames: "examples.contexts.southernHemisphere"
+});
+fluid.defaults("onward.contexts.australia", {
+    gradeNames: "onward.contexts.southernHemisphere"
+});
+
+// Secondly the adaptations binding occurence of contexts onto renderer adaptations
+fluid.contextAware.makeAdaptation({
+    distributionName: "onward.adaptations.southernHemisphereInversion",
+    targetName: "onward.imageRenderer",
+    adaptationName: "yInversion",
+    checkName: "southernHemisphere",
+    record: {
+        contextValue: "{onward.contexts.southernHemisphere}",
+        gradeNames: "onward.rendererAdaptation.yInversion"
+    }
+});
+fluid.contextAware.makeAdaptation({
+    distributionName: "onward.adaptations.antarcticDoubling",
+    targetName: "onward.imageRenderer",
+    adaptationName: "scaleDoubling",
+    adaptationPriority: "before:yInversion", // no effect - just for priority demonstration
+    checkName: "antarctic",
+    record: {
+        contextValue: "{onward.contexts.antarctic}",
+        gradeNames: "onward.rendererAdaptation.doubleScale"
+    }
+});
+
+// Thirdly, the renderer adaptations
+fluid.defaults("onward.rendererAdaptation.yInversion", {
+    coordinateMatrix: [[1, 0], [0, -1]]
+});
+
+fluid.defaults("onward.rendererAdaptation.doubleScale", {
+    coordinateMatrix: [[2, 0], [0, 2]]
+});
+
+\end{Verbatim}
+\caption{Adaptations dealing with inversion and scaling for southern hemisphere}
+\label{fig:hemisphere}
+\end{center}
+\end{table}
+
+Line 27 shows an interesting example of arbitration between the priority of adaptations. The way we have set up the encoding of the adaptations, this is unnecessary, since all of the adaptation matrices commute --- it doesn't matter which order they are composed in the renderer. Note that whilst our definitions are very significantly more verbose than the Korz equivalents, they are a little more cognitively economic since we don't need to reiterate both the scaling and inversion components of the mapping as in the Korz example of specialization for the antarctic user which reads {\tt \{-location\}.drawPixel(2 * x, -2 * y, c);}.
+
+The listing \ref{fig:colourblind} shows the adaptations for the colourblind user.
+
+\begin{table}[t]
+\begin{center}
+\begin{Verbatim}[numbers=left,fontsize=\tiny]
+fluid.contextAware.makeAdaptation({
+    distributionName: "onward.adaptations.colourBlindMonochrome",
+    targetName: "onward.imageRenderer",
+    adaptationName: "colourAdaptation",
+    checkName: "colourBlind",
+    record: {
+        contextValue: "{onward.contexts.colourBlind}",
+        gradeNames: "onward.rendererAdaptation.monochrone"
+    }
+});
+
+// Standard luma coefficients from https://en.wikipedia.org/wiki/Luma_(video)
+fluid.registerNamespace("onward.constants);
+onward.constants.lumaRow = [0.2126, 0.7152, 0.0722];
+
+fluid.defaults("onward.rendererAdaptation.monochrome", {
+    colourMatrix: [
+        onward.constants.lumaRow, 
+        onward.constants.lumaRow,
+        onward.constants.lumaRow]
+]
+});
+
+\end{Verbatim}
+\caption{Adaptations dealing with colourblind to monochrome}
+\label{fig:colourblind}
+\end{center}
+\end{table}
+
+\subsubsection{Commentary on the sample}
+
+Our rendition of this sample is very substantially more verbose than that of the Korz treatment. Firstly, this is a result of the fact that we have no syntax. Encoding of all Infusion primitives as JSON naturally increases their verbosity greatly. However, this directly serves several of our ends: firstly, the ecosystem of tools consuming and producing these artefacts is hugely simplified. We do not assume a single-point ``elite ecosystem'' where the producer is an individual developer armed with a text editor, and the consumer is a compiler.
+
+Secondly, much of our verbosity stems from the seemingly redundant extra names which our definitions are decorated with. For example, each adaptation block includes not only a {\tt distributionName} but also an {\tt adaptationName} and {\tt checkName}. These additional names directly serve the aims of our reusability open/closed principle, in ensuring that the authorial landscape is left with sufficient landmarks for further creators to bind on to, at each level of granularity. The {\tt adaptationName} can be targeted with a priority-based expression by further adaptations, indicating which adaptation should defer to which other, and the {\tt distributionName} can be used to identify the distribution itself in a running system in order for it to be overridden. The treatment of Korz in \cite{Ungar14} and other sources, for example, doesn't specify the resolution of the following scenarios:
+
+\begin{itemize}
+\item The disposition when multiple definitions are received with apparently identical guard conditions --- does the latter definition displace the former, and how are ambiguities resolved with respect to minor mismatches in condition wording or aliases in term names?
+\item How the author might arrange for the situation where a slot specification with fewer guard conditions is required to take priority over one with a greater number (the opposite of the semantic built in to the language's design)
+\end{itemize}
+
+Giving each such definition in the system a unique name is essential to allowing these contextually-guarded definitions themselves a first-class authorial status and ensuring that our algebra of expressions remains closed.
+
+Another substantial difference between Korz and Infusion is that, whilst Infusion is {\it symmetric} (in terms of establishing symmetry between multiple creators allocating context dimensions), it is not {\it subjective}. Each observer of a particular assemblage of components will see exactly the same state and behaviour. This seems essential to us in order to make it clear how a particular part of the system should be externalized in order to represent it in another system. \cite{Ungar14} doesn't fully specify how contextual information should be attached to the observer and tracked, suggesting that it might be associated with the ``call stack''. We consider this might be hard to manage when the interaction is part of one or many long-running asynchronous processes involving interactions stemming from multiple users. We suggest that a structural scoping model, where particular areas of the component tree are stably associated with interaction on behalf of different users in different contexts, would lead to clearer, more performant and more easily externalised designs.
+
+We should observe that what passes along the conduit between the portions of the systems written in different languages (Infusion/JavaScript and GLSL) takes the form of nothing particularly specially bound to a particular language system or Infusion specifically --- it is a collection of matrices in a straightforward encoding. This situation, where Infusion ends up as the gatekeeper for material representing some publically encoded {\it lenses} rather than simply a broker for message passing, is quite typical, and such lenses form frequently encountered material in Infusion designs.
+
+\section{A Real-World Example of Type 4 Reuse}\label{sec:level4}
+
+The Global Public Inclusive Infrastructure (GPII) is an ambitious project whose aim is to implement an auto-personalisation system which makes the resources of operating system and application-level adaptation available to users across all applications and platforms. This aims to deliver, for example, context-sensitive and user-aware adaptations similar to our image rendering sample of section \ref{sec:korz}, across all applications capable of enacting or providing user interface adaptation.
+
+A core architectural component is the {\it flow manager} which coordinates the workflow of assembling information about the user's needs and preferences, the capabilities of the local device and relevant privacy policies, and orchestrating the capabilities of the device to bring it to an inferred condition meeting the needs and preferences. As such it represents a moderately deeply nested containment structure of the types we have discussed in \ref{sec:demanding} in which more advanced reuse requirements have arisen in real practice. However, we should all the same stress that this still represents an architecture only at modest rather than extreme scale, currently comprising thousands rather than millions of lines of code. Therefore we feel justified in positioning even level 4 reuse as a standard, everyday level of reusability that every competent architecture should aspire to.
 
 In table \ref{fig:gpii} is a section of configuration for a ``driver'' of this system, meeting the needs of a particular integrator who wishes to make choices about configuration of a storage engine in one of the several deployment scenarios of the application, one where a particular set of components of the flow manager are deployed locally on the user's local machine, and others are deployed remotely ``in the cloud'' (other such scenarios position these component differently --- for example, all locally, or almost all remotely, etc., this flexibility of deployment scenario being one of the main drivers of the requirement for reusability.
 
@@ -431,9 +655,9 @@ In table \ref{fig:gpii} is a section of configuration for a ``driver'' of this s
 \end{center}
 \end{table*}
 
-On line 12, we see an IoCSS selector with 4 components {\tt \{that cloudBasedConfig flowManager preferencesDataSource\}}, selecting by path a particular subcomponent of just {\it one} instantiation of a {\tt flowManager} component for ``advice''. This full specification is necessary because in this configuration, {\it two} such instances exist along different containment paths, representing the traditionally local and remote functions of the system, and we wish to advise only one of them. This clearly represents level 4 reuse, since in any traditionally constructed system, the ``substitutability'' of these two instances via their common inheritance from a base grade (in this case, {\tt gpii.flowManager'}) would render them indistinguishable from the point of view of a consumer of the design.
+On line 12, we see an IoCSS selector with 4 components {\tt\scriptsize \{that cloudBasedConfig flowManager preferencesDataSource\}}, selecting by path a particular subcomponent of just {\it one} instantiation of a {\tt flowManager} component for ``advice''. This full specification is necessary because in this configuration, {\it two} such instances exist along different containment paths, representing the traditionally local and remote functions of the system, and we wish to advise only one of them. This clearly represents level 4 reuse, since in a traditionally constructed system, the ``substitutability'' of these two instances via their common inheritance from a base grade (in this case, {\tt gpii.flowManager}) would render them indistinguishable from the point of view of a consumer of the design.
 
-%Exhibit how it is a diff
+As we explained in section \ref{sec:diff}, through the IoCSS selector on line 12, one author is able to compactly specify a ``diff'' with respect to the design of another, whilst leaving it itself unmodified (``closed'' in the Meyerian sense). One author, a mid-level integrator $C$ of the GPII, has aggregated together a set of components representing a distribution meeting a particular set of use cases, and a further author $D$ can express that they wish to derive a further distribution from this aggregation, whilst specifying that a particular, deeply nested (and without a means such as IoCSS, hard to name) component should have a specially configured value. This is done whilst still leaving the field relatively uncluttered for yet further integrators to appear, and in their turn, make further aggregations and further configurations, possibly overriding yet again the choices of $D$. Note that, as in our context aware sample of section \ref{sec:korz}, these creators are obliged to continually issue fresh names to keep pace with their rate of creating fresh surfaces for adaptation. We have a truly open authorial graph.
 
 \section{Conclusion}
 
@@ -461,7 +685,7 @@ Basman, A. et al. {\it Harmonious Authorship from Different Representations}, Pr
 
 \bibitem[Basman(2011)]{Basman11}
 Basman, A. et al. {\it 
-To inclusive design through contextually extended IoC}, Proceedings of the ACM OOPSLA Companion (Wavefront), 2011
+To inclusive design through contextually extended IoC}, Proceedings of the ACM OOPSLA Companion (Wavefront), 2011.
 
 \bibitem[Bracha(2010)]{Bracha10}
 Bracha, Gilad et al. {\it Modules as Objects in Newspeak}. Proceedings of the 24th ECOOP, June 21-25 2010. Springer Verlag LNCS 2010.
@@ -469,11 +693,20 @@ Bracha, Gilad et al. {\it Modules as Objects in Newspeak}. Proceedings of the 24
 \bibitem[W3C(2002)]{W3C02}
 Le H\'egaret, Philippe. "The W3C Document Object Model (DOM)". World Wide Web Consortium, 2002 \url{http://www.w3.org/2002/07/26-dom-article.html}
 
-\bibitem[Gabriel(2002)]{Gabriel02}
+\bibitem[Fielding(2000)]{Fielding2000}
+Fielding, R.T. {\it Architectural Styles and the Design of Network-based Software Architectures}, PhD thesis, University of California, Irvine, 2000.
+
+\bibitem[Gabriel(2012)]{Gabriel12}
 Gabriel, R.P. {\it The structure of a programming language revolution}, Proceedings of the ACM Onward 2012, pages 195-214. Springer NY 2012.
 
+\bibitem[Nexus(2016)]{Nexus16}
+GPII Team - {\it The GPII Nexus}, \url{https://wiki.gpii.net/w/The_Nexus}, 2016.
+
 \bibitem[Infusion(2016)]{Infusion16}
-Fluid Infusion Documentation \url{http://docs.fluidproject.org/infusion/development/}
+Fluid Infusion Documentation \url{http://docs.fluidproject.org/infusion/development/}, 2016.
+
+\bibitem[ContextAwareness(2016)]{ContextAwareness16}
+Fluid Infusion Documentation on ContextAwareness feature \url{http://docs.fluidproject.org/infusion/development/ContextAwareness.html}, 2016.
 
 \bibitem[Kay(2013)]{Kay13}
 Kay, Alan {\it ``E-Mail of 2003-07-23''. Dr. Alan Kay on the Meaning of ``Object-Oriented Programming''.} \url{http://www.purl.org/stefan_ram/pub/doc_kay_oop_en}
@@ -483,6 +716,9 @@ Kiczales, G. et al. {\it Aspect-oriented programming}. Proceedings of the 11th E
 
 \bibitem[Kell(2009)]{Kell09}
 Kell, S. {\it The mythical matched modules: overcoming the tyranny of inflexible software construction}, Proceedings of the 2009 OOPSLA, pages 881-888, ACM.
+
+\bibitem[Kell(2012)]{Kell12}
+Kell, S. et al. {\it The JVM is not observable enough (and what to do about it)}, Proceedings of the VMIL '12, pages 33-38, ACM, New York.
 
 \bibitem[Klokmose(2015)]{Klokmose15}
 Klokmose, C. et al. {\it Webstrates: Shareable Dynamic Media}, Proceedings of the 2015 UIST, pages 280-290, ACM, New York.
