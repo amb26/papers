@@ -12,8 +12,6 @@
 % do not make the titlebox smaller than the original size of 5cm.
 %\setlength\titlebox{5cm}
 
-\title{Senses of Craft in Computer Science}
-
 % List the authors like you would in a table.
 % The \And command creates another author's column. Use it after the
 % details of one author to separate them from the following author horizontally.
@@ -24,23 +22,41 @@
   amb26@ponder.org.uk \\
 }
 
+%Notes from McCullough:
+%p.119: "limited because it consists of no more than these tasks .... painting" Question-begging! 
+%p.129: "Excitement about datagloves owes to the focus on the hand itself.... ". We can invent any number of these devices, but we cannot
+%use them to deliver any value to human beings, since such delivery would have to be mediated by software - which is universally trash.
+
 \date{}
 
 \begin{document}
+
+\title{Building Software is Not\textsuperscript{[1]} a Craft}
 \maketitle
 \thispagestyle{empty}
 
-\begin{abstract}
+\begin{abstract}\small
 Computer Science, yet to establish its role in the world, inhabits an invidious position between mathematics, engineering and craft --- losing out by the comparison to each. We draw a distinction between different levels at which the term `craft' could be applied
-and list four key virtues desirable for crafted items at a higher level. The current products of computer scientists or software engineers are deficient in these four virtues, but not necessarily so --- we see no inherent limitations that require future incarnations of our field to be forever without them. We propose a shift in the value system underlying our work --- away from correctness, towards truthfulness, rewarding the workmanship of risk, rather than certainty, and considering time horizons of generations rather than at most a couple of years.
+and list four key virtues desirable for crafted items at a higher level. The current products of computer scientists or software engineers are deficient in these four virtues, but not necessarily so. We propose a shift in the value system underlying our work --- away from correctness, towards truthfulness, rewarding the workmanship of risk, rather than certainty, and considering time horizons of generations rather than at most a couple of years.
 \end{abstract}
 
 
 \section{Introduction}
 
-Computer Science, yet to establish its role in the world, inhabits an invidious position between mathematics, engineering and craft - losing out by the comparison to each. A recent line of discourse \cite{Lindell2014, Blackwell2015} considers that software development constitutes a form of craft. 
+\footnotetext[1]{Yet}
 
-We argue that the craft status of software development remains limited, in the crucial senses which mark the phenomenon and results of craft as highly desirable to society. In a looser sense, software development shares some of the aspects of a craft --- in the same way that a DIY enthusiast, journeying to their local hardware store in search of cheap, highly standardised components with poor manufacturing values can be said to be indulging in a craft as they seek to make some more or less successful home improvements. But these are not the values we hope to appeal to as we seek to ennoble our “craft” by comparison with its more established brethren.
+This paper will take a different course in assessing the nature of craft, materials and media than is traditional in academia. A common setup would have us note some grounds for analogy --- for example, that constructing software requires some skill, is error-prone, and requires labour --- just like a craft. We would then muster the resources of critical theory and subtle argument in order to extend this analogy, all the while begging the question of whether we are dealing with a craft at all. As \cite[\S 414]{Wittgenstein1953} has it,
+\begin{quote}\small
+You think that after all you must be weaving a piece of cloth: because you are sitting at a loom --- even if it is empty --- and going through the motions of weaving.
+\end{quote}
+This kind of error is rife --- for example, \cite[p.~119]{McCullough1996}, a seminal work on the craft status of software construction, argues 
+\begin{quote}\small
+But to say that computing is limited because it consists of no more than these few tasks is like saying painting is no good because all you can do is apply color to canvas.
+\end{quote}
+Instead, we will consider the software {\it that we actually have} --- and compare it, in terms of the value that its artefacts offer to society at large, to the highest craft practices that humanity has achieved. We will find it painfully wanting, and for fundamental, rather than accidental, reasons. We will conclude by speculating on how our field could be one day regrounded by the construction of new kinds of materials supporting new ways of working. These new ways of working should include ordinary human concerns and ways of living, putting technology in the role of a genuine tool, rather than a false master.
+
+The craft status of software development remains limited, in the crucial senses which mark the phenomenon and results of craft as highly desirable to society. In a looser sense, software development shares 
+some of the aspects of a craft --- in the same way that a DIY enthusiast, journeying to their local hardware store in search of cheap, highly standardised components with poor manufacturing values can be said to be indulging in a craft as they seek to make some more or less successful home improvements. But these are not the values we hope to appeal to as we seek to ennoble our “craft” by comparison with its more established brethren.
 
 \section{Virtues of Craft}
 
@@ -57,22 +73,21 @@ In contrast, the outputs of computer science are widely acknowledged to be ugly,
 
 Let us consider our virtues in turn.
 
-\subsection{Beauty}
+\subsection{\bf Beauty}
 
-There is an aesthetics in computer science, but it is not for the user or rarely even for the developer. Any model for beauty with any currency is imported wholesale from mathematics --- an algorithm can be elegant, a proof beautiful. In contrast, any actual piece of software, especially one which performs a useful function, is without fail fantastically ugly, reflecting the haphazard and throwaway values of real software culture. As Simon Peyton-Jones remarked at the PPIG keynote of 2015, of open source - “It’s where people go to contribute, but it’s not beautiful”. \cite{Perlis1979} have recognised that ``Formal verification of programs, no matter how obtained, will not play the same role in the
-development of computer science and software engineering as proofs do in mathematics.''
+There is an aesthetics in computer science, but it is not for the user and rarely even for the developer. Any model for beauty with any currency is imported wholesale from mathematics --- an algorithm can be elegant, a proof beautiful. In contrast, any actual piece of software, especially one which performs a useful function, is without fail fantastically ugly, reflecting the haphazard and throwaway values of real software culture. As Simon Peyton-Jones remarked at the PPIG keynote of 2015, of open source - “It’s where people go to contribute, but it’s not beautiful”. A pivotal early essay on the craft of programming, \cite{Dijkstra1977} gives a fundamental role to what is called ``the beauty of a program'', associating it with such inhuman virtues as the brevity of a proof of its correctness. However, \cite{Perlis1979} have recognised that ``Formal verification of programs, no matter how obtained, will not play the same role in the development of computer science and software engineering as proofs do in mathematics.'' A piece of software which possesses desirable, useful beauty will exhibit this beauty as it is worked on throughout its long life. No sizable or long-lived program has so far exhibited such a thing.
 
-\subsection{Durability}
+\subsection{\bf Durability}
 
 The lack of beauty in actual software is intimately tied up in the lack of possibility for any kind of durable expression --- and still less, of any durable function. It is well-known that software will spontaneously ``rot'' as a result of a progressive violation of its environmental assumptions. Sadly, it does not rot gracefully in the manner of a forest log, but disgracefully in the form of simply failing to install or run correctly or indeed at all. The only hope one has for running an old piece of software is to create a complete replica of its original home (a “virtual machine”) correct in every detail, and keep it captive there. If software were a lifeform, it would be an impossibly brittle and ill-adapted one that would mark in every case an evolutionary dead-end.
 
 Unfortunately, our field does not so far have the courage to face up to this problem. Indeed, one of its leading lights, Alan Perlis, in \cite{Abelson1985} speculated whether software might not inherently lack durability, comparing it to a “soap bubble”. We can't infer from Perlis' remark whether he believed software should lack durability or simply that we lack the understanding to make it so. We suspect the latter --- and if most software didn’t possess the beauty of a junkpile or shantytown rather than a soap bubble, we would be more sympathetic to its lack of durability.
 
-\subsection{Ownability}
+\subsection{\bf Ownability}
 
 Because it is not durable, but also through further causes, software can never effectively be owned by its user. Software is less ownable now than it has ever been --- with the prevalence of “leasing” models for software, and increasingly aggressively pushed “updates” which will sometimes interrupt vital human activities in order to deprive them temporarily or permanently of the use of the artefact that they just believed was theirs \cite{Huffington2016}. This is not the behaviour of a tool or a product, but of a tin-pot aristocrat transplanted into the user’s home.
 
-\subsection{Handleability}
+\subsection{\bf Handleability}
 
 Software is legendarily opaque in form and function. It is well-attested that the vast majority of users are unaware of or unable to exploit the majority of configuration or function which is in theory available to them \cite{Spool2011}. The output of a craftsman, whether it takes the form of a spoon, bowl, basket or chair, even if it is of an unfamiliar form, typically appeals to an immediately obvious use value. Part of the problem could be ascribed to the novelty of software function, but users have little incentive to invest effort in becoming familiar with their software, because of our previous point --- they have no control over its form or any ability to resist change. At any moment the familiar may once again be swept away by the unfamiliar.
 
@@ -150,6 +165,20 @@ Whereas nothing inherent in Computer Science prevents it from being
 \end{itemize}
 
 From its current position as the world’s least forgiving craft, computer science could surpass all those currently known.
+
+\section{Forces Producing the Craft We Have}
+
+%Computer Science, yet to establish its role in the world, inhabits an invidious position between mathematics, engineering and craft - losing out by the comparison to each. A recent line of discourse \cite{Lindell2014, %Blackwell2015} considers that software development constitutes a form of craft. 
+
+We have the craft that we do, because of the power structures and mentalities embodied in our communities. Computer scientists, in theory charged with planning and directing the formalisms underlying the practices of software construction, have no appreciation of how software is actually made and on whose behalf. In turn, software engineers adopt methodologies that retain power for themselves at the expense of their colleagues and users, rather than appreciate that design and usability concerns should be the paramount ones governing their work.
+
+We can trace back the threads of this discourse as far back as we like. For example, \cite{Dijkstra1977}'s original essay on software craft status insisted that software production should {\it cease} to be a craft, rather than become one - ``a craft was applied, where a scientific discipline was needed''. How could Dijkstra have come to make such a profound category error? It is because he already inhabited a completely self-sufficient discipline, answerable only to its own aesthetic and formal standards. Dijkstra is already capable of looking at the only ``users'' he has known, professional physicists and engineers, with a kind of amused contempt for their tendency to ``write a three-page program in an afternoon''. The thought that even less-well formally oriented citizens, the general public, could gain access to the affordances of crafting the software that they need, was unthinkable --- these are people ``the majority of whom it is totally unrealistic to expect that they can still acquire a scientific attitude''. Those who imagine that ordinary citizens could become thus empowered are condemned as ``foolish''. These are the roots of the kind of disciplinary imperialism that within a few decades would bear fruit as the pernicious ``computational thinking'' movement of \cite{Wing2008}.
+
+But how could Dijkstra have come to believe that software production was a craft in the first place? The answer lies in the opening paragraphs of this paper. He had become confused by the simple fact that the software production process required special insight and skills as a result of its hopelessly unreliable tools and materials. In fact, in most cases the ``craft'' of his and our day doesn't even aspire to the level of hardware store, flat-pack DIY furniture values that we described. It is as if we bought a kit of parts for a flat-pack cupboard, and found them hopelessly ill-fitting, some pieces missing and the instructions written in an unrecognisable language with no illustrations. This is certainly the experience even of a consumer of what should be the most standard, well-understood and fully reduced to practice products of computer science --- parsers. Anyone who has proposed to design a new programming language and expected to pick up a parser technology for it ``off the shelf'' will respond to this point.
+
+Rather than, as Dijkstra claims, software production needing to {\it cease} to be a craft, it has not even got to the starting blocks where it could qualify as one. His appeals for a ``scientific discipline'' and a ``scientific attitude'' are wholly misplaced. As is well known, computer science is not a science. Its subject matter is not a domain governed by natural laws\footnote[2]{despite the continued confusion of the leading lights of the field, e.g.~ \cite{Hoare2014}} but instead the communities of real human beings, their needs, cognition, and psychology. Properly understood, Dijkstra's plea is simply one for reliability --- but reliability does not signify the end of craft, but merely its beginning. Imagine a discipline of carpentry operated by chisels which might unpredictably bounce off perfectly ordinary--looking pieces of wood, or whose tips might spontaneously disintegrate. This is the world of tools and materials which computer science has made for itself. Acquiring reliable tools doesn't mark the beginning of a science, or Dijkstra's ``production-line worker'' --- instead, it is the prerequisite for spiritual freedom\cite{Matthews2016}.
+
+\section{The Nature of Materials}
 
 \section{Resolution}
 
