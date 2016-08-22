@@ -37,7 +37,7 @@
 
 \begin{abstract}\small
 Computer Science, yet to establish its role in the world, inhabits an invidious position between mathematics, engineering and craft --- losing out by the comparison to each. We draw a distinction between different levels at which the term `craft' could be applied
-and list four key virtues desirable for crafted items at a higher level. The current products of computer scientists or software engineers are deficient in these four virtues, but not necessarily so. We propose a shift in the value system underlying our work --- away from correctness, towards truthfulness, rewarding the workmanship of risk, rather than certainty, and considering time horizons of generations rather than at most a couple of years.
+and list four key virtues desirable for crafted items at a higher level. The current products of computer scientists or software engineers are deficient in these four virtues, but not necessarily so. We propose a shift in the value system underlying our work --- recognising that the function of material is to bring communities into contact. Rather than correctness, we should promote truthfulness, and consider time horizons of generations rather than at most a couple of years.
 \end{abstract}
 
 
@@ -45,7 +45,7 @@ and list four key virtues desirable for crafted items at a higher level. The cur
 
 \footnotetext[1]{Yet}
 
-This paper will take a different course in assessing the nature of craft, materials and media than is traditional in academia. A common setup would have us note some grounds for analogy --- for example, that constructing software requires some skill, is error-prone, and requires labour --- just like a craft. We would then muster the resources of critical theory and subtle argument in order to extend this analogy, all the while begging the question of whether we are dealing with a craft at all. As \cite[\S 414]{Wittgenstein1953} has it,
+This paper will take a different course in assessing the nature of software as craft, materials and media than is traditional in academia. A common setup would have us note some grounds for analogy --- for example, that constructing software requires some skill, is error-prone, and requires labour --- just like a craft. We would then muster the resources of critical theory and subtle argument in order to extend this analogy, all the while begging the question of whether we are dealing with a craft at all. As \cite[\S 414]{Wittgenstein1953} has it,
 \begin{quote}\small
 You think that after all you must be weaving a piece of cloth: because you are sitting at a loom --- even if it is empty --- and going through the motions of weaving.
 \end{quote}
@@ -75,7 +75,7 @@ Let us consider our virtues in turn.
 
 \subsection{\bf Beauty}
 
-There is an aesthetics in computer science, but it is not for the user and rarely even for the developer. Any model for beauty with any currency is imported wholesale from mathematics --- an algorithm can be elegant, a proof beautiful. In contrast, any actual piece of software, especially one which performs a useful function, is without fail fantastically ugly, reflecting the haphazard and throwaway values of real software culture. As Simon Peyton-Jones remarked at the PPIG keynote of 2015, of open source - “It’s where people go to contribute, but it’s not beautiful”. A pivotal early essay on the craft of programming, \cite{Dijkstra1977} gives a fundamental role to what is called ``the beauty of a program'', associating it with such inhuman virtues as the brevity of a proof of its correctness. However, \cite{Perlis1979} have recognised that ``Formal verification of programs, no matter how obtained, will not play the same role in the development of computer science and software engineering as proofs do in mathematics.'' A piece of software which possesses desirable, useful beauty will exhibit this beauty as it is worked on throughout its long life. No sizable or long-lived program has so far exhibited such a thing.
+There is an aesthetics in computer science, but it is not for the user and rarely even for the developer. The model for beauty with any currency is imported wholesale from mathematics --- an algorithm can be elegant, a proof beautiful. In contrast, any actual piece of software, especially one which performs a useful function, is without fail fantastically ugly, reflecting the haphazard and throwaway values of real software culture. As Simon Peyton-Jones remarked at the PPIG keynote of 2015, of open source - “It’s where people go to contribute, but it’s not beautiful”. A pivotal early essay on the craft of programming, \cite{Dijkstra1977} gives a fundamental role to what is called ``the beauty of a program'', associating it with such inhuman virtues as the brevity of a proof of its correctness. However, \cite{Perlis1979} have recognised that ``Formal verification of programs, no matter how obtained, will not play the same role in the development of computer science and software engineering as proofs do in mathematics.'' A piece of software which possesses desirable, useful beauty will exhibit this beauty as it is worked on throughout its long life. No sizable or long-lived program has so far exhibited such a thing.
 
 \subsection{\bf Durability}
 
@@ -94,8 +94,7 @@ Software is legendarily opaque in form and function. It is well-attested that th
 \section{Our Lack of Materials}
 Some of the discourse around software “craft” centres on the property of its “material”. We argue that the core of the deficiencies of software can be ascribed to the lack of anything which properly qualifies as its material. A true material is the result of a natural process, accumulated and shaped for years if not millenia. When one applies craft to a natural material, one is engaging with the natural accident of this process when meeting difficulties of resistance. By contrast, when meeting resistance in crafting software, one is primarily tangling with the obtuseness of one’s colleagues and their insistence in retaining authorial power for themselves.
 
-Before software could become a craft, we need to construct its material. The durability of a true material, as well as enjoying the sheer ability of continued survival, also has the aspect of the ability to participate in creative networks. A product made of a material can be passed from hand to hand, at each point being seen in a different role or being the starting point of a fresh creative cycle.
-%Refer to other PPIG paper here
+Before software could become a craft, we need to construct its material. The durability of a true material, as well as enjoying the sheer ability of continued survival, also has the aspect of the ability to participate in creative networks. A product made of a material can be passed from hand to hand, at each point being seen in a different role or being the starting point of a fresh creative cycle. We'll return to the nature of our materials in section \ref{sec:materialsii}.
 
 \section{Workmanship leading to Craftsmanship}
 
@@ -122,7 +121,7 @@ A lack of durable and natural materials, as well as a suitable craft culture, re
 \label{fig:Latch}
 \end{figure*}
 
-\section{Spectrum of Forgiveness}
+\section{Spectrum of Forgiveness}\label{sec:forgiveness}
 
 Whilst the software that we have is constituted of a material far more brittle and less malleable than the least forgiving of the human crafts (for example, ceramics), being a product of the mind, it has the potential to be far superior to the most forgiving (for example, knitted textiles). The following table illustrates the affordances that we can expect from different materials.
 
@@ -172,16 +171,40 @@ From its current position as the world’s least forgiving craft, computer scien
 
 We have the craft that we do, because of the power structures and mentalities embodied in our communities. Computer scientists, in theory charged with planning and directing the formalisms underlying the practices of software construction, have no appreciation of how software is actually made and on whose behalf. In turn, software engineers adopt methodologies that retain power for themselves at the expense of their colleagues and users, rather than appreciate that design and usability concerns should be the paramount ones governing their work.
 
+\subsection{The Term `Craft' in Our Lineage}
+
 We can trace back the threads of this discourse as far back as we like. For example, \cite{Dijkstra1977}'s original essay on software craft status insisted that software production should {\it cease} to be a craft, rather than become one - ``a craft was applied, where a scientific discipline was needed''. How could Dijkstra have come to make such a profound category error? It is because he already inhabited a completely self-sufficient discipline, answerable only to its own aesthetic and formal standards. Dijkstra is already capable of looking at the only ``users'' he has known, professional physicists and engineers, with a kind of amused contempt for their tendency to ``write a three-page program in an afternoon''. The thought that even less-well formally oriented citizens, the general public, could gain access to the affordances of crafting the software that they need, was unthinkable --- these are people ``the majority of whom it is totally unrealistic to expect that they can still acquire a scientific attitude''. Those who imagine that ordinary citizens could become thus empowered are condemned as ``foolish''. These are the roots of the kind of disciplinary imperialism that within a few decades would bear fruit as the pernicious ``computational thinking'' movement of \cite{Wing2008}.
+
+\subsection{Mistaking the Past for the Future}
 
 But how could Dijkstra have come to believe that software production was a craft in the first place? The answer lies in the opening paragraphs of this paper. He had become confused by the simple fact that the software production process required special insight and skills as a result of its hopelessly unreliable tools and materials. In fact, in most cases the ``craft'' of his and our day doesn't even aspire to the level of hardware store, flat-pack DIY furniture values that we described. It is as if we bought a kit of parts for a flat-pack cupboard, and found them hopelessly ill-fitting, some pieces missing and the instructions written in an unrecognisable language with no illustrations. This is certainly the experience even of a consumer of what should be the most standard, well-understood and fully reduced to practice products of computer science --- parsers. Anyone who has proposed to design a new programming language and expected to pick up a parser technology for it ``off the shelf'' will respond to this point.
 
 Rather than, as Dijkstra claims, software production needing to {\it cease} to be a craft, it has not even got to the starting blocks where it could qualify as one. His appeals for a ``scientific discipline'' and a ``scientific attitude'' are wholly misplaced. As is well known, computer science is not a science. Its subject matter is not a domain governed by natural laws\footnote[2]{despite the continued confusion of the leading lights of the field, e.g.~ \cite{Hoare2014}} but instead the communities of real human beings, their needs, cognition, and psychology. Properly understood, Dijkstra's plea is simply one for reliability --- but reliability does not signify the end of craft, but merely its beginning. Imagine a discipline of carpentry operated by chisels which might unpredictably bounce off perfectly ordinary--looking pieces of wood, or whose tips might spontaneously disintegrate. This is the world of tools and materials which computer science has made for itself. Acquiring reliable tools doesn't mark the beginning of a science, or Dijkstra's ``production-line worker'' --- instead, it is the prerequisite for spiritual freedom\cite{Matthews2016}.
 
-\section{The Nature of Materials}
+\section{What Could Materials Be?}\label{sec:materialsii}
+
+What could the materials be, which might be the medium for the craft we want? There's potential confusion and paradox in this area, since from a traditional point of view, these materials are ``immaterial'' since they aren't directly constituted as matter in the world that we can grasp with our hands. \cite{Gross2014} have drawn up three principal models for the materials of software --- broadly speaking, these are i) the traditionally physical, as embodied in tangible user interfaces, ii) the metaphysical, embodied in the relationships between information, and iii) the traditions, relations and communication that artefacts enable between people. Of these, we are most closely in sympathy with the third model --- material can be anything it needs to be, either material or immaterial, that enables the open, unbounded authorial stories that promote participation in society. Traditional materials support the growth of traditions --- as artefacts are passed from hand to hand, they inspire others not only by the stories embodied in them but by the fresh stories and uses they may participate in. Today's software materials support only ``dead-end'' authorial stories. To adapt an artefact built with today's languages in a way other than its authors intended, one must first ``fork'' the source code of the artefact in order to modify it. Version control techniques only provide a paper trail by which this process could be audited, rather than a transparent means for communities downstream of the fork to remain in contact with the upstream.
+
+How could we build software that allows us to ``change things without changing them''? Just as with the apparent distinction between the `material` and the `immaterial', this paradox will lose its force through a change of perspective. The paradoxes of today will be the unexamined assumptions of tomorrow.
+
+\cite{Basman2016} explores some concrete strategies for bringing true materiality to software, by expanding the repertoire of available moves for building authorial stories. A traditional distinction between artefacts is between those which are ``live'', that is, comprise currently executing systems, and those which are ``dead'', taking the form of textual documents or directly authored files on disk. The central dogma of computer science, that live systems are only derived from dead ones, and not vice versa, is one of the many inflexibilities that prevent communities trying to share software artefacts from remaining in touch with each other. 
+
+
+%\cite{Gross2014} appeal to
+
+%\begin{quote}
+%\ldots other communicative traditions, integrating and extending them, as a living
+%descendent and inheritor of its riches. In doing so, it
+%also provides a mechanism to link interaction designs to
+%holistic experiences of expression and understanding.
+%\end{quote}
+
+%Where such notions of making arise in our work with software, they always emerge on the %{\it outside} of our community --- that is, as we relate to outsiders via, say, HCI, or the %SPYN application for knitters cited by \cite{Gross2014}. However, it is software itself that %first needs to be endowed with traditional materials, materials supporting traditions. 
+
+
 
 \section{Resolution}
-
+%McCullough dataGloves here?
 Our field is making only tiny and halting steps towards craftsmanship. It is increasingly popular to show relevance to craftspeople by an appeal to our ability to work in their spaces or with their materials (see \cite{Victor2014} or other “Maker” movements), but the only result will be to export our own aesthetics of frustration and power-worship into already functional communities. The experience of \cite{Blackwell2014} exhibits the behaviour of craftspeople when provided with pieces of “techno-junk” such as a USB keyboard which doesn’t work with a USB socket and other similar obstructions:
 \begin{quote}
 {\it experiences were \ldots  ``frustrating'' --- a word that was used consistently and repeatedly in the artists’ reports} \\
