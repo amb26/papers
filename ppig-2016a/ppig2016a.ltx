@@ -127,6 +127,34 @@ Dynamic and live programming languages typically expose facilities where the int
 
 Essentially any programmatic (as opposed to declarative) authorial action targeted at the {\it extensa} may result in divergence, but we'll round off this list of examples with a final prominent case --- that of registration of event listeners. Traditionally, events represent a multicast publish/subscribe pattern which has some kind of incarnation in essentially every programming system, especially those which present some form of user interface. Event listeners represent a primary source of divergence because they are traditionally very hard to coordinatise. Programmatic systems tend to treat listener equality or identity based on the equality of function (or slot) handles which naturally leads to problems once part of a system enters serialization outside a running VM. This issue can often lead to design puzzles in itself --- for example, if a particular method or slot is added multiple times as a listener to an event, should it be notified multiple times? If it is then removed, should just one instance of the listener be removed, or should it be all matching ones?
 
+\renewcommand{\tablename}{Listing}
+
+\begin{table}[t]
+\begin{center}
+\begin{Verbatim}[numbers=left,fontsize=\scriptsize]
+var events = require("events");
+// Create a new event emitter
+var eventEmitter = new events.EventEmitter();
+// Define a listener function
+var listener = function () {
+    console.log("I hear it");
+};
+// Register the listener with the event emitter
+eventEmitter.addListener("anEvent", listener);
+// What is the state of the system at this point? How could we represent it outside the runtime?
+eventEmitter.addListener("anEvent", listener);
+eventEmitter.removeListener("anEvent", listener);
+// How many listeners are still registered here?
+\end{Verbatim}
+\vspace*{-0.2cm}
+\caption{Registration of an event listener function to an event emitter using node.js}
+\label{fig:listeners}
+\end{center}
+\vspace*{-0.6cm}
+\end{table}
+
+Listing \ref{fig:listeners} shows a very simple setup registering event listeners using a popular JavaScript runtime, node.js. By line 10, we have registered our listener named {\tt listener} to an object which manages registration and firing of events, an {\tt eventEmitter}. If we were to try to author this system from outside the runtime, how could we represent this situation to the author? What actually is the identity of the thing which has been added to the {\tt eventEmitter}, and how could we describe it? This conundrum is elaborated by our attempt at line 11 to add the same listener again, and on line 12 to remove one or more of these listeners. In fact, node.js' API clearly specifies the behaviour in this situation (one listener is added at line 11, and one is removed at line 12), but its choice of behaviour is just one of many valid alternatives.
+
 \subsection{Strategies for Minimising Divergence}
 
 No unified strategy for opposing divergence in all its forms can be mounted --- since these forms are highly diverse, and do not stem from a single cause; instead, they each result from particular engineering tradeoffs, physical and cognitive ergonomics. Considering our sources of divergence above, we could consider, for example, the following kinds of strategies for reducing their design impact:
@@ -188,6 +216,7 @@ Klokmose et al \cite{klokmose2015webstrates} demonstrate how transclusion of web
 \caption{Opening the same webstrate in different browsers. Changes to the DOM are synchronized among clients and made persistent on the {\it Webstrates} server.}
 \label{fig:webstrates}
 \end{center}
+\vspace*{-0.6cm}
 \end{figure}
 
 \subsection{Externalizability}
@@ -255,6 +284,7 @@ function makeThing () {
     ...
 }
 \end{Verbatim}
+\vspace*{-0.4cm}
 \caption{A highly divergent Infusion usage}
 \label{fig:divergent}
 \end{center}
@@ -270,8 +300,8 @@ fluid.construct(["thing"], {
     type: "fluid.thing",
     arg: "value"
 });
-
 \end{Verbatim}
+\vspace*{-0.4cm}
 \caption{Potentia II expression with reduced divergence from that of listing \ref{fig:divergent}}
 \label{fig:lessdivergent}
 \end{center}
@@ -284,6 +314,7 @@ To complete the externalization picture, listing \ref{fig:nexusconstruct} shows 
 \begin{Verbatim}[numbers=left,fontsize=\small]
 HTTP POST /components/thing {"type": "fluid.thing", "arg": "value"}
 \end{Verbatim}
+\vspace*{-0.4cm}
 \caption{Externalized form of the expression shown in listings \ref{fig:divergent} and \ref{fig:lessdivergent} as a Nexus HTTP request}
 \label{fig:nexusconstruct}
 \end{center}
@@ -344,9 +375,10 @@ that.A.events.fireIt.fire("I send it again");
 \caption{Declarative registration of divergence-free listeners in Infusion}
 \label{fig:infusionlistener}
 \end{center}
+\vspace*{-0.6cm}
 \end{table}
 
-\section {Conclusion}
+\section{Conclusion}
 
 We have critiqued the values of live programming, showing that many of their aims can be met without necessarily adhering to the letter of liveness, and that they can be situated amongst wider considerations of authorship for software systems in general, supporting cycles of authorship and use by networks of authors working in different times and places. We have introduced a quantity named {\it divergence}, a measure of the discrepancy between the internal bookkeeping state required to maintain a running, live system, and the state by which it can be authored by means of externalizable documents. We have linked the authorial cycles that we wish to support both to the system of Potentials and Actuals envisioned by Whitehead in his {\it Process and Reality}, as well as to the system of maintenance of the universe described by Ibn al-Arabi in his {\it The Bezels of Wisdom}.
 
