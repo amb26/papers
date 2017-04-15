@@ -1,0 +1,164 @@
+===========================================================================
+                            ONWARD16 Review #4A
+---------------------------------------------------------------------------
+                   Paper #4: A New Open/Closed Principle
+---------------------------------------------------------------------------
+
+                      Overall merit: 2. Weak reject
+
+                         ===== Paper summary =====
+
+The paper describes a new software architecture, Infusion, which, according to their claims, provides developers with greater flexibility to reuse software. They define four different levels of reuse, and show how their system meets these levels. At the end, they describe an example that fits the fourth level of reuse, and argue that other approaches to software development fall short of it.
+
+                      ===== Comments for author =====
+
+The paper set me thinking, and I guess this is good indication that it fits the Onward!'s call. Yet, after thinking a bit about it, I believe that the authors are not really providing a new way to reuse software. Here is my point: "We reuse A if we can extend A without changing its source code." Now, can you reuse the elements at the Level 4, if those elements are not really coded to be reused? That would be difficult in a statically typed language, because these languages have the annoying constraint of relating operations with types. Yet, the fourth level of reuse, as defined in the paper, can be implemented more-or-less naturally in a dynamically typed language. Basically, you are adding new operations to "Classes" of objects, or whatever equivalent of class you have in that language. You might argue that this work is proportional to the size of the set that is being changed. But then I would say that you are adding a common operation to all of them. Even in the case of In
+ fusion one still has to list all the elements that need to be modified. And, the authors get the flexibility of Infusion mostly because it has been implemented on top of a dynamically typed language, and so, the type system does not get in the way of the developer who wants to modify "Classes" of objects.
+
+At some points, the authors are defending - in my opinion - the wrong side of their contribution. See, for instance, the statement: "We are only able to make adaptations which are linear in the colour and coordinate spaces, whereas the Korz example can perform arbitrary functional mappings. However, our example is capable of processing high-resolution video at framerate on everyday equipment, whereas the Korz example is not"
+-> Building a performant system does not seem to be the goal of Korz. Rather, they aim at developing a more modular and reusable system. And, from what I got from this paper, that is also the goal of its authors.
+
+I found the paper also difficult to read. It took me a while to start to see what is the point that the authors are trying to make. I think they should open Section 2 with an example of situation in which current techniques are not good enough to reuse software. But, beware of some flaming: programmers can be very creative to reuse components. In particular, a few design patterns, e.g., decorator and templates, are very handy to deal with the examples proposed by the authors - assuming that you design the system right from the beginning with reuse in mind. For instance, templates can provide the context that the authors want in Section 8.1, and decorators can provide the reuse that they want in Section 9. The beauty of what they are proposing - again in my opinion - is the possibility to reuse software that has not designed with reuse in mind right from the beginning.
+
+At some points, the paper is a bit tiring. The authors use some convoluted terminology to refer to very well-stablished concepts. For instance, they take the definition of the open/closed principle from Meyer [Meyer'88]: "It is possible for one creator to use the definition of an implementation unit to derive an elaborated definition without requiring the original creator to modify their definition." This is a pretty cumbersome way to state this principle. Rather, why not to use the popular definition? The open/closed principle is widely defined as "In object-oriented programming, the open/closed principle states that 'software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification'; that is, such an entity can allow its behaviour to be extended without modifying its source code."
+
+Finally, I think the paper would benefit from some algebra. In particular, when the authors define their levels of reuse (really cool part of the paper, by the way). From what I got, below are the levels of reuse. But the description is a bit informal, and maybe I am getting them wrongly. So, if they could be more precise, that would be nicer:
+
+Level 1: A => A->A' : A'
+- A' extend A in an object oriented way.
+
+Level 2: A[B] => A[B] -> A'[B']
+- B' modifies B, producing a new component A'[B']
+- Parameterized types, Simple Composition, Template Pattern
+
+Level 3: A->A1, A->A2, A1->A3, A2->A4, etc => add a new property to all the elements
+- Aspect Oriented Programming
+
+Level 4: A->A1, A->A2, A1->A3, A2->A4, etc => add a new property to a subset of the elements
+- Infusion
+
+===========================================================================
+                            ONWARD16 Review #4B
+---------------------------------------------------------------------------
+                   Paper #4: A New Open/Closed Principle
+---------------------------------------------------------------------------
+
+                      Overall merit: 2. Weak reject
+
+                         ===== Paper summary =====
+
+This paper describe a system for supporting implementation replacements,
+that is, parts of a subsystem description can be replaced without changing
+the subsystem itself. The authors argue this is similar to the so-called
+"open/closed principle" proposed by Meyer and later modified by Martin and
+others. The authors argue that their view implies (at least) 4 "levels of
+reuse". They describe various reuse scenarios, their system, and give an
+example of their top level of reuse in their system.
+
+                      ===== Comments for author =====
+
+The criteria for Onward! is ideas that inspire, for grand visions and new
+paradigms that could make a big difference to how we program. While claims
+of a grand vision were made, they way they were presented did not inpsire,
+nor do I see them causing any significant change in how we program.
+
+The title of the paper promised a new open/closed principle (OCP). In fact,
+while it is clearly a more general form of previous versions of OCP it's not
+clear to me how what was presented is new. I did like the presentation given
+(section 5). I think this has a lot of potential, however almost none of
+this potential was exploited in this paper.
+
+For example, the problem with existing formulations of OCP is that they are
+not precisely stated, leading to confusing as to when (or whether) the
+principle is being correctly applied. If the presentation of OCP in this
+paper has any validity, it should be possible to express existing
+formulations of OCP with it. This would, for example, demonstrate how
+different the two major OCP formulations (Meyers and Martins) are with
+respect to to each other.
+
+In fact, the authors themselves appeared to not believe in its potential,
+with statements in section 5, saying "The property we seek is not
+susceptible to perfect verification or definition." Why not? And if not,
+where are the limits? What kinds of reuse would not be captured by this new
+presentation of OCP? What evidence is there that everything we care to name
+as supporting reuse is not captured by this property? This statement seems
+to be a bit of a cop-out. That the paper finishes by repeating it hardly
+inspires confidence.
+
+This lack of belief is emphasised by the almost complete lack of reference
+to its form anywhere in the rest of the paper. They could have presented
+their 4 levels of reuse in terms of their principle, but they did not. Doing
+so would have significantly strengthened their argument for its value. I
+found their levels of reuse unconvincing. While I could see differences in
+their examples, I did not understand why the differences justified "being at
+a different level". Given their OCP makes references to "addition of a
+further expression from any other member" presumably the levels of reuse can
+be characterised by the nature of the additions? If not, then I do not see
+the value of the new OCP.
+
+Similarly, if the principle has any value, other mechanisms supporting reuse
+(implementation inheritance, polymorphism, mixins, traits, AOP) ought to be
+able to be expressed in its terms.
+
+Having introduced their new OCP, I expected the authors would then
+illustrate its value by referring to in when presenting their system and
+examples. Such an illustration would refer to a relevant "addition", in
+keeping with the presentation of the OCP. However, there is almost no
+reference.
+
+The paper makes a big deal about the new OCP (it's in the title afterall),
+but in the end fails to deliver. Given its lack of use in the paper, it is
+difficult to avoid wondering if it in fact it is not as useful as the
+authors suggest.
+
+There are other aspects of the paper that I found unhelpful, but it is what
+I discuss above that I'm basing my recommendation on. But just to mention a
+couple:
+
+* The original open/closed principle is, as the authors say, from Meyer's
+  1988 book "Object-oriented software construction". However it was not what
+  they say it is. Or rather, the summary they give in the first paragraph of
+  section 2 is consistent with Meyer's formulation, but it is not the same
+  as what they say in the second paragraph. That they do not realise the
+  difference is somewhat disconcerting. While Wikipedia is not an
+  authoritative source, its article on this captures the essence of the
+  difference and saves me having to explain it here:
+  https://en.wikipedia.org/wiki/Open/closed_principle
+
+* Parts of the authors' description of their system remind me of the kinds
+  of games people play (or used to - it's been a long time since I've done
+  this kind of thing) with Xpath. I can't help wondering if their system
+  would have the same kinds of maintenance nightmares. Allowing arbitrary
+  people to make modifications to arbitrary parts of the system seems asking
+  for trouble. I guess the fact that the existing system does not get
+  changed helps, but allowing such easy substitution must make it hard to
+  avoid malicious changes surely?
+
+===========================================================================
+                            ONWARD16 Review #4C
+---------------------------------------------------------------------------
+                   Paper #4: A New Open/Closed Principle
+---------------------------------------------------------------------------
+
+                      Overall merit: 2. Weak reject
+
+                         ===== Paper summary =====
+
+This paper discusses about the features of the Infusion language, an
+OO-like extensible system for describing configurations.  The first
+half of the paper discusses about the "new open/close principle",
+where the authors point out more flexible style of extensions.  The
+rest half discusses the features of Infusion.
+
+                      ===== Comments for author =====
+
+The motivation of the paper is understandable.  It is in fact
+interesting to think about limitations of extensibility provided by
+OOP and related languages.  In this sense, the paper fits the criteria
+of Onward!
+
+It was however not easy to read the paper.  This is mainly due to its
+philosophical discussions along with abstract examples.  It would be
+more readable paper to more people if it gave concrete motivating
+examples (of level 4, according to the paper) first, and then how
+Infusion solves the problem.

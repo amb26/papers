@@ -589,7 +589,7 @@
 
 \def \@copyrightspace {%
   \@float{copyrightbox}[b]%
-  \vbox to 1in{%
+  \vbox to 0.15in{%AMB FIX
     \vfill
     \parbox[b]{20pc}{%
       \tiny
@@ -1169,6 +1169,7 @@
     \@latex@error{Cannot handle more than 12 authors}{}%
   \fi
   \vspace{1.75pc}
+  \vspace*{-0.5in}%AMB ADDITION
   \end{center}}
 
 \def \@settitlebanner {%
