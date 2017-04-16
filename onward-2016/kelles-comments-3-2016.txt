@@ -1,0 +1,71 @@
+
+Thanks for this... am happy to comment. It's super-interesting, 
+particularly to me.
+
+I've attached my scribbled-on copy which has some detailed (albeit 
+perhaps indecipherable) comments.
+
+The high-level comment is that it clearly has some important things to 
+say, but is currently quite hard to digest... I worry that in its 
+current form most reviewers will find it a bit inscrutable. This can be 
+fixed though. Some suggestions follow.
+
+- It would be better to give a longer introduction with a lot more 
+examples, more explicit references to the related work (i.e. "give a 
+flavour" in the first few paragraphs -- toss out some touchstones, like 
+Newspeak and AOP and IoC and diffs and so on), and some more direct 
+clues/hints aobut what you're going to deliver (something about 
+"difference" as being a key idea, maybe).
+
+- It would be better to litter the whole thing (especially the first few 
+pages) with examples. Try to talk in concrete terms first. Most of the 
+text in the first few pages is stated in a deliberately abstract way. 
+It's good that there is abstract thought behind it, and good to show 
+that fact, somehow. But the first few pages are too abstract to get a 
+handle on in many places, at least for little old me.
+
+- Pictures of the creator graphs would be good. They're always easier to 
+look at than sentences about As and Bs and alphas and alephs and the 
+like.
+
+- I have mixed feelings about the Open/Closed angle. I suspect a large 
+fraction of people either don't know what Meyer's open/closed principle 
+is, or think (like me) that it's overblown near-tosh (and nothing really 
+yas grand as a "principle"). Still, I like the play on it that you do, 
+with the algebra thing. And it's a relevant touchstone to invoke. So I 
+don't want to advocate throwing it out, necessarily. Maybe it's not the 
+thing to emphasise in your title, though.
+
+- Perhaps you can (instead or as well) make more of the idea of 
+differencing. It's long been apparent to me that differencing is one of 
+the key ideas behind class-based OOP: derived classes are perhaps better 
+described as "differential classes" since they are described as deltas 
+over a base. This does come through a bit in what you write... I'd be 
+inclined to draw it out a bit more, but it's up to you.
+
+- It's worth saying sooner and more clearly that Infusion is a real 
+thing that works and has been in development for many years. Relative to 
+a lot of Onward! submissions, this will be a thing that should count a 
+lot in your favour. This becomes clear later, of course.
+
+- The "new cellular model" is also very interesting. If you could 
+somehow cover it sooner, that could work... e.g. to say that the 
+mindset(s) of the dominant OO paradigms, witnessed by both Kay and 
+Smalltalk, valuable as they have proven, bake in some 
+asymmetries/inadequacies/horizons that limit our ability to re-use and 
+(re-)author. You could even take aim at Parnas-style information hiding 
+at the same time, since anticipation is its obvious weakness, and it 
+clearly opposes arbitrary re-use.
+
+I seem to be saying that everything needs to be sooner. If time allows, 
+you could try one or both of the following devices:
+
+- give a rough/quick run-through of the whole thing i nthe first few 
+pages, focusing on use cases and aggressively saving Infusion-based 
+details for later (e.g. even making up a fake notation, possibly 
+diagrammatic, to illustrate).
+
+- go through the "evolution" of an Infusion-like system from a simpler 
+basis, explaining why each feature becomes necessary and why other 
+[common] design choices would violate your principles. Again, the actual 
+notation is secondary 
