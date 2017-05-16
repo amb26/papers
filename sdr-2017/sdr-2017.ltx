@@ -25,6 +25,12 @@
 \newcommand{\tp}[1]{%\textcolor[rgb]{.6, .6, .1}{Tomas: #1}
 }
 
+\copyrightyear{2017} 
+\acmYear{2017} 
+\setcopyright{acmlicensed}
+\acmConference{Programming '17}{April 03-06, 2017}{Brussels, Belgium}\acmPrice{15.00}\acmDOI{10.1145/3079368.3079409}
+\acmISBN{978-1-4503-4836-2/17/04}
+
 \title{Tracing a Paradigm for Externalization: Avatars and the GPII Nexus}
 %Designing for the unexpected
 % List the authors like you would in a table.
@@ -46,7 +52,7 @@
 \email{amb26@ponder.org.uk}
 
 \begin{document}
-\maketitle
+
 \thispagestyle{empty}
 \interfootnotelinepenalty=10000
 
@@ -54,10 +60,36 @@
 We will situate the concept of an {\bf avatar} (a working simulacrum of part of a system separated from it in space or time) with respect to traditional concepts of programming language and systems design. Whilst much theory and practice argues in favour of {\bf insulation} (the creation of architectural boundaries prohibiting the leakage of information) we will find that many successful systems take a diametrically opposed approach. We name this family of systems as those based on {\bf externalised state transfer}. Rather than hiding implementation details behind APIs, object interfaces or similar, these systems actively advertise their internal structure and its coordinates via data and metadata. Examples of these systems include RESTful web applications, MIDI devices, and the DWARF debugging file format. We discuss such systems and how we can purposefully design new systems embodying such virtues in a more distilled form.
 \end{abstract}
 
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10011007.10010940.10010971.10011682</concept_id>
+<concept_desc>Software and its engineering~Abstraction, modeling and modularity</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10011007.10010940.10011003.10010117</concept_id>
+<concept_desc>Software and its engineering~Interoperability</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10011007.10011006.10011050</concept_id>
+<concept_desc>Software and its engineering~Context specific languages</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Software and its engineering~Abstraction, modeling and modularity}
+\ccsdesc[500]{Software and its engineering~Interoperability}
+\ccsdesc[500]{Software and its engineering~Context specific languages}
+
+\maketitle
+
 \section{Avatars}\label{sec:avatars}
 An avatar is a part of a system of which a working simulacrum can be naturally embodied elsewhere. The simulacrum is a functioning replica of the remote system, which can stand in for it to some level of faithfulness without having to ask questions of it at each interaction. The notion of ``naturalness'' we hope to establish, however, cannot be determined by examining properties of a single group of interacting systems. Instead, we will need to consider ecologies of such related systems, their users, and networks of other authors who work with them. By exhibiting different kinds of systems which we consider meet and do not meet our definition, we hope to sharpen understanding of the distinction we are interested in, as well as promote new development techniques that make the implementation of avatars natural and idiomatic.
 
-We have borrowed and extended the term ``avatar'' slightly from its traditional use describing a visual or schematised representation of a user of a system. In our usage, an avatar is a more or less symmetrical concept: two systems may be avatars of one another if they meet the criterion of faithfulness or representation without one of them being necessarily designated as ``primary'' or ``real''.
+We have borrowed and extended the term ``avatar'' from its traditional use describing a visual or schematised representation of a user of a system. In our usage, an avatar is a more or less symmetrical concept: two systems may be avatars of one another if they meet the criterion of faithfulness or representation without one of them being necessarily designated as ``primary'' or ``real''.
 
 The most common appearance of the avatar pattern is in supporting a remote user interface, whereby a single system exposes the potential for control to different locations, separated by a network of some kind. To the extent that the remote system might be agnostic as to whether the controlled system is local or remote, it could be said to be working with an avatar, or functioning local replica of the controlled system. However, whilst it is one of the most convenient, the avatar pattern is an uncommon choice for implementing such a remote UI. A more common pattern has the remote UI bound to the controlled system by a message bus along which passes essentially arbitrary messages --- that is, messages with individual schemas whose content do not correspond to an integrated view of the system state. We could describe this pattern as a remote procedure call (RPC) or API idiom where the message bus simply stands in for whatever function calls the two parts of the architecture found it necessary to make to each other from time to time. Examples of this remoting pattern are the X Windows protocol, the Microsoft Windows Remote Desktop protocol, Virtual Network Computing, etc.
 
