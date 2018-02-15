@@ -1,0 +1,82 @@
+\documentclass{ppig}
+\usepackage[utf8x]{inputenc}
+
+\title{Philip's loose definitions of some terminology}
+
+\begin{document}
+\section{From apps to open ecologies of function}
+
+I am working on a conceptual model for building blocks of interaction where behaviors are packaged in such a way that they can occur opportunistically.
+The motivation for this work is the insight that \emph{in human tool use, the ability to choose, refine, share, and organize tools is as essential as the actual 'using' that is going on when a hammer is hitting a nail}.
+In software, we have tended towards distributing these behaviors harshly between designers/developers and 'users'.
+This distribution has a different balance in, for example, arts and crafts.
+Expert artisans sometimes master their practice to the degree that they A skillful artisan has mastered a practice to the degree that they can 
+This is not just a concern for people who use tools professionally.
+Consider a kitchen, with its knives, pots, and stovetops.
+The average user of a kitchen cannot fabricate these tools, but whenever they take on a common task, they are continuously selecting, organizing, and combining tools and materials at a granularity that the app model of software disallows.
+% (Bødker et al.'s study of tax authority gives a good account of workspace organization)
+
+Take an app as a counter-example:
+The interface determines the organization, availability, and operational details of tools and materials.
+If my practice consists in, say, equal parts illustration and writing, I cannot choose to bring together my preferred illustration tools with my preferred word processing tools on a shared material.
+Instead, I must use a set of apps that give me enough of the functionality that I want while producing output files that can either be transferred from one working environment to another or composed in some other specialized app.
+
+Not only is an instrument a relational phenomenon, \emph{so is an interactive system}.
+
+\section{My view of co-occurrence, entanglements, and entanglers}
+
+To get from here to there, I am trying to figure out the missing pieces in the way we build software, and demonstrate how those pieces might look.
+% (This is obviously only a small part of an elephant of problems, including problems of politics and economy, but it is the part that I address actively in my thesis work)
+% (In a thesis context, I would like to have a review of some work dealing with these other aspects, especially covering how they motivate and problematize my work.)
+
+Co-occurrence is the antecedent of interaction.
+It generalizes the notion of focus-nimbus~\cite{Benford1993} overlap.
+A co-occurrence is a monitorable phenomenon that ``data'' enters into to trigger some interaction, whether with a human or with some non-human component.
+%It's a good question what is a "thing". I think too much is made, in the HCI literature, of the distinction between humans and non-humans. A participant in a co-occurrence could be some form of "direct avatar" for a human or their effects? We should try to make something of the analogy between Latour's "hybrids" and our "new terrain".
+% pt: Isn't a human-non-human hybrid a cyborg? 
+For example, that two devices are plugged into the same machine, or that a finger is touching a screen, or that a color picking instrument is targeting a particular pixel.
+
+Kinds of co-occurrence:
+\begin{itemize}
+    \item focus-nimbus overlap
+    \item errors/ambiguity
+    % This one is a bit esoteric and perhaps belongs in a section of its own lest we disorient readers too much at the outset
+    \item device co-presence
+    \item user co-presence
+    \item device proximity
+\end{itemize}
+
+% what do we mean by things?
+
+The notion of co-occurrence is necessary in an open ecology of function.
+It is the starting point for establishing an interaction.
+Much like the move from entanglements to entanglers, as compared to traditional software programming, the purpose of co-occurrences is to shift responsibility away from the programmer.
+
+The concept of co-occurrence is necessary in an open ecology of function because it is no longer a programmer's job to fully specify all the entities that will be available in an 'interactive system' throughout its lifetime. 
+When communities bring together various kinds of sub-systems, the notion of co-occurrence is necessary to allow the integration of these systems.
+
+One angle on this work is that we are proposing that user software should be an integration domain~\cite{Kell2009} where useful interactive artifacts can be coupled to construct personal and communal interactive systems.
+
+Interaction, then, is entanglement.
+% part-whole problem here? "Interaction" as a term covers the terrain that we now cover more finely using terms like co-occurrence, entanglement, entangler, etc. Perhaps we could say that "In our taxonomy, entanglement is a prerequisite for interaction", but this also doesn't seem quite right. 
+Entanglements are state interdepdendencies among things.
+They are our reification of interaction.
+They can take the form of event listeners, mutation observers, uni- or bi-directional constraints, reactive data flows, etc.
+%I think "take the form of" takes us too strongly towards divergence. We want it to be as natural as possible for entanglements to be "things in their own right" which the things you have listed make tough - that is, if an entanglement took the form of any of those things per se it would then be very hard for "an entanglement to produce further co-occurrences". We might want to say something like "an entanglement, when realised in a particular system, may have its effects honoured by primitives like event listeners, etc."
+%This reformulation of course has the drawback of being linguistically obstructive, ugly and hard to read ....
+%But somehow we want to stop people from believing that an event listener *could be* an entanglement .........
+%pt: the reasoning behind the phrasing is that I see entanglements as being a reformulation of existing program mechanisms for interaction with software. Entanglements are really nothing new, but naming them allows us to ask questions like "How do entanglements come to be?", and "How should entanglements be reified/potentialized?"
+
+Of course, entanglements can produce further co-occurrences.
+
+An entangler is a potentialization of interaction.
+This is not entirely accurate, as 'potentialization' is ambiguous here.
+%Yes, we may have entanglement, together with a greater or lesser degree of potentialization. A lot depends on how the entangler and its products are encoded.
+An entangler is a description of an interaction along with a description of when and where that interaction should be instantiated.
+%Yes, the question is to whom and for what purposes is this description readable.
+%pt: Good point! I think the pragmatic response is to give a feasible account of how entanglers appear or do not appear to different kinds of human users, and how they are given life by an interaction architecture/pipeline. Something a la the approach taken in Buttons~\cite{MacLean1990}
+Another sense of potentialized interaction is how an active state interdependency can be represented and transmitted, e.g., when it is active in several (virtual) machines at the same time. 
+
+\bibliography{refs}
+\bibliographystyle{apacite} 
+\end{document}
