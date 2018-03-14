@@ -1,0 +1,300 @@
+
+
+Dear author,
+
+The Onward! 2017 Papers program committee is sorry to inform you that your
+paper #18 was rejected, and will not appear in the conference.
+
+       Title: The Open Authorial Principle - Supporting Networks of Authors
+              in Creating Externalizable Designs
+     Authors: Antranig Basman (Raising the Floor - International)
+              Clayton Lewis (University of Colorado, Boulder)
+              Colin Clark (OCAD University)
+  Paper site: https://onward17papers.hotcrp.com/paper/18?cap=018a_iaecxTqeDU
+
+15 papers were accepted out of 30 submissions.
+
+Reviews and comments on your paper are appended to this email. The
+submissions site also has the paper's reviews and comments, as well as more
+information about review scores.
+
+Contact emina@cs.washington.edu with any questions or concerns.
+
+- Onward! 2017 Papers Submissions
+
+===========================================================================
+                      Onward! 2017 Papers Review #18A
+---------------------------------------------------------------------------
+Paper #18: The Open Authorial Principle - Supporting Networks of Authors in
+           Creating Externalizable Designs
+---------------------------------------------------------------------------
+
+                      Overall merit: 2. Weak reject
+                 Reviewer expertise: 4. Expert
+
+                         ===== Paper summary =====
+
+This paper makes two contributions - first, a conceptual ranking of
+adaptability of programming languages, and second, presents the design
+of the configuration language Infusion which embodies the highest level
+of that ranking.
+
+After an introduction, a brief section 2 describes "Meyerian" reuse
+and then section 3 discusses "level 2" reuse that cannot be captured
+in OO languages because constructors are generally statically bound.
+Section 4 then discusses higher levels of reuse that the paper argues
+are (partially) supported by Newspeak and KORZ. Sections 5 and 6
+revisit underlying principles while section 7 then present the authors
+Infusion system (all this in five pages). Section 8 presents a new
+reusable model abstracted from Infusion, and section 9 shows how this
+can support higher levels of reuse.  Sections 10 and 11 present case
+studies, and section 12 concludes.
+
+                      ===== Comments for author =====
+
+There is clearly something valuable going on in this paper, but
+unfortunately at this point I seem to be unable to determine precisely
+what it is.  I found the paper very hard to follow, whether the levels
+of reuse, the purpose and design of the infusion system, the
+underlying conceptual model, the descriptions of other systems and
+minor implementation footnotes all scattered about.  Maybe the paper
+would benefit from being restructured following the "Open Authorial
+Principle". Maybe it already does follow that principle and that is
+the source of my misunderstandings.  Maybe I'm just too demanding.
+Maybe I'm just like my father: too bold.  Maybe I'm committing the
+cardinal sin of the reviewer: complaining that the paper isn't the one
+I would have written.
+
+So: in the rest of this review I necessarily limit myself to
+relatively detailed comments, because I can't at this point see how to
+make any large ones.  I do think there is much that is valuable in
+this paper; I hope my fellow reviewers manage better than I; and I
+look forwards to seeing a revised version in the second phase.  I
+apologise for the overweening pretentiousness of this review.
+
+section 2: "Meyerian" reuse.  The distinction I think Meyer is making
+here is that between composition and inheritance: a class should
+generally support both. This is a distinction e.g. with Modula-2
+style modules which supported "use" but not "reuse" (aka extension,
+aka inheritance).  It seems to me that when a module (left-pad
+perhaps) that is linked into tens of thousands of programs that module
+has been "reused" but this reuse does not appear in your taxonomy,
+which I found made it harder to follow. Perhaps a level 0 - reuse
+without modification?  Then the description conflates base classes and
+interfaces: the distinction here is more subtle: note that Javascript
+and Smalltalk (and any other dynamic / duck typed language) require
+neither for "Meyerian" reuse --- nor do structurally typed
+object-oriented languages.  (modulo the consistency of the underlying
+objects' vocabularies). The discussion here finishes with the case
+where "E" must be modified or extended rather than A - I think it is
+important to keep that distinction clear. In the first of many nods to
+my friends work, an obscure-yet-google-able paper "Evaluating Design
+by Reusability" by Biddle and Tempero distinguishes cases of context
+reuse vs component reuse - I think that is applicable here, but I do
+not know of a better (or more accessible or accepted) presentation of
+the difference.
+
+
+section 3 claims to "expose the limitations of object-orientation and
+other contemporary idioms". That's a big claim, especially when
+Newspeak (for example) is object-oriented, and there are
+object-oriented techniques (e.g. factory methods) to abstract over
+creation should that be necessary. I'm pretty sure e.g. Cook's
+abstract definition of OO (from "On understanding data abstraction,
+revisited", 2009) does not suffer from these limitations.  It's not
+clear you need to make that claim anyway: the paper can e.g. aim at extant
+systems (such as Java) and trumpet the difficulties motivating
+e.g. dependency injection frameworks to ensure configurability ---
+although the ugliness there is more due to the necessary of
+configuration occurring outside the program, rather than inside the
+program as with inheritance. Newspeak has much the same problem but
+handles it by module configuration outside the language.  Note that
+BETA and gBETA also allow Newspeak-style parameterisation of various
+kinds, in fact Newspeak's design also draws upon that tradition.
+You can probably do much with Scala's various mechanisms too.
+
+I found section 3.1 again hard to follow with the various As, Bs,
+alpha, alephs, etc. I wonder if the paper would not work better with a
+simple concrete running example, and showing concrete modifications
+thereof (see e.g. "Expressive Pointcuts for Increased Modularity" at
+by Klaus Ostermann and Mira Mezini and Christoph Bockisch which does
+this nicely).  I'm not convinced that factory methods e.g. are as
+horrible as Bracha makes out; and in fact Newspeak and Dart allow a
+mixin to be derived from any class which can them be "rebased" so to
+speak.  
+
+A problem here is that of anticipated vs unanticipated reuse,
+i.e. where and when and how modules must be parameterised. What if a
+client doesn't want to replace every beta with beta', just some of
+them?  Alternatively, what if a programmer (to maintain invariants or
+security etc) wants to prevent wholesale redefinition or rebinding of
+internal objects?  At least the paper should mention this issue in
+passing - or perhaps it does: is that level 4?  But this issues
+applies even at the level of a single hierarchy without having to go
+deep.  Newspeak supports some cases nicely by e.g. allowing clients to
+instantiate what appear to be different classes but because all names
+are parameterised, their names may be all bound to the same underlying
+class.  This issue also arises in AOP: Aldrich's Open Modules is one
+solution, with variation points identified and exported explicitly.
+
+Section 3.3. - this talks about "AOP" but doesn't specify which
+version. I'm sure there will be some languages where aspects etc can
+themselves be advised (Composition Filters perhaps?). Even AspectJ
+has aspect priority which in some cases let one aspect override
+another - and don't underestimate the turing-complete power
+of dynamic pointcuts.  Footnote 4 is simply wrong: consider the
+comparison of decorators and strategies in Gamma, et al; there
+is no "list of decorators" rather each decorator has a reference
+to whatever it decorates.    
+
+The textual description of level 3 reuse made me ask "won't multiple
+inheritance do?" If so, why is level 3 above level 2? Or are levels 2
+and 3 orthogonal?  This assumes I understand the distinctions the
+paper is making: Table 1 doesn't help much, seems to contract the
+first bullet point in section 4... and at least should use UML!  The
+sectioning of the paper through here is odd: sections 4 and 5 is too
+short - 4 should be suffixed 3, and 5 prefixed to 6.  Section 6
+introduces an "algebra of programs" which I think goes back to Backus
+and has been built upon by Hoare amongst others: without rigours
+definitions underlying the equation this is nothing more than a
+metaphor. The first paragraph in that section dives from the highly
+abstract discussion down to an embodiment in a compiler or web page:
+but in fact there are many languages - including in some sense
+Newspeak - that embody such an algebra. 
+
+section 7 presents infusion, again bouncing from high level
+descriptions to descriptions of the design process, philosophical
+ruminations on the meaning of "language", mentions issues like
+literate programming (e.g. Knuth's web) as out of scope when then
+appear to be in scope - and that's just in the first paragraph.  I did
+not understand the "comprehended" and "uncomprehended" parts of the
+system: although this distinction seems similar to that between base
+level code and advice in AOP which the paper earlier deplored.  What
+happens if something that should be uncomprehended is by accident
+comprehended - where comprehended seems to mean gratuitously hacked in
+Javascript according to footnote 7.
+
+The assertion in that footnote that " economics of adaptation for
+ordinary dynamic languages run on the same basis as those for static
+languages — locating the source code for the artefact, forking and
+modifying it" is simply not true, and is specifically not true in
+Javascript or other dynamic languages that support structural
+modification at runt me. (Question en passant, presumably inserted by
+some advice declaration: how does meta-programming relate to this
+question?).  Are infusion's terms so important that a half-page
+glossary is required to explain them, rather than e.g. presenting the
+argument in terms readers may understand?  Again, I think this shows
+to a (commendable, postmodern) lack of intent and structure in the
+paper, but some separation of concerns between the conceptual model
+and the infusion system would simplify the presentation for this
+reader at least.  I've no idea what 7.1 means, nor why office or web
+applications are somehow not Turing complete. What about Excel?  Is
+Excel that an office application?
+
+I apologise that at this point the time I could devote to reading the
+paper expired. I can only repeat my comment at the start of this
+review: I think there are good ideas in this paper, but in this draft
+the ideas are tangled tightly together, and also tangled with
+allusions to abstract external theories on one side, (mis)quotations
+or (mis)references to existing systems and the other side, and
+detailed implementation points on yet another side.  The topology of
+postmodernism is the rhizome - "The rhizome itself assumes very
+diverse forms, from ramified surface extension in all directions to
+concretion into bulbs and tubers. When rats swarm over each other. The
+rhizome includes the best and the worst: potato and couchgrass, or
+the weed" (Deleuze & Guattari's Thousand Plateaus, quoted in a very
+obscure paper of mine titled "Postmodern Prospects for Conceptual
+Modelling"). Maybe the key problem, I think, of this paper is how to
+construct or compose or configure software given the rhizomatous /
+rhizomic nature of the underlying system.  Maybe a paper can
+be written to present the key idea without the paper itself turning
+rhizomic, rats swarming over each other.  Maybe a review of that
+paper could avoid exactly that problem: rants swarming over each
+other. Maybe I'm just like my father: too old.
+
+
+To encourage accountability, I'm signing my reviews in 2017. For the
+record, I am James Noble, kjx@ecs.vuw.ac.nz.
+
+===========================================================================
+                      Onward! 2017 Papers Review #18B
+---------------------------------------------------------------------------
+Paper #18: The Open Authorial Principle - Supporting Networks of Authors in
+           Creating Externalizable Designs
+---------------------------------------------------------------------------
+
+                      Overall merit: 2. Weak reject
+                 Reviewer expertise: 2. Some familiarity
+
+                         ===== Paper summary =====
+
+This paper introduces a new paradigm where languages and configuration systems can support a network of developers reusing and modifying each others' code. Their system can support a graph of authors each adding/replacing different expressions in a program.
+
+                      ===== Comments for author =====
+
+The authors tried to solve a relevant problem. However, it is not clear why the system is better than an object oriented system. What kind of use cases will be better suited for the proposed model that OO system cannot handle efficiently?
+
+In their case study of the fluid infusion system, it is not very clear to me how the authorship is handled by the system as none of the listing examples talk about authorship. 
+
+Also, I am wondering, how representatives the 4-level of reuses are in practice?
+
+===========================================================================
+                      Onward! 2017 Papers Review #18C
+---------------------------------------------------------------------------
+Paper #18: The Open Authorial Principle - Supporting Networks of Authors in
+           Creating Externalizable Designs
+---------------------------------------------------------------------------
+
+                      Overall merit: 4. Accept
+                 Reviewer expertise: 3. Knowledgeable
+
+                         ===== Paper summary =====
+
+The paper provides an organization of thirty years of programming language design from the perspective of reuse, in order to situate its contribution (Infusion) at the forefront of this progression. Level 1 is OOP. Level 2 is AOP. Level 3 is Newspeak and Korz. Level 4 is Infusion: a composition language on top of base language (Javascript, in the current implementation). Infusion is in active usage by some programmers "in the wild".
+
+The paper makes its case for suitability for Onward, as opposed to a more conventional venue, primarily in section 6. The authors argue:
+1. The paper does not fit in conventional language theory venues.
+2. The paper does not fit in conventional systems programming venues.
+3. The principle/property of interest cannot be provably or fully satisfied.
+
+                      ===== Comments for author =====
+
+The term "economics" is introduced in section 6. This concept probably needs to be introduced in the introduction, and perhaps renamed. Insofar as I understand the dismal science, it is highly concerned with quantification. The work in this paper is primarily presented from a qualitative standpoint --- while it might have quantitative implications, those are not explored at this time (which is fine for Onward, but probably not fine for economists). I'm not sure exactly what a better phrase would be, but brainstorm ideas like "practical economics", or "qualitative economics", or "experienced economics". Maybe it's better to focus on "division of labour": my understanding is that economists consider this to be a foundational concept. The point is to facilitate clearer division of labour. That's clearly a qualitative idea that could have significant quantitative implications.
+
+1.1 talks about costs scaling linearly (or super-linearly) in the number of authors. Again, cost is a quantitative issue, and this paper is not quantitative. Maybe the division of labour approach could work here? The existing passage in 1.1 also seems, to me, to be in conflict with the old Fred Brooks wisdom about the difficulty of increasing the size of a programming team because the number of communication links between the programmers grows exponentially. Maybe talking about division of labour instead of quantitative aspects of programming would sidestep this issue? In any case, either lock horns with Brooks directly or be clearer that you aren't picking this fight.
+
+I think the historical discussion would be stronger if it at least genuflected to Liskov substitutability and Harrison & Ossher's Subject-Oriented Programming. Incorporating these historically important contributions should be smooth, and would make the presented viewpoint more comprehensive (and therefore authoritative).
+
+The formulation of the Open Authorial Principle in 1.1 defines the modularity boundary as "expression". This term has meaning in programming languages, and that meaning is (I think) not really the one you want: the example modularity boundaries in the paper are more often things with names, like classes, fields, and methods. Expressions (in the conventional PL use of that term) are usually not named. Maybe say "named expressions"? Or something else.
+
+The phrasing of the OAP is re-visited in section 6. Is the first italicized block supposed to be a repetition of the OAP given in 1.1? Because it isn't. The text needs to be clearer about whether this difference is intentional or not. The 6.0 block adds some interesting details, but still uses the term "expression". 
+
+The second italicized block in 6.0, giving another statement of the OAP, starts with the agency of the researchers: that should probably be removed. Somehow, as in the previous two attempts, it should be possible to state a principle without invoking the agency of the researchers.
+
+It's fine to talk about the agency of the researchers (what you are seeking) in the paper. But are you seeking the principle, or are you seeking a usable realization of the principle? Most of the paper gives the impression that you think you have found the principle, and are presenting a usable realization of it. Here "usable" is substantiated by the fact that programmers are actually using it in the wild.
+
+End of 5: "The need to account for repeated reuse". I know what you're trying to say here, but I think the phrasing "only considers a single exercise of the facility of reuse" is not entirely accurate. The Meyerian view allows for different authors to each implement their own subclass, but not for one end user to benefit from multiple extensions (e.g., the coloured shapes from your rhetorical example). 
+
+Section 7, end of page 5: the long parenthesized list crosses a page break, and also includes nested parentheses for the citation. Find a flatter syntax.
+
+Citation style: I think the convention for this style is like this:
+"The material world is but shadows of true reality (Plato 2000BC)"
+Or:
+"Plato (2000BC) says that the material world is but shadows of true reality."
+My understanding is that the convention is that the stuff in the parens, which makes it a citation, is not read as part of the sentence. So if you want the name to be part of the sentence, then it should be outside the parens. I think citation packages for LaTeX support this varied usage.
+
+7.1: So is Infusion for CRUD programs? I've been bringing this old term back to life in some of my undergraduate courses. Is there a useful distinction between CRUD and Infusion's domain? This kind of historical positioning might strengthen (slightly) the perception of authoritativeness of the viewpoint.
+
+3.2.1 talks about the need for foresight. The whole idea of foresight is sometimes rejected by Agile programming, with the YAGNI acronym: Ya ain't gonna need it. It might be good to bring YAGNI into the discussion. Does Infusion facilitate reuse even when following YAGNI? So we can have reuse without introducing abstractions that might not yet be necessary?
+
+How does Generative Programming fit into this historical overview of reuse? In some sense, the whole point of Generative Programming is to facilitate reuse within a "program family". The paper would be stronger with a discussion of Generative Programming.
+
+One running example could be very helpful to understand the idea and Infusion.
+
+Listing fonts are very small and hard to read.
+
+
+---------------------------------------------------
+I do not usually sign my reviews, but James sets a good example here. I am Derek Rayside <drayside@uwaterloo.ca>. I want to encourage you to continue this work: if you wish, you may send me a future draft of this paper for informal feedback outside of any formal conference reviewing process.
+
+
