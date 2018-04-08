@@ -93,7 +93,7 @@ context awareness, declarative configuration
 
 \subsection{Horizons in the network of authors}\label{sec:horizons}
 
-We consider that all existing programming idioms create unwelcome distinctions among a population of authors, and thus, {\it horizons} beyond which the graph of authors cannot grow. Some authors can restructure the work of an originating author to enable the modifications they want. But other authors won't have this privilege. Even if they might in principle earn the right to make such modifications, as in an open source project, in practice they may lack the resources to do so. Thus the graph of authors fails to be {\it open} if a language system can't economically address each level of these reuse scenarios --- that is, to deliver the affordances of reuse at a cost that the interested community can afford. We'll consider that a system {\it de facto} fails to deliver these affordances economically if it incurs costs amongst the authors that grow much faster than linearly with respect to their number and the size of design they're collaborating on.
+We consider that all existing programming idioms create unwelcome distinctions among a population of authors, and thus, {\it horizons} beyond which the graph of authors cannot grow. Some authors can restructure the work of an originating author to enable the modifications they want. But other authors won't have this privilege. Even if they might in principle earn the right to make such modifications, as in an open source project, in practice they may lack the resources to do so. Thus the graph of authors fails to be {\it open} if a language system can't economically address each level of these reuse scenarios --- that is, to deliver the affordances of reuse at a cost that the interested community can afford. We'll consider that a system {\it de facto} fails to deliver these affordances economically if it incurs costs amongst the authors that grow much faster than linearly with respect to their number and the size of design they're collaborating on. We discuss the scaling economics of development and of communication amongst authors in section \ref{sec:economics}.
 
 As we progress through increasingly sophisticated levels of reuse, we will observe that the horizon bounding the graph of authors is steadily pushed back. At level 2 we will meet developments such as Aspect-Oriented Programming \cite{Kiczales97} and Context-Oriented Programming \cite{Costanza05}, and at level 3 more modern and ambitious systems such as Newspeak \cite{Bracha10} and Korz \cite{Ungar14}. In order to situate the entire hierarchy of levels, showing the way to level 4 and beyond, we will summarise our conception of reuse under a central organising principle, our new {\it open authorial principle} (OAP). This principle provides a light in which the potential for any design idiom to promote generous reuse can be clearly assessed. The principle, elaborated in section \ref{sec:principle}, states 
 
@@ -242,8 +242,29 @@ The property we seek is not susceptible to perfect verification, because it esta
 
 Can useful properties lie outside the domain of axiomatised theory? Consider homoiconicity, the property of a programming language in which the program structure is similar to its syntax. This is also a ``soft'' property: any language could be said to have it to at least some extent, LISP strongly and C very weakly. The notion is useful despite its not being crisp. The property is also not unrelated to the one we seek --- some measure of homoiconicity is clearly essential in a system capable of encoding program differences as programs.
 
+Another important reason that the property cannot be fully satisfied is that increasing attempts to satisfy it inevitably entail losses in other design areas, which we will discuss in the next secion.
+
 % Remember to cite diff's "best efforts" nature and git diff's arbitrary nature
 % Talk about the ADDITIVE OPERATOR and how it is another thing that "jumps out of the woodwork" that had always been implicit
+
+\subsection{Economics of development and communication}\label{sec:economics}
+
+The OAP is stated in isolation as an apparently absolute principle, but naturally it is just one element in a wider picture of design economics. In practice, increasing attempts to satisfy the OAP will result in designs with weaker locality of reference, reduced comprehensibility of individual design artefacts (in the absence of supporting tools), greater verbosity, and greater consumption of runtime resources. Linked goals of this paper are
+\renewcommand{\labelenumi}{\roman{enumi})}
+\begin{enumerate}
+\item To argue that previously unvisited extremes of the design tradeoffs implied by satisfying the OAP should be explored by designing new language-like systems
+\item Exhibiting what the design costs incurred by these systems look like
+\item Suggesting ways that these costs could be reduced either through improved engineering of the supporting system or improved tooling
+\end{enumerate}
+
+An important scaling phenomenon that is directly implied by the economics of the OAP is one described by \cite{Brooks95}, that the costs of communication between a team of $n$ authors grows superlinearly with $n$ --- and therefore, one of the goals of this paper, to bring the growth in costs for designs worked by multiple authors to close to linear might appear inherently futile. However, we argue that Brooks' analysis is inapplicable to the situations encountered by many communities of authors today. Brooks' analysis was situated within the ``military-industrial complex'' model of organisation where hierarchically organised groups are assembled in more or less the same time and place in order to achieve a task which results in clearly quantifiable economic benefits. The experience of the current authors with software development has frequently violated these assumptions:
+\begin{itemize}
+\item Where one's ``collaborators'' may not only be widely dispersed but in many cases unavailable --- they have left an major open source project drifting and unmaintained, or are trying to achieve widely different objectives than your own
+\item Where one is attempting to build a "product" whose function can't be easily characterised, and tends to drift over time
+\item Where one can't directly quantify the benefits of the software since it is not the artefact which is the agency of the value, and further, one may not easily draw a boundary around its community of use
+\end{itemize}
+
+On these grounds, Brooks' observation that the number of communication links grows superlinearly between programmers in a ``team'' of size $n$ becomes questionable since in many cases the links are either unidirectional or else completely absent. One of the main aims of the OAP is to make software development tractable in these ``open graphs'' of authors where one must frequently inherit design artefacts from others with little or no influence over or communication with their authors --- and still worse, when this lack of influence has been cascaded down a long chain of project dependencies.
 
 \section{Fluid's Infusion System}\label{sec:infusion}
 
@@ -875,6 +896,9 @@ Gilad Bracha {\it A DOMain of Shadows}, blog posting at \url{http://gbracha.blog
 \bibitem[Bracha(2010)]{Bracha10}
 Gilad Bracha, Peter von der Ah\'e, Vassili Bykov, Yaron Kashai, William Maddox and Eliot Miranda {\it Modules as Objects in Newspeak}. Proceedings of the 24th ECOOP, June 21-25 2010. Springer Verlag LNCS 2010.
 
+\bibitem[Brooks(1995)]{Brooks95}
+Frederick P. Brooks,Jr., The Mythical Man-month (Anniversary Ed.), Addison-Wesley, 1995.
+
 \bibitem[Clark(2017)]{Clark17}
 Colin Clark and Antranig Basman {\it Tracing a Paradigm for Externalization: Avatars and the GPII Nexus}, $\langle$Programming$\rangle$, Proceedings of  Salon des Refus\'es Workshop, 2017.
 
@@ -891,7 +915,7 @@ Philippe Le H\'egaret. ``The W3C Document Object Model (DOM)''. World Wide Web C
 Roy T. Fielding {\it Architectural Styles and the Design of Network-based Software Architectures}, PhD thesis, University of California, Irvine, 2000.
 
 \bibitem[Gabriel(2012)]{Gabriel12}
-Richard P. Gabriel {\it The structure of a programming language revolution}, Proceedings of the ACM Onward 2012, pages 195-214. Springer NY 2012.
+Richard P. Gabriel {\it The structure of a programming language revolution}, Proceedings of the ACM Onward 2012, pages 195-214. Springer NY, 2012.
 
 \bibitem[Gamma(1994)]{Gamma94}
 Erich Gamma, John Vlissides, Ralph Johnson, and Richard Helm {\it Design Patterns: Elements of Reusable Object-Oriented Software}, Addison-Wesley, 1994
