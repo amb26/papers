@@ -2,7 +2,6 @@
 \usepackage{epsfig}
 \usepackage{natbib}
 \usepackage{ucs}
-\usepackage[utf8x]{inputenc}
 \usepackage{color}
 \usepackage{fancyvrb}
 \usepackage{listings}
@@ -24,8 +23,10 @@
 \newcommand{\mbl}[1]{%\textcolor[rgb]{.5, .2, 1}{Michel: #1}}
 }
 \newcommand{\changed}[1]{\textcolor[rgb]{.2, .5, 1}{#1}}
+\newcommand{\added}[1]{\textcolor[rgb]{.1, .3, 1}{#1}}
 % uncomment to include changes without coloring
-%\renewcommand{\changed}[1]{#1}
+\renewcommand{\changed}[1]{#1}
+\renewcommand{\added}[1]{#1}
 
 \begin{document}
 
@@ -41,24 +42,32 @@
 \author{Antranig Basman}
 \affiliation{%
   \institution{Raising the Floor - International}
-  }
+  \city{London}
+  \country{England}
+}
 \email{amb26@ponder.org.uk}
 
 \author{Philip Tchernavskij}
 \affiliation{%
-  \institution{Universit{\'e} Paris-Sud}
+  \institution{LRI, Universit{\'e} Paris-Sud, CNRS,\\Inria, Université Paris-Saclay}
+  \city{Orsay}
+  \country{France}
 }
 \email{ptcher@lri.fr}
 
 \author{Simon Bates}
 \affiliation{%
   \institution{OCAD University}
+  \city{Toronto}
+  \country{Canada}
 }
 \email{sbates@ocadu.ca}
 
 \author{Michel Beaudouin-Lafon}
 \affiliation{%
-  \institution{Universit{\'e} Paris-Sud}
+  \institution{LRI, Universit{\'e} Paris-Sud, CNRS,\\Inria, Université Paris-Saclay}
+  \city{Orsay}
+  \country{France}
 }
 \email{mbl@lri.fr}
 
@@ -66,9 +75,9 @@
 \interfootnotelinepenalty=10000
 
 \begin{abstract}\it
-We present a new taxonomy for describing the conditions and implementation of interactions.%, based around the notion of co-occurrence and entanglements. 
+We present a new taxonomy for describing the conditions and implementation of interactions. %, based around the notion of co-occurrence and entanglements. 
 %We explain that in order to support open ecologies of function and fabrication, we need to support externalised designs and design tools. % pt: perhaps more building blocks than design tools in this case?
-Current mechanisms for embedding interaction in software support a hard separation between the programmers who produce the software, and the communities who go on to use it.
+Current mechanisms for embedding interaction in software promote a hard separation between the programmers who produce the software, and the communities who go on to use it.
 In order to support open ecologies of function and fabrication, where this separation is negotiated by communities of users and designers, we need to reconceive those mechanisms.
 %This goes against traditional designs which stress the importance of information isolation and specialisation in the roles of system components and designers.
 We describe interaction in two phases: Co-occurrence, the prerequisite conditions for an interaction to take place; and entanglement, the temporary coupling and interplay between elements participating in the interaction.
@@ -81,16 +90,15 @@ We exhibit different systems which we have implemented based on these metaphors,
 \maketitle
 
 \section{Introduction}
-
 To support human activities, what computers do must be about more than just computation. 
 In a reframing of computational activity, \citet{Wegner1997} argues that ``Interaction is more powerful than Algorithms''. 
 We support Wegner's problematisation of computation, that ``Algorithms and Turing Machines, like Cartesian thinkers, shut out the world during the process of problem solving''. 
 Taking computers and computation beyond the role of ``problem solvers'', we want to embed their activities in the real world as part of an {\it open ecology of function}~\cite{Clark2017}. 
 We want to facilitate and empower creative networks to curate and share artefacts of interest.
-To reach this goal, we need to to tease apart the nature of what interaction {\bf is}, what it relies upon, and how its prerequisites can be organised and filtered in order to allow interactions themselves to take the role of first-class artefacts of interest.
-In this paper, we reveal substructure in what has been traditionally treated as an atomic phenomenon. We begin by sketching our goals for software artefacts within communities of interest, then by speaking broadly of what we are prepared to recognise as an interaction, and then consider how these goals influence the structure of what we recognise.
-\mbl{I am not sure the last part is actually addressed in the paper}
-\amb{It is actually the main function of section 4 - since this isn't clear we should try to think about how to make this clearer}
+To reach this goal, we need to tease apart the nature of what interaction {\bf is}, what it relies upon, and how its prerequisites can be organised and filtered in order to allow interactions themselves to take the role of first-class artefacts of interest.
+In this paper, we reveal substructure in what has been traditionally treated as an atomic phenomenon. We begin by sketching our goals for software artefacts within communities of interest, then \changed{characterise} what we are prepared to recognise as an interaction, and then consider how these goals influence the structure of what we recognise.
+% \mbl{I am not sure the last part is actually addressed in the paper}
+% \amb{It is actually the main function of section 4 - since this isn't clear we should try to think about how to make it clearer}
 %This is the goal of this paper.
 
 %\mbl{I don't think this next paragraph is needed.}
@@ -102,49 +110,83 @@ Basman and Clark~\citep{Basman2016b, Clark2017} introduce the notion that artefa
 The ecology of {\bf use} or {\bf function} reflects how an artefact comes to be recognised and used amongst a collection of similar artefacts with similar functions --- for example, the ecology of spoons presents obvious and related affordances based on their relative size, shape and materials.
 
 The ecology of {\bf construction} or {\bf fabrication} establishes relationships amongst creators which may or may not mirror those amongst the artefacts which are being constructed --- different craftsmen may specialise in spoons of different materials, different dimensions or context of use.
+%\pt{A sentence here explaining what we mean by openness? How about this?}
+%\amb{I think it helps rather than hinders, but I worry that, much as with "interaction" we fail to quite draw the boundary we want}
+\added{These ecologies can be more or less open to the extent they enable new participants to enter or transition into the ecology, as users or fabricators.}
 Expert users may have the option to make connections to relevant members of the fabrication ecology, if it is sufficiently open, and perhaps start taking on some of their skills.
 However, what is good for spoons is not good for software --- even the most basic of the skills necessary to construct or modify acceptable software will remain out of reach of the vast majority of citizenry who could benefit from their use, because the relevant ecologies are closed.
 
 \subsection{Open Authorship}\label{sec:authorship}
-So-called end-user development~\citep{Paterno2017} has been a goal of many communities over decades, but we argue that an important impediment to useful results has been a failure to concentrate on the material qualities of software that influence the structure of the above ecologies~\cite{Basman2016b}.
+So-called end-user development (EUP)~\citep{Paterno2017} has been a goal of many communities over decades, but we argue that an important impediment to useful results has been a failure to concentrate on the material qualities of software that influence the structure of the above ecologies~\cite{Basman2016b}. 
+\added{Our work in drawing up and materializing our anatomy of interaction will assist the goals of EUP only indirectly --- since as the literature shows, a head-on assault on this profound problem will not lead to generally useful results. We see our anatomy as a piece of cognitive and implementational scaffolding on which future EUP systems can be productively built; the code and artefacts presented in this paper will not be manipulated by users of the system directly, but are planned to allow the expression of a future superstructure of tooling to be more harmonious and amenable.}
 
 The form of current software changes radically between the two ecologies, from brittle and largely textual code to opaque and largely visual interfaces. Code is changeable by those with the tools and status of the fabrication ecology, but once it is in use, a piece of software cannot generally return to a changeable form.
-Whilst there are social and economic drivers of this separation, \citet{Basman2016a} describe a technological driver as a problem of \emph{divergence} between the dead and live forms of software.
+Whilst there are social and economic drivers of this separation, \citet{Basman2016a} describe %a technological driver as a problem of \emph{divergence} between the dead and live forms of software.
+\changed{one technological driver as the problem of \emph{divergence} between dead and live forms of software}.
 
-\sjb{I don't think we define "real materials" and "real function of software development". Or is this something that is discussed in the cited papers?}
-\pt{Agree that we should unroll that a little here. I'm assuming the argument is that the materials of software developers (source code, functions, objects, commits, patches) does not map to meaningful materials to users (instruments, documents, other artefacts in the domain of the user's practice/community). Making first-class interactions should support (communities of) users in assembling their software as a collection of artefacts that have meaningful functions in their domain.}
+% \sjb{I don't think we define "real materials" and "real function of software development". Or is this something that is discussed in the cited papers?}
+% \pt{Agree that we should unroll that a little here. I'm assuming the argument is that the materials of software developers (source code, functions, objects, commits, patches) does not map to meaningful materials to users (instruments, documents, other artefacts in the domain of the user's practice/community). Making first-class interactions should support (communities of) users in assembling their software as a collection of artefacts that have meaningful functions in their domain.}
 
 %So-called end-user development has been a goal of many communities over decades~\citep{Paterno2017}, but we argue that an important impediment to useful results has been a failure to concentrate on the real materials~\cite{Basman2016b} and function of software development, both from the point of view of these ecologies but also from the resulting refined taxonomy of activity that they will reveal within the everyday expressions of software engineers. 
-A clearer statement of this ecological goal is the ``open authorial principle'' described in \cite{Basman2018a} --- that any expression by any one author of a system can have its effect replaced via an {\it addition} to the design by another author.
+\added{The purpose of bringing these forms into convergence is to support the}
+% pt: we did not actually formulate convergence as an ecological goal in the previous paragraph.
+%A clearer statement of this ecological goal is the 
+``open authorial principle'' described in \cite{Basman2018a} --- that any expression by any one author of a system can have its effect replaced via an {\it addition} to the design by another author.
 
 Some previous work has approached the goals of open authorship:
-For example, in the \emph{Buttons} project~\citep{MacLean1990}, a community of users tailored their operating systems by creating, customising, and sharing buttons containing Lisp scripts.
+For example, in the \emph{Buttons} project~\citep{MacLean1990}, a community of users tailored their operating systems \added{as part of normal use} by creating, customising, and sharing buttons containing Lisp scripts.
 Notably, \citeauthor{MacLean1990} emphasise the parallel project of creating a tailoring toolkit side-by-side with a tailoring culture.
-The toolkit allowed users to progressively unfold and edit buttons, accessing their representation, then command parameters, then the functions that defines their behaviour.
+The toolkit allowed users to progressively unfold and edit buttons, accessing their representation, then command parameters, then the functions that define their behaviour.
 The culture consisted of relationships among non-programmers and programmers who collaboratively modified and distributed buttons, e.g., through email.
 
 \subsection{Externalisation}\label{sec:externalisation}
 Externalising the design of a piece of software is one of the key quantities that support open authorship. 
-As described in \cite{Basman2018a,Basman2016b}, there are two principal components of externalisation. 
+As described in~\cite{Basman2018a,Clark2017}, there are two principal components of externalisation.
+%\pt{Corrected this citation to refer to the OAP and SDR'17 papers, removing Building Software Is Not a Craft, which doesn't mention externalization.}
+
 Firstly, the elements of the design should take an {\it integral form} --- in the language of functional reactive programming, we would say that they give rise to a {\it signal} or {\it behaviour}, which has a (in our case complex, structured) value which is in theory observable at any instant in time. 
 Secondly, the elements of the design should have reasonably stable, publicly exposed {\it coordinates} which may be used to address them. \citet{Basman2018a} explain that an important property of these coordinates is that they allow for negotiation between different communities, by being structured around references to more or less stable design elements designated as {\it landmarks}. This is similar to the way in which the structure of CSS selectors in a web document allows for negotiation between code-focused and design-focused authors.
 
+%\pt{Is it perhaps fair to describe how \emph{Buttons} buttons are an example of externalization here, and why that supports open authorship? Perhaps with an additional indication that the reach of public coordinates can be much larger, e.g. as web URL's}
+%\amb{I'm concerned about this because there doesn't seem to be convincing evidence in the Buttons paper that they are based on an architecture which uses externalisation in any substantive way. There is certainly evidence that there are some of the "trappings" of externalisation, in that buttons may be mailed back and forth, but without more details about either the supporting technical structures or else the actual design ergonomics of that process I'd worry about exhibiting them as an example of the paradigm. For example, one may say that programs are "externalised" because one can mail git diff text snippets between developers, but we know based on the details of how that process works that they are not}
+%\pt{That sounds fair to me. Academically, I am interested in what it is that \emph{Buttons} shares with systems designed with externalisation in mind, how particular features in that system change the economy of tailoring, but that's probably not useful to get into here.}
+% things that don't have integral forms: events, event listeners
+% so buttons have an integral form in that they are a structured piece of data with layers representing the button execution procedure, the parameters of the procedure, and the visual details of the button.
+% buttons have public coordinates in the sense that they are present on screen and can be manipulated directly.
+% this is unusual in modern interfaces, where buttons may be graphically present to users, but not expose any mutable state.
+
+% public coordinates can have a larger reach, \eg a coordinate might be a web URL
+
 \section{Characterising Interaction}
 Before we investigate the substructure of the phenomenon of interaction, we should try to draw a boundary around the phenomena we are interested in.
-\pt{Though we draw a boundary and then expand it.}\amb{In the best Lakatosian concept-stretching tradition}
+%\pt{Though we draw a boundary and then expand it.}\amb{In the best Lakatosian concept-stretching tradition}
 
 \subsection{Interaction in the world}
 There are many theories of interaction with and through computers, some of which are reviewed in~\citep{Hornbaek2017}.
-For our purposes, we sketch a broad definition based on \citeauthor{Bodker1991}'s adaptation of activity theory~\citep{Bodker1991}.
-We describe interaction as any situation where a computer is acting as a mediating artefact in some task the human is performing.
+For our purposes, we sketch a broad definition based on \citeauthor{Bodker1991}'s adaptation of human activity theory for the design of user interfaces~\citep{Bodker1991}.
+We accept as interaction any situation where a computer is acting as a mediating artefact in some task the human is performing.
 This mediation can be described at a very high level, such as using computers as tools for writing, as well as lower levels, such as using the mouse-and-cursor assemblage to select and manipulate objects on a screen.
 From the human user's perspective, software contains many mediators, variously suited or unsuited to the user's goals.
-%\pt{This description is surface-level enough that it could cover many notions of interaction, but is clearly inspired by activity theory. Is it sensible?}
 
 \subsection{Interaction as Classically Implemented in Code}
+%\pt{I suggest we clarify that interaction in programs does not model interaction in the world, but that it is a mechanism to support it. (Subsequently, we shift the emphasis from the moment of an interaction occurring to the process of creating interactions.)}
+
+\added{For computers and software to become mediators of human action, they need to be able to respond to the outside world.
+This is broadly the purpose of interactions as implemented in code:
+To transduce changes at some locations to changes at other locations.
+When one of these locations is an input or output device, an interaction can involve human users by taking input or producing output and feedback.}
+
+\added{However, abstractions for interaction not only determine the form of transduction between locations in a system, but also the means of connecting and disconnecting sources of transduction.
+We call this aspect \emph{second-order} interaction, since it frames the \emph{first-order} interactions that mediate elementary changes to a system.
+%To transduce change at one location to changes at other locations, and to connect and disconnect sources of transduction.
+% a sentence defining these two as respectively first-order interaction and second-order interaction.
+% 
+In this paper, we are interested in how abstractions for interaction enable modification or addition of interactions throughout a system's lifetime.
+Hence, we focus on second-order interactions.}
+% conventionally, we evaluate program abstractions for interactions by software-architectural qualities simplicity, maintainability, and flexibility.
+% in this paper, we are interested in how program abstractions for interaction support open ecologies of function by enabling the modification or addition of interactions throughout a system's lifetime.
 
 Listing \ref{fig:classical} shows a stereotypical simple interaction as it would be structured in a mainstream imperative language, rendered in a JavaScript-like pseudocode.
-
 It exhibits all the typical divergent properties of such code, i.e., it establishes an interaction that is illegible and unchangeable to future users who wish to author their system.
 For example, the design elements corresponding to the scope and procedure of the interaction ({\tt mouselistener}); the origin and form of the user's operation ({\tt mouseEvent}); and the preconditions for the interaction to begin and end ({\tt interactionStartsCondition} and {\tt interactionStopsCondition}) are all unreferenceable from the point of view of the executing system. Only an author imbued with the god-like powers to fork the original source code and interpose their own definitions can enter this ecology.
 %For example, the design elements corresponding to the {\tt mouseListener} function handle, and the {\tt mouseEvent} object delivered to it, are all unreferenceable by future authors, and the arguments to the {\tt interactionStartsCondition} and {\tt interactionStopsCondition} predicate functions which aimlessly consume arguments drawn from the program's wider environment.
@@ -170,15 +212,18 @@ if (interactionStartsCondition(some arguments from world) {
 \end{center}
 \end{table}
 
-\pt{I anticipate comments of the form ``Aren't event listeners old hat, and doesn't FRP/state machines/constraints solve all their problems?'' Is it fair to say that those methods are in general similarly divergent, though they may define a more sensible distribution in code of the scope, trigger, and flow of an interaction?}
+%pt{I anticipate comments of the form ``Aren't event listeners old hat, and doesn't FRP/state machines/constraints solve all their problems?'' Is it fair to say that those methods are in general similarly divergent, though they may define a more sensible distribution in code of the scope, trigger, and flow of an interaction?}
 More modern, or less imperative, schemes for expressing such interactions, for example via functional reactive programming, state machines, or constraint propagation, address some of the infelicities of expression in this example, but do little to expose the resulting system to open authorship without explicit moves towards externalisation.
 
 \subsection{The Need to Reconceive Interaction}
-The above descriptions in turn address the ends, and the means, of interaction; but we are equally interested in how a design process draws up an interaction.
-\pt{I think this is the place for a sentence to draw attention to the...Lakatosian maneuver?}\amb{But have we actually performed it yet? It seems that we are still largely stuck with the original (activity theory-based) characterisation of what interaction *is*, which isn't necessarily a terrible thing}
-\pt{This is for revision then. I suspect I can dig up an activity-theoretical extension, so the argument becomes that the extant programming tools for interaction look at an artificially separated instant in a web of activity that is extended by means of itself.}
+%\pt{We use means/ends in this paragraph and the next with different meanings. It's clever, possibly too much so. First, we use `ends' as `turning computers into mediating artefcats', and `means' as `programming with event listeners'. Then we use `ends' as `achieving some given task the designer is interested in', and `means' as `assembling interfaces'.}
+\changed{The above descriptions in turn address the ends (turning computers into mediators of human action), and the means (programming mechanisms such as event listeners) of interaction; but we are equally interested in how a design process draws up an interaction.
+We believe that the major fault of current approaches to programming interactions is that they do not account for how interactions come to be.}
+% \pt{I think this is the place for a sentence to draw attention to the...Lakatosian maneuver?}\amb{But have we actually performed it yet? It seems that we are still largely stuck with the original (activity theory-based) characterisation of what interaction *is*, which isn't necessarily a terrible thing}
+% \pt{This is for revision then. I suspect I can dig up an activity-theoretical extension, so the argument becomes that the extant programming tools for interaction look at an artificially separated instant in a web of activity that is extended by means of itself.}
 
-A lot of work in assembling means and ends has already been done before an interaction can take place:
+%A lot of work in assembling means and ends has already been done 
+\changed{Many decisions have already been made} before an interaction can take place:
 Someone has decided when and where each particular action should be available.
 For example, when using a word processor of a traditional construction, it is straightforward to edit the presentation of the document being written, but it is usually impossible to edit the presentation of the largely text-based interface around the document.
 It is also settled how each action can be triggered, whether via a drop-down menu, a toolbar, a keyboard shortcut, etc.
@@ -186,9 +231,11 @@ Implicitly, interaction is brought into being by software designers and programm
 The consensus ``model'' of interaction with computers assumes that end users can operate their tools, but that they can only select, organise, combine and share them in delimited ways.
 On the one hand, the skills necessary to assemble these interactions are typically far away from the application domain in which they are used; on the other hand, even with those skills, it is not generally possible to change those decisions.
 
-Other authorial activities occur when communities bring together various kinds of sub-systems. This integration creates the possibility for encounters between groups of elements which had not been part of the design of either system. 
+%\pt{We've already mentioned combining and sharing tools, so what is this `Other' in reference to?}
+%Other 
+\changed{Related} authorial activities occur when communities bring together various kinds of sub-systems. This integration creates the possibility for encounters between groups of elements which had not been part of the design of either system. 
 It may be the task of a third community to describe and orchestrate such interactions, and each system must be designed in such a way that this third-party integration is possible. 
-This requires suitable public coordinates (as introduced in section \ref{sec:externalisation}) for each element of both systems that allow the expression of the required co-occurrence and activation rules.
+This requires suitable public coordinates (as introduced in section \ref{sec:externalisation}) for each element of both systems that allow the expression of the rules for activating and operating the interaction \mbl{Is it wise to introduce the term co-occurrence here?}\amb{Removed}.
 Following \citet{Kell2009}, we propose that user software should form an {\it integration domain} where useful interactive artefacts can be coupled to construct personal and communal interactive systems.
 
 In the following section, we cut into pieces (anatomise) and examine the process of triggering and enacting interaction, and show how each of the elements of listing \ref{fig:classical} can be mapped onto an externalisable design forming a public workflow.
@@ -199,11 +246,13 @@ Meeting our goals of externalisation drives us, at the coarsest level, to anatom
 
 \subsection{Interaction as Co-occurrence $+$ Entanglement}
 
-First, a specific combination of conditions, which we call \emph{co-occurrence}, must occur. 
+%\pt{This `First' is ambiguous, as we have just stated that we consider a wider life cycle of interaction than the one from input to output. This sentence should be replaced with `Before...' something. Before an interaction can be enacted?}
+First, a specific combination of conditions, which we call a \emph{co-occurrence}, must occur. 
 Co-occurrence determines what elements of the design are in a configuration in which an interaction that involves them may potentially be initiated.
 
 Second, the interaction itself unfolds as an interplay between the elements, which we call \emph{entanglement}. 
-An entanglement is both a process and an object, i.e., we orchestrate those elements into a new design element which represents the interaction for its lifetime.
+An entanglement is both a process and an object, i.e., %we orchestrate those elements into a new design element which represents the interaction for its lifetime.
+\changed{a new element that represents the interaction for the duration of its lifetime}.
 
 Both phases are necessary to define any interaction, however current systems usually do not distinguish them.
 
@@ -212,11 +261,13 @@ This gives rise to a ``co-occurrence document'' or ``co-occurrence signal'' whic
 In the other part of the design we have the entanglements, which will be as externalisable as the implementation technology of the overall system allows --- but by being grouped together, offer the potential that they may be treated as first-class elements of the running system, and hence be suitable for participating in further interactions.
 
 The notion of interaction as co-occurrence $+$ entanglement is inspired by the philosophical idea that a tool is not so much a thing in itself as a thing that an agent has brought into a tool-like relation.
-Interactions are by their nature boundary-crossing: The ability to write is not contained within a pencil \changed{nor within a piece of paper}, writing is a thing that a person does by tracing a pencil over paper.
+Interactions are by their nature boundary-crossing: The ability to write is not contained within a pencil nor within a piece of paper, writing is a thing that a person does by tracing a pencil over paper.
 Hence, we require the ability to detect co-occurrences of things that can engage in a collective behaviour, such as drawing a line.
 
 Separating the description of interaction into co-occurrence and entanglement is necessary in an open ecology of function. 
 The purpose of this separation is to shift away responsibility from programmers, by ensuring that it is no longer their job to fully specify all the entities that will be available in an interactive system throughout its lifetime.
+%\pt{a sentence to indicate what we expect programmers to be doing instead, i.e. adding elements that may result in new co-occurrences, and creating entanglements that will be created opportunistically in response to co-occurrences.}
+\added{Instead of describing interactions in closed terms, that is, with reference to ``closed world'' quantities such as object handles and event listeners, authors will talk about landmarks in time and space using an open vocabulary in a shared, authorial space. These statements about landmarks will demarcate the creation and destruction of the constituent elements of the interaction, the co-occurrences and entanglements, which themselves can be the subject of future statements.}
 
 The following is a blueprint describing the function of these activities in bringing about interaction, and the implementation requirements for interactions to be brought about in a way that conforms with the open authorial principle. 
 We will serve the principle by making sure that we do not need to know all entities that will exist in a given software system at the time it is produced, and furthermore that we do not need to know what interactions they may participate in. 
@@ -224,17 +275,19 @@ This implies that a software substrate for an openly authorable interactive syst
 
 In practice, the separation of interaction into co-occurrence and entanglement leads to further separations --- we require further elements to represent the activity of detecting co-occurrences, and for instantiating further elements representing entanglements.
 In the following sections we consider the design of these activities themselves, and how their inputs and outputs are described, generated and consumed. 
-In Figure~\ref{fig:anatomised} we illustrate the dataflow in the process as a whole, and give numbers 1 to 5 for the elements of it that we argue should be externalised.
+In Figure~\ref{fig:anatomised} we illustrate the dataflow in the process as a whole, and \changed{label the elements that we argue should be externalised with the numbers 1 to 5}.
+% give numbers 1 to 5 for the elements of it .
 
 
-\pt{A note here, or at the end of section 4, or at the beginning for section 6, stating that our implementations comply with this blueprint to various extents, with resultant limitations.}
+%\pt{A note here, or at the end of section 4, or at the beginning for section 6, stating that our implementations comply with this blueprint to various extents, with resultant limitations.}
 
 \begin{figure*}[!h]
 \begin{center}
 
-\includegraphics[width=\linewidth]{Anatomised.png}
+%\includegraphics[width=\linewidth]{Anatomised.png}
+\includegraphics[width=\linewidth]{Anatomy.png}
 
-\caption{Anatomy of the interaction process with arrows representing dataflow and numbering for externalised elements}
+\caption{\changed{Anatomy of the interaction process, illustrated with Bier et al.'s Toolglass interaction technique~\cite{Bier1994}. Filled arrows represent dataflow, dotted arrows represent references, and numbered elements are externalised.}}
 
 \label{fig:anatomised}
 \end{center}
@@ -251,10 +304,21 @@ In Figure~\ref{fig:anatomised} we illustrate the dataflow in the process as a wh
 %\end{quote}
 
 \subsection{State of the (or a) world}
-Starting at the element numbered 1 in Figure~\ref{fig:anatomised}, we consider the entanglement workflow to begin through the materialization of some state in the system mirroring that in some portion in the world of interest.
-As we explain in section \ref{sec:externalisation}, opening up the design process requires this mirroring to have an open structure. 
-Each community of interest will have different concerns that lead them to select different sources of state, and mirror them with different representations.
-We require that both the description of the state to be materialised, as well as the materialised state itself, are externalised as an openly authorable document that is available throughout the lifetime of the system, not just an early design phase.
+Starting at the element numbered 1 in Figure~\ref{fig:anatomised}, we consider the entanglement workflow to begin with some externalised state, representing the world that a particular community of users are interested in.
+As we explain in section~\ref{sec:externalisation}, opening up the design process requires this state to have an open structure.
+Each community of interest will have different concerns that lead them to select representations of the world appropriate to their domains.
+\changed{The direct content of this representation as primary state can be considered as the Model part of the Model-View-Controller triad as initially sketched in \cite{Reenskaug1979}. 
+However, for an effectively open system, the selection and representation machinery for this state itself must also be comprised as secondary state within what we consider the ``state of the world of interest''. This kind of secondary state forms what is termed ``device drivers'' at the operating system level but has other names depending on the kind of system of interest.
+Both of these kinds of state should be externalised as openly authorable documents that are available throughout the lifetime of the system, not just at an early design phase.}
+\amb{Well there we go, I've managed to triple the size of the section but perhaps it is now less jargony}
+
+%\changed{We require that community statements describing which state is of interest to them, as well as the resulting materialised state, are externalised as openly authorable documents that are available throughout the lifetime of the system, not just an early design phase.}
+% Starting at the element numbered 1 in Figure~\ref{fig:anatomised}, we consider the entanglement workflow to begin through the materialization of some state in the system mirroring that in some portion in the world of interest.
+% As we explain in section \ref{sec:externalisation}, opening up the design process requires this mirroring to have an open structure. 
+% Each community of interest will have different concerns that lead them to select different sources of state, and mirror them with different representations.
+% \changed{We require that community statements describing which state is of interest to them, as well as the resulting materialised state, are externalised as openly authorable documents that are available throughout the lifetime of the system, not just an early design phase.}
+
+%We require that both the description of the state to be materialised, as well as the materialised state itself, are externalised as an openly authorable document that is available throughout the lifetime of the system, not just an early design phase.
 \mbl{I find the paragraph pretty jargony. An example would help.}\amb{I agree - I've turned this over a bit but can't think of anything that isn't fairly involved and biased towards Infusion's way of doing things. I'll continue to think and see if we can do something about this section during the review phase}
 
 \subsection{Co-occurrence}\label{sec:co-occurrence}
@@ -281,7 +345,9 @@ The form of co-occurrence is a signal (labelled 3 in Figure~\ref{fig:anatomised}
 
 In a straightforward implementation which has good authorial values, we can then cast the work of the entanglement instantiator as a pure function of the co-occurrence signal, which maps detected co-occurrences into entanglements for as long as they last, and subsequently maps them back into non-existence. This could be described as an ``integral'' model following the terminology of section \ref{sec:externalisation}.
 
-This signal can then be conveniently transported around different sites of a distributed system, allowing the instantiation machinery itself to be implemented wherever it is convenient --- perhaps at sites where computation is economically available, or perhaps where communication with a crucial system element or the user has particularly low latency. This argument supports the externalisation of the co-occurrence signal itself, labelled 3 in Figure \ref{fig:anatomised}. 
+%\pt{The caveat about whether co-occurrence is coextensive with entanglement in all cases might be appropriate as early as this point, and I don't think it should be a footnote.}
+
+This signal can then be conveniently transported around different sites of a distributed system, allowing the instantiation machinery itself to be implemented wherever it is convenient --- perhaps at sites where computation is economically available, or perhaps where communication with a crucial system element or the user has particularly low latency. This argument supports the externalisation of the co-occurrence signal itself, labelled 3 in Figure~\ref{fig:anatomised}. 
 
 %The following workflow stage has the {\it entanglement engine} consume the co-occurrence signal in order to construct entanglement instances.
 
@@ -290,18 +356,24 @@ This signal can then be conveniently transported around different sites of a dis
 %\pt{I am not sure I can distinguish between the positive benefits of externalising the signal versus externalising the description. In the entanglement engine, there is no externalised signal, but the description of the function is a partial substitute. I suppose an externalised signal is salient when we move past a single-device toy setting.}
 
 \subsection{Entanglement}\label{sec:entanglement}
-After a suitable co-occurrence has been recognised and selected for activation by entering it into the co-occurrence signal, it must be acted upon to initiate an interaction. At this point there are various sets of terminology we will use to describe the process, governed by different sets of metaphors. These are elaborated in section \ref{sec:metaphors}, but for the current discussion we will refer to the entity created in order to represent the interaction process as an {\bf entanglement}. The entanglement has a lifetime coextensive with the interaction, and represents it as an addressable element of the system's runtime\footnote{Note that whilst the beginning of the lifetimes of the co-occurrence and entanglement will invariably agree, there may be interaction models in which the entanglement persists beyond the co-occurrence and follows the agents as they diverge, perhaps to be dismissed as a result of some special signal issued by any of the participants.}.
+After a suitable co-occurrence has been recognised and selected for activation by entering it into the co-occurrence signal, it must be acted upon to initiate an interaction. %\pt{This sentence should probably be moved to the beginning of section 4:} 
+At this point there are various sets of terminology we will use to describe the process, governed by different sets of metaphors. These are elaborated in section \ref{sec:metaphors}, but for the current discussion we will refer to the entity created in order to represent the interaction process as an {\bf entanglement}. 
+The entanglement has a lifetime coextensive with the interaction, and represents it as an externally addressable element of the system's runtime.
+
+\changed{Whilst the beginning of the lifetimes of the co-occurrence and entanglement will invariably agree, there may be interaction models in which the entanglement persists beyond the co-occurrence and follows the agents as they diverge.}
+
+\added{One example of such an interaction is manipulating a slider with a mouse cursor, where the initiating co-occurrence is that the cursor and trough overlap, but the drag continues as long as the mouse button is held, even if the cursor moves away from the trough. Note that in this case, the entanglement termination condition could still be best expressed as an externalizable, integral signal, derived from a pure function of the coordinate of the reactants --- just a different such signal than the one bracketing the parent co-occurrence.}
 
 \subsubsection{Externalisation of Entanglement}
 There are some conditions on entanglements (numbered 5 in Figure~\ref{fig:anatomised}) that result from our open authorship goals described in sections \ref{sec:ecology} and \ref{sec:authorship}.
 
 Firstly, entanglements themselves must be first-class elements of the system in their own right --- and capable of giving rise to further co-occurrences and hence entanglements. 
 %If, for example, the underlying paradigm of the design were object-orientation, this would imply that there is an ``entanglement object'' for the lifetime of the interaction that it represents.
-As a result of this, the right-hand side of Figure~\ref{fig:anatomised} leads back into the ``state of the world''.
+As a result, the right-hand side of Figure~\ref{fig:anatomised} leads back into the ``state of the world''.
 
 Externalisation of entanglements allows us to trace what entanglements affect what elements of the world, and vice versa. It also allows entanglements to stretch across all of the externalised world, i.e., they are not bound to only act on the runtime they exist in.
 Crucially, externalising entanglements supports integrating entanglements created by different authors.
-\pt{Though this is not something we have illustrated in action yet}
+%\pt{Though this is not something we have illustrated in action yet}
 
 \renewcommand{\tablename}{Table}
 \renewcommand{\arraystretch}{1.5}%
@@ -332,7 +404,8 @@ Crucially, externalising entanglements supports integrating entanglements create
 
 Our plan caters for a plurality of designs for the co-occurrence and entanglement process, and there are design choices reflecting how much of the signal transformation is performed by the two machines whose descriptions are labelled 2 and 4 in Figure~\ref{fig:anatomised}.
 
-In these sections we will argue for the externalisation of the descriptions of these engines themselves, which arguments will be presented together given the somewhat flexible division of their work.
+In the following sections we argue for the externalisation of the descriptions of these engines themselves. We will present arguments for externalisation of similar design elements at the same time, given the somewhat flexible division of their work.
+\mbl{I don't understand the second part of the previous sentence.}\amb{Reworded - any better?}\mbl{Yes!}
 
 \subsubsection{Workflow Connecting Co-Occurrence to Entanglement}
 In any realistically-sized system, such co-occurrences may be detected with high frequency or even continuously.
@@ -340,7 +413,7 @@ This may require a further round of interaction between the user and the system 
 
 The user could select from a menu of available co-occurrences, perhaps with suggestions emphasising choices that they or members of their community of interest have frequently made in the past. 
 Alternatively, a set of rules, e.g., based on priorities, may choose the suitable co-occurrence automatically.
-In simpler, or classical interactions initiated by means of a dedicated pointing device, it may be appropriate to make the classical choice of initiating any available interactions immediately.
+In simpler, or classical interactions initiated by means of a dedicated pointing device, it may be appropriate to make the choice of initiating any available interactions immediately.
 
 In all cases, an essential component of the descriptions of the co-occurrence engine and entanglement engine themselves determines what combinations of elements they recognise and how they assemble them into an entanglement complex. These parts of their descriptions could be termed {\it recipes} for particular entanglements, using a metaphor we will discuss further in section \ref{sec:metaphors}.
 
@@ -349,7 +422,7 @@ In all cases, an essential component of the descriptions of the co-occurrence en
 
 \subsubsection{Supporting Open Authorship with Recipes}
 We wish to lower the bar to productive use of a community's tools to members of that community as much as possible.
-Within a well-developed ecology of function, it should be possible to ``plug in'' known behaviours with no programming skills necessary.
+Within a well-developed ecology of function, it should be possible to ``plug in'' known \changed{interactions} with no programming skills necessary.
 %Adding and substituting entanglers/recipes is a pragmatically viable way of extending a running system with new interactions, similar to the exchange of buttons containing behaviour as scripts in \emph{Buttons}~\cite{MacLean1990}.
 As a landmark example of what this could look like, \emph{Buttons}~\cite{MacLean1990} allowed users to e-mail each other newly developed tools, which could trivially be arranged in their respective workspaces.
 \emph{Buttons} buttons have slots for configuring parameters and providing input/targets. 
@@ -357,7 +430,7 @@ When interaction is limited to the button-pressing paradigm, that behaviour can 
 Thus, recipes can engage the elements provided by a particular co-occurrence in a reusable entanglement.
 %In our implementations, we have called these descriptions recipes, reactions, or entanglers (Section \ref{sec:metaphors}).
 
-\cite{Edwards2009} provides an instructive example of the value of such recipes.
+\citet{Edwards2009} provides an instructive example of the value of such recipes.
 In the \emph{Obje} project (formerly known as \emph{SpeakEasy}), \citet{Edwards2009} develop an infrastructure to let networked devices be integrated in an ad hoc way by letting them exchange behaviours.
 For example, the \emph{Obje} infrastructure allowed users to control and connect devices on their local network via a PDA browser.
 However \citeauthor{Edwards2009} did not focus on establishing an \emph{Obje} community, or develop infrastructural features for such a community.
@@ -373,12 +446,16 @@ This hypothesis is supported by the success of the tailoring community approach 
 Since this is freshly mapped conceptual territory, several metaphorical structures have been applied to describe the elements operating the interaction process. The base term ``co-occurrence'' is fairly generic and not tightly bound to any particular mapping, but other metaphors for viewing the nature of the process lead to different names for its elements. These are described in the following subsections and illustrated in table \ref{fig:metaphors}.
 
 \subsection{Chemical metaphor}
-In this metaphorical structure, we describe the prerequisites for the interaction as {\it reactants} and the resulting structure representing the live reaction as the {\it product}. This metaphor is helpful in aligning us with the SMIRKS reaction transformation language~\cite{Daylight2008}, developed in order to describe not only the molecules which are required for a particular chemical reaction to proceed, but also the exact relationship between atoms in the product and those in the reactants\footnote{An early precedent for the idea of using chemical reactions as a computational model appeared in~\cite{Berry1992}}. This is helpful as a generalisation of the regular-expression-like SMARTS language for encoding predicates on molecules, as well as showing an example of how declarative and publicly intelligible notations for reactions can be written and operated by a running system. Areas where this metaphor breaks down for us include the fact that chemical reactants are typically consumed during reactions, and the products are fabricated from their components --- whereas for the kinds of reactions we are centrally interested in, the product typically mounts {\it references} to the reactants which are typically unchanged by the process of constructing the product itself (although they may be modified by interactions which occur during the entanglement).
+In this metaphorical structure, we describe the prerequisites for the interaction as {\it reactants} and the resulting structure representing the live reaction as the {\it product}. This metaphor is helpful in aligning us with the SMIRKS reaction transformation language~\cite{Daylight2008}, developed in order to describe not only the molecules which are required for a particular chemical reaction to proceed, but also the exact relationship between atoms in the product and those in the reactants\footnote{An early precedent for the idea of using chemical reactions as a computational model appeared in~\cite{Berry1992}}. This is helpful as a generalisation of the regular-expression-like SMARTS language for encoding predicates on molecules, as well as showing an example of how declarative and publicly intelligible notations for reactions can be written and operated by a running system. Areas where this metaphor breaks down for us include that chemical reactants are typically consumed during reactions, and the products are fabricated from their components --- whereas for the kinds of reactions we are centrally interested in, the product typically mounts {\it references} to the reactants, which are typically unchanged by the process of constructing the product itself \changed{(although being put into this relation may mediate changes in the reactants during the lifetime of the product)}.
+%\pt{This last parenthetical is imprecise: The entanglement in some sense is the interaction. Alternative: `although the product may cause changes in the reactants during its lifetime.' }
+%\amb{Is this comprehensible? The extra words are there because I want to minimise the impression that it is the product itself that might be the agency for the changes}
+%\pt{Looks OK to me.}
 
 \subsection{Quantum metaphor}
 In a metaphor taken from quantum physics, we describe the participants in the reaction complex as being {\it entangled}, and speak of the resulting complex as an {\it entanglement}. The machinery that instantiates and transmits descriptions of these complexes is called an {\it entanglement engine} or {\it entangler}. 
 This metaphor is helpful in situating the purpose of the complex as being primarily informational, and also one that mediates communications and relationships beyond the timeframe of the co-occurrence: in quantum physics, entangled particles interact even after they have been separated, until an external event breaks the entanglement.
 Similarly, two objects may continue to interact after the co-occurrence has ceased to exist, as when continuing to drag a slider even when the cursor moves away from the trough.
+%\pt{We should relate this back explicitly to earlier consideration of whether co-occurrence and entanglement should be coextensive. It would further help that point to give the same example of an interaction that we use here.}
 This metaphor better maps the ``reversible construction'' aspect of the entanglement complex than the chemical metaphor, but provides fewer implementation clues.
 
 %\mbl{This was the old version which, as Philip pointed out, is not accurate}
@@ -450,7 +527,7 @@ The Entanglement Engine mimics the role of the CSS engine in a web browser, tran
 %If a DOM element is added to a web page, the active CSS rules will be applied to attempt to make the element conform to the local style directives
 %Though typical web pages do not operate in this way.
 
-Rather than operate on web documents, the Entanglement Engine is implemented to operate on a structured data world inspired by the DOM, extended to also represent browser-external elements, such as mouse cursors and input devices.
+Rather than operate on web documents, the Entanglement Engine is implemented to operate on a structured data world inspired by the Document Object Model (DOM), extended to also represent browser-external elements, such as mouse cursors and input devices.
 The engine is configured with \emph{entanglers}, which are similar to Co-Occurrence Engine recipes, with a few notable exceptions:
 
 Firstly, if an entangler is triggered, the engine produces an entanglement, a relationship coupling the state of the entangled elements, which are called components. These relationships currently take the form of programming abstractions appropriate to the concrete interaction, e.g., event listeners, reactive functions, state machines~\cite{Appert2006}, etc.
@@ -459,7 +536,7 @@ Secondly, entanglers include a list of predicate functions that must hold before
 These predicates are used to flexibly define different kinds of co-occurrence.
 For example, one entangler may require that its components geometrically overlap, while another may require that one component contains a reference to another.
 
-The set of available co-occurence signals is currently small, but our intent is that entanglers can be configured to trigger based on the signals appropriate to various interaction paradigms, e.g., device proximity for cross-device systems, or gesture detection for gestural interaction. 
+The set of available co-occurence signals is currently small, but our intent is that entanglers can be configured to trigger based on the signals appropriate to various interaction paradigms, e.g., \added{geometric overlap for conventional mouse pointer-based interaction}, device proximity for cross-device systems, or gesture detection for gestural interaction. 
 % Worth going into how a co-occurrence signal can be built out of entanglements? I.e., I have established the notion of focus with entanglers.
 %Spatial model of interaction~\cite{Benford1993}
 
@@ -469,7 +546,7 @@ If triggered opportunistically, this entangler would connect all mice to all pos
 Instead, the entangler is operated by the second entangler in listing \ref{fig:entangler}, \verb|makecursor|.
 \verb|makecursor| triggers when a mouse exists that does not already have a \verb|mousemove| entanglement.
 As mice are added to the system, this entangler creates a new cursor for each mouse and instantiates a new \verb|mousemove| entanglement with them as components.
-Other entanglers allow the created cursors to, e.g., target and moved around elements they overlap.
+Other entanglers allow the created cursors to, e.g., target and move around elements they overlap.
 
 %Different interaction paradigms
 %In this tradition, multiple entanglers have been implemented in order to show a high degree of flexibility in the definition of co-occurrence and to mediate human-computer interactions with varying arity, that is, with varying number and idiom of co-occurring elements.
@@ -508,11 +585,14 @@ Other entanglers allow the created cursors to, e.g., target and moved around ele
 /* An entangler for wiring up something with a position to move with a mouse. */
 export const mousemove = {
     name: 'mousemove',
+    // we will entangle two elements: 
+    // 'mouse', which must have the mouse type, 
+    // and 'moved', which must have an attribute named 'position'
+    // that has the type '2d-coordinate'
     components: {
         mouse : ':mouse',
         moved : '[position:2d-coordinate]'
     },
-    configuration: ['atLeastOneComponentTag'],
     on_start: 'reaction getHash -> moveCursor',
     actions: {
         getHash: function() {
@@ -527,10 +607,12 @@ export const mousemove = {
 /* An entangler that spawns a cursor for each mouse that connects to the system. */
 export const makecursor = {
     name: 'makecursor',
+    // we will entangle one element, 'mouse', which must have the type 'mouse'
     components: {
         mouse: ':mouse'
     },
-    configuration: [[['mouse'], 'hasNoCursor']],
+    // the 'mouse' element should not already be entangled with a cursor
+    configuration: ['mouse hasNoCursor'],
     on_start: 'makeCursor',
     actions: {
         hasNoCursor: function(components) {
@@ -548,7 +630,8 @@ export const makecursor = {
                 targets    : d(':id-list', [])
             });
             /* add it to the document */
-            let cursorMountPoint = findFromNode(components.mouse, ':root', ':renderables')[0];
+            let cursorMountPoint =
+                findFromNode(components.mouse, ':root', ':renderables')[0];
             cursorMountPoint.get('content').push(cursor);
             /* entangle the cursor and the mouse using the mousemove entangler */
             this.entangle({
@@ -559,7 +642,7 @@ export const makecursor = {
     }
 }
 \end{Verbatim}
-\caption{Two Entanglement Engine entanglers \mbl{More comments, especially in the first part, would help.}}
+\caption{Two Entanglement Engine entanglers \pt{Added some comments in the source.}} %\mbl{More comments, especially in the first part, would help.}}
 \label{fig:entangler}
 \end{center}
 \end{table}
@@ -577,31 +660,30 @@ As we note in section \ref{sec:co-occurrence}, not all interactions may be signa
 
 
 \section{Concrete Application Example}\label{sec:sciencedemo}
-\amb{We will make it clear that this is not the "evaluation section" of this paper where we directly evaluate the top-level hypothesis, but instead an exposition of an artefact developed using tools which may support open authorial values through reasonably direct extension of the artefact, as well as being in itself an "open exposition" of the data itself which was materialised through multiple modes}
-
+%\amb{We will make it clear that this is not the "evaluation section" of this paper where we directly evaluate the top-level hypothesis, but instead an exposition of an artefact developed using tools which may support open authorial values through reasonably direct extension of the artefact, as well as being in itself an "open exposition" of the data itself which was materialised through multiple modes}
 Here we will describe how one of our engines, the co-occurrence engine of section \ref{sec:co-occurrenceengine}, has been employed to construct a system and interaction meaningful to end users in a physical context, the Nexus Science Demo\footnote{A video of the demo in action can be found at \url{https://www.youtube.com/watch?v=NNwc0VYRhUU}}. The demo implementation is not at a stage where it substantially meets the goals of open authorship described in section \ref{sec:authorship}, but we describe how our factoring of the interaction process leads to an open, flexible design supporting variant presentations of data collected from dynamic sources and how we plan to extend the design towards more open authoring of interactions.
 
 \subsection{The Nexus Science Demo}
-The goal of the Nexus Science Demo is to explore designs to make science labs more inclusive. We use the GPII Nexus~\cite{GPIINexus} to connect lab sensors to a range of different presentations and interactions. This helps a student pick the interaction that works best for them. For some students this might be a visualisation and for others it might be a sonification, or a combination of different presentations.
+The goal of the Nexus Science Demo is to explore designs that make science labs more inclusive. We use the GPII Nexus~\cite{GPIINexus} to connect lab sensors to a range of different presentations and interactions. This helps a student pick the interaction that works best for them. For some students this might be a visualisation and for others it might be a sonification, or a combination of different presentations.
 
 Drivers for three sensors were developed: a USB pH sensor, a USB electrical conductivity sensor, and a Raspberry Pi based temperature sensor. Six presentations were developed: a numeric dashboard showing the values of all connected sensors, a bar-graph visualisation, a coloured pH visualisation annotated with the values of common substances, a coloured temperature visualisation, a general ranged-value sonification, and a pH sonification.
 
-The sensor drivers work by maintaining peers within the Nexus. When a sensor becomes available (for example by connected a USB based sensor to a computer running a suitable driver, or by adding a Raspberry Pi to the network), a peer is constructed within the Nexus, and a WebSocket connection is established to stream sensor value updates. When a sensor becomes unavailable, the peer is destroyed. In this way, the availability of each sensor is indicated by the presence or absence of a peer within the Nexus.
+The sensor drivers work by maintaining peers within the Nexus. When a sensor becomes available (for example by connected a USB based sensor to a computer running a suitable driver, or by adding a Raspberry Pi to the network), a peer is constructed within the Nexus, and a WebSockets connection is established to stream sensor value updates. When a sensor becomes unavailable, the peer is destroyed. In this way, the availability of each sensor is indicated by the presence or absence of a peer within the Nexus.
 
 \subsection{Co-occurrence for open designs}
 
-The needs of open authorship are a superset of those which lead to open, configurable application designs. We describe how the current science demo supports flexible aggregation of an open collection of live data sources, and then how we plan to 
+The needs of open authorship are a superset of those which lead to open, configurable application designs. We describe how the current science demo supports flexible aggregation of an open collection of live data sources, and then how we plan to extend such designs into systems supporting authorship of such demos supporting the needs of individual learners.
 
 The co-occurrence engine is used to decouple the sensor drivers from the presentations that students use to interact with the data. The sensor drivers need only make their data available and the co-occurrence engine recipes organise the data for the presentations. Presentations expect a central data store with an entry for each sensor, together with metadata such as name and value range. The co-occurrence engine is configured with one recipe per sensor type, each with 2 reactants: the sensor that the recipe is for, and the presentation collection data store. When these reactants are present, the recipe constructs a product that relays the sensor data to the collection data store, in a format expected by the presentations.
 
 The co-occurrence engine facilitates dynamic connection and disconnection of sensors, as student needs change. When a new sensor is connected, the driver will construct a peer for the sensor. The co-occurrence engine will then construct any product components needed to make the sensor data available for presentation. Once the sensor data is available, the student may then select from the available data presentations. When they are finished, they may disconnect the sensor. The driver will destroy the peer and the co-occurrence engine will tear down the products that it had previously set up.
 
 \subsection{Extending the Design}
-The goal of the design work underlying the Science Demo, to feed into the education activities in the FLOE project (\url{https://floeproject.org/}), is to support one-to-one learner customisation. We will build tools not only to allow content authors to author multimodal content for consumption by learners, learners themselves will make custom visualisations and sonifications, presentations of data that are meaningful to them, that they can share and remix with other users. This will form a substrate that we term the ``Materialisation Toolkit''.
+The goal of the design work underlying the Science Demo, to feed into the education activities in the FLOE project\footnote{\url{https://floeproject.org/}}, is to support one-to-one learner customisation. We will build tools not only to allow content authors to author multimodal content for consumption by learners, learners themselves will make custom visualisations and sonifications, presentations of data that are meaningful to them, that they can share and remix with other users. This will form a substrate that we term the ``Materialisation Toolkit''.
 
-\pt{This section is missing the user perspective: How did the participants in the science demo use the co-occurrence engine to co-author the science experiment?}%\mbl{I agree.}
+%\pt{This section is missing the user perspective: How did the participants in the science demo use the co-occurrence engine to co-author the science experiment?}%\mbl{I agree.}
 
-\pt{This is a transcript from the Nexus science demo video which may help explaining the connection between the demo and open authorship: ``So what we think of in an educational context for the applications of this is a kind of multimodal science lab experience where you might have groups of students dealing with common sets of sensors. Because the client side doesn't need to know where the sensor's data is coming from it could be sensors that were adjacent to them or it could be remote sensors being streamed over the internet. so you're dealing with kind of a common set of inputs and then depending on the preferences or the learning styles of any one learner, they might wanna see that as a plain dashboard implementation, they could reinforce that with a sonification, or they can see visualisations like this. Some of the eventual goal of the kind of work we're doing here, which is work that feeds into our education activities in FLOE, is this idea of one-to-one learner customisation. So someone will want to choose the presentation that works best for them. And eventually, with the tools we're building, not only will content authors be authoring multimodal content within these tools for consumption by learners, learners themselves will be making custom visualisations and sonifications, you know, presentations of data that are meaningful to them, that they can share and remix with other learners.''}
+%\pt{This is a transcript from the Nexus science demo video which may help explaining the connection between the demo and open authorship: ``So what we think of in an educational context for the applications of this is a kind of multimodal science lab experience where you might have groups of students dealing with common sets of sensors. Because the client side doesn't need to know where the sensor's data is coming from it could be sensors that were adjacent to them or it could be remote sensors being streamed over the internet. so you're dealing with kind of a common set of inputs and then depending on the preferences or the learning styles of any one learner, they might wanna see that as a plain dashboard implementation, they could reinforce that with a sonification, or they can see visualisations like this. Some of the eventual goal of the kind of work we're doing here, which is work that feeds into our education activities in FLOE, is this idea of one-to-one learner customisation. So someone will want to choose the presentation that works best for them. And eventually, with the tools we're building, not only will content authors be authoring multimodal content within these tools for consumption by learners, learners themselves will be making custom visualisations and sonifications, you know, presentations of data that are meaningful to them, that they can share and remix with other learners.''}
 
 \section{Conclusion}
 We have introduced a new taxonomy for the constituents of interaction, and set new goals that must be met by systems offering it, in order to support open ecologies of use and construction through open authorship. 
@@ -609,9 +691,11 @@ We have introduced a new taxonomy for the constituents of interaction, and set n
 We have argued that our reconception of the process of interaction can support more externalised designs, and a more open set of choices for who can make decisions about how a system should be, and how it is mapped onto the world.
 We have exhibited variant metaphors and variant concrete implementations for such systems, contrasting the relevance of each for different tasks and contexts. 
 
-\pt{We should state how our taxonomy supports the open authorial principle. It does so by establishing a principled mechanism for how interactions come to be. Rather than being written down in source code which is then compiled and made inaccessible in the running software, we describe interactions as something that can be authored in a potential form and dynamically inserted into software As with \emph{Buttons}~\cite{MacLean1990}, we don't yet eliminate the need for programming, but want to establish a paradigm where executing authorial gestures requires skill proportional to their complexity. Bringing together a set of instruments should be trivial, rewriting the behaviour of an instrument should be possible. As compared to \emph{Buttons} we have a more general/lower level model of interaction that can consider interaction as a function of a single thing, but also as a function of a particular combination of things, which is similar to \emph{Obje}.}
-%\mbl{It would be nice indeed to justify how we support open authoring, but maybe this should be done at the end of the paper, once our contributions have been presented.}
+% \pt{We should state how our taxonomy supports the open authorial principle. It does so by establishing a principled mechanism for how interactions come to be. Rather than being written down in source code which is then compiled and made inaccessible in the running software, we describe interactions as something that can be authored in a potential form and dynamically inserted into software. As with \emph{Buttons}~\cite{MacLean1990}, we don't yet eliminate the need for programming, but want to establish a paradigm where executing authorial gestures requires skill proportional to their complexity. Bringing together a set of instruments should be trivial, rewriting the behaviour of an instrument should be possible. As compared to \emph{Buttons} we have a more general/lower level model of interaction that can consider interaction as a function of a single thing, but also as a function of a particular combination of things, which is similar to \emph{Obje}. This latter part is not something we can justify on the back of this paper, but attack head-on in the UIST paper.}
 
+\added{Our goal has been to develop an anatomy of interactions that conforms to the open authorial principle.
+If interactive software is to truly support open ecologies of function and fabrication, interactions should be constructed as additions to an already-existing system.}
+%\mbl{It would be nice indeed to justify how we support open authoring, but maybe this should be done at the end of the paper, once our contributions have been presented.}
 %\mbl{A word about future work?}
 Our implementations are currently at various stages from proof of concept to early prototype.
 The true test of these implementations is going to be integrating them into communities of practice.
