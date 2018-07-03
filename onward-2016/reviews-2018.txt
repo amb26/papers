@@ -1,0 +1,133 @@
+Review #21A
+===========================================================================
+
+Overall merit
+-------------
+2. Weak reject
+
+Reviewer expertise
+------------------
+2. Some familiarity
+
+Paper summary
+-------------
+The paper has two threads through it woven together by the introduction of the “Open Authorial Principle”. This principle states that the “the design should allow the effect of any expression by one author to be replaced by an additional expression by a further author”. The first thread of the paper looks at the different ways one should be able to reuse and extend existing expressions (code), the problems associated with different ways to perform reuse with existing approaches and introduces/describes the Infusion system as a means to overcome limitations of existing reuse mechanisms. The second thread of the paper looks at some of the issues using an algebra of program differences.
+
+Comments for author
+-------------------
+There are many thought provoking ideas in this paper. I liked the concept of the “Open Authorial Principle” and thinking about how it affects how we view, express and work with software.  The recap of different reuse mechanisms and their limitations/issues covered a lot of ground in a small amount of space. However, I have a few hesitations with the paper:
+
+•	The paper doesn’t provide compelling, easily understood examples of how Infusion meets the challenges of Level 3 and 4 reuse, without succumbing to some of the same limitations expressed against other reuse mechanisms. For instance, a limitation stated for aspect-oriented programming is the need to have more than one language: how is Infusion any different? Is there not more than one language at play?
+
+•	The paper doesn’t solidly provide examples of how a more generous model of reuse will “uproot information hiding, function composition and scopes, the program stack, compilers and programming languages in general” (as hinted at in the very first paragraph of the paper). In this way, I didn’t find the paper really explored the idea of changing how we author software, veering instead towards a high-level broad-stroked description of one approach: Infusion.
+
+•	It simply read like the paper is trying to do too much and in doing so, doesn’t provide a tight argument of the intended direction of the work.  For instance, there is reference made to moving away from diff-based approaches to versions to using this new approach but that thought just rather dangles in the paper. 
+
+I would have found the paper to be more accessible if it was more problem-based, i.e., Here is something we should be able to do in reuse that we can’t. Let me now show you how fundamental assumptions built into our languages are limiting us. Here is a new way (open authorial) to think about it…
+
+I really liked Table 3 and did find myself returning to it to situate myself in the paper.  The number of forward references in the paper made me want to sit down and try to restructure the paper to remove so many of them – the author should consider some remodularization of the content in the paper. 
+
+The paper would be stronger if at around page 9 and 10 the focus was on describing some examples of level 3 and 4 reuse with infusion even If many of the details of Infusion are not described. The paper became hard to follow around this point in the paper.
+
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+
+Review #21B
+===========================================================================
+
+Overall merit
+-------------
+3. Weak accept
+
+Reviewer expertise
+------------------
+3. Knowledgeable
+
+Paper summary
+-------------
+This paper posits a programming language design principle: the "Open Authorial Principle", which states that any author should be able to incrementally override anything expressed by other authors. It is claimed that adhering to this principle forces a cascade of non-traditional design decisions in programming languages and tools. Four levels of authorial revision (called reuse) are categorized, corresponding roughly to 1) classic OO, 2) generics and dependency injection, 3) AOP and class hierarhcy inheritance ala Newspeak/Beta and 4) the more general mechanism of the author's Infusion language. A number of examples are presented to explain the differences between these levels and the capabilities of the Infusion language.
+
+The key ideas are that the language is document-structured, encoded in JSON, and offers a modular overriding mechanism called "option distributions" that I would describe as "AOP via CSS" or perhaps "selector-based extension".
+
+Comments for author
+-------------------
+This paper has the sort of deep unconventional thinking we want at Onward, but it is hard to read. The narrative makes many forward references. Concrete details did not come till the very end. I wonder if the attempt to derive everything from a first principle led to writing the paper backwards. You could start with section 6 describing the actual Infusion language and then contrast it with prior languages and discuss principles and implications. As is, the paper is constantly making forward references to explain abstractions before a concrete example has been seen. There were also a number of interesting observations and proposals offered along the way that I wish had been come back to or at least summarized.
+
+Nevertheless there are some tantalizing ideas here. The signature feature of the language is the modularity mechanism that is sort of "AOP via CSS", and should be highlighted up front in the abstract. A significant claim was made on the last page of the paper: "lack of dynamic dispatch does not limit the dynamism ... and in fact makes it easier to quantify and bound this dynamism and hence export it into other environments". That is a major result if you can substantiate it, but we need more than just asserting that it is shown in the example in the appendix. That could be an entire paper.
+
+The "open authorial principle" is an interesting formulation that gets at one of the original motivations for OO languages. The discussion of the principle was nuanced and had some good insights into how language design is situated. Perhaps it deserves it's own essay, presented as a design principle applied to existing languages. As it is, the discussion felt somewhat marched towards justifying Infusion before we really understood what that was.
+
+The paper places great importance on the ability to describe any program delta within the language itself, called an "algebra of program differences". I like this idea a lot, but a fuller account is needed. The merging and resolution mechanisms aren't precisely defined, and appear to be purely additive. What about a delta that deletes something? Or renames something? Or does surgery on the tree structure to wrap or flatten? 
+
+The journal version of the original Traits paper [http://scg.unibe.ch/archive/papers/Duca06bTOPLASTraits.pdf] defines a set of composition operators that might be relevant to your discussion.
+
+I suggest you offer a more descriptive term for "level 4 reuse". Perhaps "query-based extension"?
+
+Typo in section 8.1: "line 20" should be "line 16"
+
+Class hierarchy inheritance was introduced in Beta before Newspeak.
+
+I am sorry if this review seems harsh. I like very much the direction you are going but the way the paper is written will make it hard for many to fully appreciate your ideas. Perhaps you are trying to cram too much into one paper. Please keep trying to communicate your ideas better.
+
+I sign all my reviews: Jonathan Edwards jonathanmedwards@gmail.com
+
+
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+
+Review #21C
+===========================================================================
+
+Overall merit
+-------------
+3. Weak accept
+
+Reviewer expertise
+------------------
+4. Expert
+
+Paper summary
+-------------
+This paper tries to achieve two things: First, it introduces the "Open Authorial Principle" as a motivation for supporting reuse through cross-cutting adaptation of all program artifact. Second, it tries to present "Infusion" (the authors' programming and configuration system) as an implementation adhering to this principle.
+
+Comments for author
+-------------------
+=== Review ===
+
+This paper tries to achieve two things: First, it introduces the "Open Authorial Principle" as a motivation for supporting reuse through cross-cutting adaptation of all program artifact. Second, it tries to present "Infusion" (the authors' programming and configuration system) as an implementation adhering to this principle.
+
+I enjoyed reading the paper. Its particular look at reuse was refreshing. I resonated with the discussed categorization of reuse; the four levels presented, the examples shown, and programming approaches mentioned in that context felt like a good match.
+
+For the assessment and "placement" of Aspect-oriented and Context-oriented Programming, I would suggest to the authors that they also look at more dynamic languages or language extensions offered by the modularity community, since some of them can (in my opinion) largely address Level 4 reuse.
+
+Also the readers might appreciate a more detailed introduction to the "Infusion" language/configuration system to see how it is an improvement of the prior work presented.
+
+While reading the paper, I repeatedly felt that the "Law of Demeter" (LoD) was ignored or disregarded on purpose. In their discussion at for example the beginning of Section 7.1 ("A New Cellular Model"), the authors suggest that for sharing, advertising the internal structure of components is a plus. I would like to see a discussion of this assumption wrt. the LoD.
+
+Some of the listings could be improved by highlighting the parts the audience should focus on. This can help readers not fluent in JavaScript or Infusion to easily recognize was is important there.
+
+=== Minor ===
+
+In Section 3.4 ("Aspect-oriented Programming", p. 6), the symbolic expressions to name points in a design are called "pointcuts" instead of "join-points."
+
+The the end of Section 2.1 ("Toy example - a flowManager", p. 3) and in Section 6 ("Fluid's Infusion System"), there are double the's ("the the").
+
+Also, there is a glitch in numbering listings and referring to them. For example, there are Figure 1s on both p. 3 and p. 10.
+
+=== Related work to consider ===
+
+Karl Lieberherr and Ian Holland. "Assuring Good Style for Object-oriented Programs." IEEE Software, September 1989, pages 38-48.
+
+Karl Lieberherr, Ian Holland, and A. Riel. "Object-Oriented Programming: An Objective Sense of Style." In Proceedings of the Conference on Object-oriented Programming Systems, Languages, and Applications, OOPSLA, pages 323–334, ACM, 1988.
+
+Walter R. Smith. "Using a Prototype-based Language for User Interface: The Newton Project’s Experience." In Proceedings of the Conference on Object-oriented Programming Systems, Languages, and Applications, OOPSLA, pages 61–72, ACM, 1995.
+
+Jens Lincke, Malte Appeltauer, Bastian Steinert, and Robert Hirschfeld. "An Open Implementation for Context-oriented Layer Composition in ContextJS." In Elsevier Journal on Science of Computer Programming, Special Issue on Software Evolution, volume 76, issue 12, pages 1194-1209, Elsevier Science Direkt, 2011.
+
+Robert Hirschfeld, Hidehiko Masuhara, Atsushi Igarashi, and Tim Felgentreff. "Visibility of Context-oriented Behavior and State in L." In Journal of the Japan Society for Software Science and Technology (JSSST) on Computer Software, volume 32, issue 3, pages 149-159, 2015.
+
+Matthias Springer, Fabio Niephaus, Robert Hirschfeld, and Hidehiko Masuhara. "Matriona: Class Nesting with Parameterization in Squeak/Smalltalk." In Proceedings of the Conference on Modularity, Modularity, Málaga, Spain, March 14-17, 2016, ACM.
+
+John Potter, James Noble, and David Clarke. "The Ins and Outs of Objects." In Australian Software Engineering Conference, pages 80–89, IEEE, 1998.
+
