@@ -77,7 +77,7 @@
 
 \maketitle
 \begin{abstract}
-We introduce a new principle, the {\it open authorial principle}, that characterises desirable properties of languages supporting networks of authors. We survey the growth in generosity of authorial systems, in a progression starting with traditional object-orientation, continuing through aspect-oriented, subject-oriented, context-oriented and dependency injection systems, and concluding with the most recent generation of highly dynamic systems such as Korz and Newspeak. We follow the implications of our principle for the externalisation of application designs, resulting from the need to promote the representation of differences between programs as valid programs themselves. This raises conceptual and practical parallels with technologies and idioms supporting the web, such as REST, realised document structures supported by the DOM, and the negotiated space of CSS selectors.
+We introduce a new principle, the {\it open authorial principle}, that characterises desirable properties of languages supporting networks of authors. We survey the growth in generosity of authorial systems, in a progression starting with traditional object-orientation, continuing through aspect-oriented, subject-oriented, context-oriented and dependency injection systems, and concluding with the most recent generation of highly dynamic systems such as Korz and Newspeak. We follow the implications of our principle for the externalisation of application designs, resulting from the need to promote the representation of differences between programs as valid programs themselves. This raises conceptual and practical parallels with technologies and idioms supporting the web, such as REST, realised document structures supported by the DOM, and the negotiated space of CSS selectors. These parallels lead to a quite different organisation for the language and runtime of an openly authorable system, which emphasises a publically addressible cellular structure and a largely static dispatch.
 \end{abstract}
 
 %\category{CR-number}{subcategory}{third-level}
@@ -98,13 +98,13 @@ We propose that supporting this principle is so important that we should uproot 
 
 Our justification for the principle will be a mixture of social, economic and technical concerns which cannot always be cleanly disentangled. Primarily we will argue on the basis of the role we desire software to have in society, rather than from the usual technological or mathematical considerations of correctness, consistency or efficiency. Along the way we will note some of the philosophical, economic and organisational background that has led to the kinds of software that we currently have, and why we consider these justifications inapplicable.
 
-We will revisit the principle from various points of view throughout the paper, and progressively unpack some of its implications. We begin by considering an activity which the principle facilitates, {\it reuse}.
+We will revisit the principle from various points of view throughout the paper, and progressively unpack some of its implications. We begin by considering an activity which the principle facilitates, {\it reuse}. 
 
 \section{Introduction}\label{sec:introduction}
 
 Reuse is the capacity of a design to empower others to continue the design process via extension or adaption. We will look at reuse by following the histories of design artefacts as they pass between the hands of authors whom we see as comprising networks. These histories form what we will call ``authorial stories'' involving authors conventionally labelled $A$, $B$, $C$, etc. in which collection an ``end user'' $E$ is incorporated. The design artefact is composed of what we call the {\it expressions} of the authors, by which we mean whatever they write or whatever gestures they make to convey their design intentions. The resulting design has an {\it effect}, by which we mean the design as experienced by someone in the role of use (e.g.~$E$). Authors who exchange design artefacts are connected by arcs in the network. One example of such a connection is whereby $A$ writes source text that is processed by a compiler lying along the arc, resulting in an executable used by $B$. Another is if $A$ writes a base class which is imported by $B$ in order to produce a derived class by the addition of source text.
 
-Some developments in programming idioms have increasingly supported reuse as supported by our principle, by supporting reuse in richer networks of authors working on artefacts with more complex structuring. In this paper, we will survey a series of increasingly generous idioms which we will categorise into a 4-level hierarchy\footnote{Note that levels 3 and 4 are not strictly nested, but in practice addressing level 4 scenarios seems to entail dealing with those at level 3.} according to the sophistication of the reuse stories that they support, starting with object-orientation at the base level 1, and ending with reuse requirements at level 4 which appear to be economically beyond the capabilities of current systems.
+Some developments in programming idioms have increasingly supported reuse as supported by our principle, by supporting reuse in richer networks of authors working on artefacts with more complex structuring. In this paper, we will survey a series of increasingly generous idioms which we will categorise into a 4-level hierarchy\footnote{Note that levels 3 and 4 are not strictly nested, but in practice addressing level 4 scenarios seems to entail dealing with those at level 3.} according to the sophistication of the reuse stories that they support, starting with object-orientation at the base level 1, and ending with reuse requirements at level 4 which are somewhat economically beyond the capabilities of current systems.
 
 \subsection{Horizons in the network of authors}\label{sec:horizons}
 
@@ -123,7 +123,7 @@ This goal gives rise to what we will call an {\it algebra of program differences
 
 \subsection{Reuse levels}
 
-The following sections will tour our hierarchy of reuse levels, an overview and illustrations of which appear in table \ref{fig:levels}. In this presentation of reuse levels, we will sometimes use the term ``component'' to refer to the design artefacts/elements referenced by the authors' expressions.
+The following sections will tour our hierarchy of reuse levels, an overview and illustrations of which appear in table \ref{fig:levels}. In this presentation of reuse levels, we will sometimes use the term ``component'' to refer to the design artefacts/elements referenced by the authors' expressions. This view of reuse is from the traditional perspective of a developer with direct access to its design elements --- traditionally its source text. We will call this form of reuse ``internal reuse''. Following a wider presentation of the principle in section \ref{sec:principle}, we will then turn to the implications of our principle for users and developers who lie outside the bounds of the running system, and who do not have access to modify its design elements. We will call reuse for these authors``external reuse'' --- all of the considerations of internal use and this hierarchy of levels are in scope, in addition to further considerations of externalisability and system architecture.
 
 \section{Meyerian Reuse - Level 1}\label{sec:meyer}
 
@@ -285,22 +285,18 @@ Creating a template like this requires foresight from $A$: they need to anticipa
 
 Parameterised types are a sufficiently powerful reuse mechanism that they also resolve the aggregation variant of this problem in section \ref{sec:factory} --- it's just as easy for a parameterised type to appear as the type of a member as the type of a base class.
 
-\subsubsection{Containment through private use}
-The point within $\alpha$ where $\beta$ is used may also lie within arbitrary implementation code, rather than a member initialiser appearing in a constructor, and hence the $\beta$ instance does not appear within the class definition. This situation is yet worse than the one before, since we not only have to refactor $\alpha$ but also rewrite it to include some point where parameterisation by {\tt T} may be expressed. This form of ``private reuse'' occurs, for example, whenever two functions are composed using traditional programming language mechanisms, leading to our assertion in the opening paragraph that we would like to see function composition uprooted. \cite{Basman17} follows through this argument in more detail.
-[, proposing that function composition be supplanted by ...]
+\subsubsection{Containment through private use}\label{sec:private}
+The point within $\alpha$ where $\beta$ is used may also lie within arbitrary implementation code, rather than a member initialiser appearing in a constructor, and hence the $\beta$ instance does not appear within the class definition. This situation is yet worse than the one before, since we not only have to refactor $\alpha$ but also rewrite it to include some point where parameterisation by {\tt T} may be expressed. This form of ``private reuse'' occurs, for example, whenever two functions are composed using traditional programming language mechanisms, leading to our proposal in the opening paragraph that we would like to see function composition supplanted by composition in pipelines whose sequence points are given publically addessable names. \cite{Basman17} follows through this argument in more detail, which is taken up again in section \ref{sec:diverge}.
 
-\subsection{Aspect-Oriented Programming}
+\subsection{Aspect-Oriented Programming}\label{sec:aop}
 
 Aspect-oriented programming \cite{Kiczales97} is a solution to level 2 reuse problems which has appeared in some object-oriented languages --- most notably as a decoration to mainstream OO languages such as Java and C++. With AOP, author $B$ is allowed to create a symbolic expression known as a {\it pointcut} to name the point in $A$'s design where $\beta$ is referred to. A further expression known as {\it advice} encodes the modification of the design where $\beta$ is substituted by $\beta'$.
 
-Whilst AOP provides a clear native solution to the level 2 reuse problems presented earlier in this section, it fails with the more demanding level 3 and 4 scenarios we will present in section \ref{sec:demanding}.
-[consider moving rest of paragraph into section 4 after those levels have been defined]
-The key limitation of AOP in these scenarios is that the aspects encoding pointcuts and advice can't be expressed in the base language. This means that modifications of these parts of a design can't be expressed using pointcuts and advice, but requires something new. That is, in the terminology where we elaborate the Open Authorial Principle in section \ref{sec:principle}, the space of AOP expressions {\it fails to be closed}. More primitive expressions of the same intent behind AOP are available in traditional OOP, under the names of ``decorator patterns'' or ``visitor patterns''\cite{Gamma94}. However, as well as suffering from the poor compositional properties of AOP\footnote{It is hard to decorate a decorator, since it has no clear coordinates in the design --- all one can do is add oneself to the chain of decorators attached to the same base artefact.}, these also suffer from the same problem noted against templates in section \ref{sec:templates} --- they may not be deployed without design forethought.
+Whilst AOP provides a clear native solution to the level 2 reuse problems presented earlier in this section, it fails with the more demanding level 3 and 4 scenarios we will present in the following section --- we return to AOP and other more modern approaches to reuse in section \ref{sec:aopcop}.
 
 \section{More Demanding Reuse Scenarios - Levels 3 and 4}\label{sec:demanding}
 
-[I'm finding the use of numbered section refs confusing with the level numbers. Maybe just say 'previous section'?]
-The simple scenario in section \ref{sec:basic}, solved by AOP, DI and similar formalisms, only represents level 2 reuse. In practice, much more demanding scenarios arise quite regularly. For example
+The simple scenario in the previous section, solved by AOP, DI and similar formalisms, only represents level 2 reuse. In practice, much more demanding scenarios arise quite regularly. For example
 \begin{itemize}
 \item Level 3 reuse scenarios involve several authors, $B$, $C$, etc. who have written modifications to modify the same part (e.g. $\alpha$) of $A$'s work. This is not the situation addressed through ``multiple inheritance'' or ``mixins` provided in some flavours of OO since we require $A$'s original expression to be consumed unmodified by $E$, without any further authors who simultaneously want to put $B$'s, $C$'s expressions in scope needing access to a construction point of $\alpha$ or suffering a scaling burden through having to refer to each other's expressions.
 %TODO: This sort of seems like the point at which "failure of closure" emerges but we should note that it also emerges at level 1->level2, from the requirement that the maker of a derived class needs to pick a new name which can't be constructionally or nestedly embedded, etc.
@@ -426,7 +422,6 @@ drawPixel(x, y, c) {
 \end{table}
 
 
-
 \subsection{A Level 4 Reuse Scenario}\label{sec:level4}
 
 We conclude our series of reuse examples from sections \ref{sec:flow1} and \ref{sec:basic} with a more complex example of level 4 reuse. In this author network, author $A$ (originally $B$ in section \ref{sec:flow1}) implemented an ``untrusted {\tt flowManager}'' which was simply hosted on the user's machine. Author $B$ extended $A$'s design to incorporate a remote ``cloudBased {\tt flowManager}'' to factor off just those functions which were relevant within the cloud. Author $C$ then wished to write an integration test which verified the compatibility of $A$ and $B$'s work by aggregated them back into a single local design. $C$ needs to direct overriding configuration at a nested part of $B$'s design, whilst leaving $A$'s untouched. We should stress that this still represents an architecture only at modest rather than extreme scale, currently comprising thousands rather than millions of lines of code. Therefore we feel justified in positioning even level 4 reuse as a standard, everyday level of reusability that every competent architecture should aspire to. In listing \ref{fig:gpii} we see a rendering of this relationship in Newspeak, a modern language offering a powerful reuse mechanism first seen in Beta, named ``virtual classes''.
@@ -480,14 +475,28 @@ class MultiConfig = (
 \vspace*{-0.4cm}
 \end{table}
 
-As we can see, the definitions for author $C$ have become deeply nested, in order to address the structure of the deeply nested artefacts inherited from $A$ and $B$. This doesn't represent economic reuse since the depth of this nesting will increase with the size of the pool of authors and their activities.
-[But the depth grows only logarithmically and I think you said ealier that linear growth was ok?]
-In addition, we could interpret this situation as representing a form of violation of the ``Law of Demeter'' in which authors should not depend on direct structural knowledge of the layout of objects designed by others.
-[ref to Lieberherr]
+As we can see, the definitions for author $C$ have become deeply nested, in order to address the structure of the deeply nested artefacts inherited from $A$ and $B$. This doesn't represent economic reuse since the depth of this nesting will increase with the size of the pool of authors and their activities. In this case, the growth is nominally $n\log(n)$ in the size of the expressions, which is broadly acceptable, but we should note extra ergonomic and design costs incurred through writing deeply nested artefacts. 
 
-One might argue that authors $A$ and $B$ should have factored their definitions more appropriately, arranging to surface the piece of configuration which would eventually need to make its way to $C$ at each stage of reuse. However, as in section \ref{sec:inherit}, we are emphasising the fact that, under the OAP, effective reuse should not necessarily depend on such design anticipation and that we should be able to make some kind of economic use of previous authors' expressions purely through additionality.
+We can interpret this situation as representing a form of violation of the ``Law of Demeter'' (LoD) in which authors should not depend on direct structural knowledge of the layout of objects designed by others. This law was originally stated in the context of classic OOP and governed classical entities such as objects and methods, but we can interpret its intent in terms of more exotic quantities such as author $C$'s virtual classes. In the formulation of \cite{Lieberherr89}, a method should only depend on ``the immediate parts of {\tt self}''. The authors state that such a law produces code which is ``robust with respect to changes in the hierarchy structure'', a goal with which we agree. We note here that if the author of {\tt CloudBasedConfig} had followed standard recommendations on information hiding and made the definition of the relevant internal classes {\tt private} rather than {\tt public}, this reuse would not have been possible at all. We will return to the LoD and this tension between information hiding and reusability in section \ref{sec:domain}.
 
-Our preferred means of resolving such problems appeals to what could be called ``query-based extension''. We would prefer that author $C$ was able to issue a query structured as a selector, which would specify in logical terms the address of the nested definition they wished to adapt, without having to precisely anticipate each layer of containment along the way to it. In this way, the ``algebra of differences'' would enable $C$ to compactly encode differences between program designs in a moderately stable way. Providing capability, however, has cascading implications for many aspects of system and language design that we will begin to elaborate in section \ref{sec:address}.
+One might argue in this example that authors $A$ and $B$ should have factored their definitions more appropriately, arranging to surface the piece of configuration which would eventually need to make its way to $C$ at each stage of reuse. However, as in section \ref{sec:inherit}, we are emphasising the fact that, under the OAP, effective reuse should not necessarily depend on such design anticipation and that we should be able to make some kind of economic use of previous authors' expressions purely through additionality.
+
+\subsection{AOP, COP and Dispatch}\label{sec:aopcop}
+
+In this section we return to AOP as providing successful level 2 reuse, and consider the difficulties it runs into at higher levels, and how more modern techniques such as Context-Oriented Programming (COP) improve on it.
+
+A key limitation of AOP in level 3 scenarios is that the dialect encoding pointcuts is only capable of making use of local, static design information, and furthermore that the results of advice can only take the form of method composition. This makes examples such as Newspeak's \ref{sec:level3-hierarchy} hard to express since the result is an elaborated class definition, and examples such as Korz's \ref{sec:level3-context} are hard to express because the change in dispatch depends on contextual information in a multidimensional way, and the result is wholesale replacement of methods, together with the ability to retain access to definitions from coarser contexts. COP substantially lifts the first restriction --- decisions for adaptation can depend on distant contextual information, and in presentations such as \cite{Lincke11} can also depend on structural runtime information. Some recent variants of COP such as \cite{Springer16} substantially lift the second restriction --- adaptations can take the form of parameterisations of the class hierarchy, via support for the virtual class idiom we saw in Beta and Newspeak.
+
+However, in all of these approaches we see a significant reliance on complex idioms for dispatch. Examination of the system descriptions in \cite{Ungar13}, \cite{Lincke11}, \cite{Bracha10}, etc.~shows complex resolution algorithms which select amongst multiple available implementations of a method using both lexical and dynamic information, and in the COP tradition, are also capable of weaving multiple such into a single, fused execution. In section \ref{sec:dispatch} we will argue that this opposes important goals of the OAP by producing implementations which are hard to distribute into other environments.
+
+%The key limitation of AOP in level 3 scenarios is that the aspects encoding pointcuts and advice can't be expressed in the base language. This means that modifications of these parts of a design can't be expressed using pointcuts and advice, but requires something new. That is, in the terminology where we elaborate the Open Authorial Principle in section \ref{sec:principle}, the space of AOP expressions {\it fails to be closed}. 
+%More primitive expressions of the same intent behind AOP are available in traditional OOP, under the names of ``decorator patterns'' or ``visitor patterns'' \cite{Gamma94}. However, as well as suffering from the poor compositional properties of AOP\footnote{It is hard to decorate a decorator, since it has no clear coordinates in the design --- all one can do is add oneself to the chain of decorators attached to the same base artefact.}, these also suffer from the same problem noted against templates in section \ref{sec:templates} --- they may not be deployed without design forethought.
+
+
+
+\subsection{Query-based extension}
+
+Our preferred means of resolving problems such as those seen in section \ref{sec:level4} appeals to what could be called ``query-based extension''. We would prefer that author $C$ was able to issue a query structured as a selector, which would specify in logical terms the address of the nested definition they wished to adapt, without having to precisely anticipate each layer of containment along the way to it. In this way, the ``algebra of differences'' would enable $C$ to compactly encode differences between program designs in a moderately stable way. Providing this capability, however, has cascading implications for many aspects of system and language design that we will begin to elaborate in section \ref{sec:address}.
 
 Firstly, however, we return to our principle in the light of these examples and consider some more direct aspects of its interpretation and implications for the economics of development.
 
@@ -570,7 +579,7 @@ Following our presentation of an algebra of program differences in section \ref{
 
 In order to operate this algebra in an economically effective manner, we must allow externalisable references from outside an executing system to bind to instances of components in a way which is relatively stable across the variations in design induced by the contribution of author expressions. Our algebra cannot be operated with crude, unstable source-level coordinates such as program line numbers directing where differences are taken from and where they are projected to. We aim to recast the work of programming in terms of a {\it natural coordinate system} in which units of design have meaningful, stable names which identify their location in a fine-grained tree of cells within the design.
 
-[Note that such stable references are also a central problem in Live Programming, typically solved by attaching unique IDs to source locations, either via hidden annotations in a text editor, or using a structure editor that assigns IDs. No good citation for this - it is mostly folk wisdom of the field.]
+%[Note that such stable references are also a central problem in Live Programming, typically solved by attaching unique IDs to source locations, either via hidden annotations in a text editor, or using a structure editor that assigns IDs. No good citation for this - it is mostly folk wisdom of the field.]
 
 This aim leads to the following two properties of components in an OA design:
 
@@ -594,13 +603,11 @@ Our cellular model, thus, imports two vital elements from the idiom of DOM-based
 
 A selection of tree nodes which is to be targeted with some effect or predicate can be stably identified by means of a pattern encoded into a string, with clauses representing intermediate match sites in the tree. These could be structured very similarly to the CSS system. A further precedent for such selectors binding to tree-structured elements is the regular-expression-like SMARTS language for encoding predicates on molecular graphs \cite{Daylight2008}. A bridging analogy considering chemical reactions as a computational model appeared in \cite{Berry1992}. It is these selectors which form the basis for the ``query-based adaptation'' model that we propose for achieving level 4 reuse in section \ref{sec:level4}.
 
-%\footnotetext{for further details, see \cite{Basman16} for ``Queen of Sheba adaptation''.}
-
 \subsubsection{Lifecycle of interactions aligned with component peers}\label{sec:lifecycle}
 
 The DOM is an environment where elements may unpredictably come and go. It's crucial for application integrity that any effects associated with the existence of a node are banished along with its demise. A typical behaviour to maintain integrity is to in some form ``neuter'' such a destroyed element, so that it can no longer participate in making side effects visible to the user. In the DOM parlance, it is ``detached from the document'', and further operations with it remain valid, but can no longer influence the browser's rendering process. A successful OA system needs to behave similarly, and prevent any further dispatch from being serviced on a component which has been destroyed. This is quite at odds with a typical OO approach, in which there is not intended to be any distinct lifecycle state in which an object reference is visible to referrers and in which the object is not considered ``live''. These lifecycle requirements go beyond those of traditional garbage collection because of the situation where a freshly destroyed node may {\it imminently} be targeted by an upcoming effect, say an event notification which is upcoming on the call stack. These requirements would be weakened in a system which adopted a fully asynchronous message-passing idiom as is seen, for example, in Erlang.
 
-In a general-purpose OA system, rather than one which simply represents a display document structure as the DOM, there are yet more complex possibilities for multilateral relationships amongst component nodes. For example, one component may bind an event listener on behalf of another, set up a dataflow relationship between itself and other components, or broadcast adaptations into the tree at large. All of these relationships must be cleanly torn down when the component is destroyed. A realisation of this kind of multi-lateral relationship in such a context appears in the {\it Entanglements} of \cite{Basman18}.
+In a general-purpose OA system, rather than one which simply represents a display document structure as the DOM, there are yet more complex possibilities for multilateral relationships amongst component nodes. For example, one component may bind an event listener on behalf of another, set up a dataflow relationship between itself and other components, or broadcast adaptations into the tree at large. All of these relationships must be cleanly torn down when the component is destroyed. A realisation of this kind of multilateral relationship in such a context appears in the {\it Entanglements} of \cite{Basman18}.
 
 %The lifecycle of components also provides crucial landmarks in {\it time} whereby the scope of dynamic adaptations can be demarcated. We will speak further of this issue in section \ref{sec:dispatch}.
 
@@ -614,15 +621,34 @@ As we identified in section \ref{sec:dom}, the web is a highly evolved and succe
 
 Transferring application state in bulk (externalising sections of an application) has been noted by some authors as highly desirable for many authorial tasks --- for example, \citet{Kell12} notes that several changes in JVM design would be desirable in order to make it more ``observable'' for debugging purposes, and \citet{Clark17} notes that the choices of some MIDI devices to respond to certain messages by simply dumping some memory contents has greatly improved to their longevity and adaptability.
 
-\section{Dynamic Adaptation and Dispatch}\label{sec:dispatch}
+\subsection{Integration Domains and the Law of Demeter}\label{sec:domain}
 
-Following our arguments section \ref{sec:address} on the necessarily cellular structure of successful openly authorable systems, we continue to make yet further indirect deductions from our principle about the strategies such systems should most likely use in place of familiar primitives from object-oriented and live systems.
+It may seem that our recommendations that all design elements be exposed in a structured space of publically addressible names is at odds with a widely accepted maxim of object-oriented design known as the Law of Demeter, which we described earlier in section \ref{sec:level4}. Here we invoke a concept taken from \cite{Kell09}, an ``integration domain'', in order to resolve this apparent discrepancy.
 
-A central feature of every object-oriented system, and those from many other traditions, is its algorithm for{\it dispatch}. This is the means by which the runtime selects amongst multiple available choices for the implementation of a method based on the environment around the call site. Both of the highly adaptible level 3 systems that we surveyed in section \ref{sec:demanding} solved their reuse questions through use of a highly dynamic dispatch --- that is, the runtime performs a complex calculation at the point where an operation is invoked, in order to determine which implementation should be selected. We argue that strongly satisfying the OAP implies that we take a different approach that provides externalisability via static dispatch.
+As defined in \cite{Kell09}, an integration domain in the broadest terms is ``simply a set of languages or tools for performing integration of software''. However, \citet{Kell09} draws up some important properties of such a domain expressed in its purest form:
+\begin{itemize}
+\item It is likely to be less than Turing-powerful, in particular being deficient in looping and other core computational constructs
+\item It will not resemble a conventional language, being declarative and minimal in form
+\item Primarily, it expresses relations between runtime values, predicated on the context in which they occur
+\end{itemize}
 
-Our externalisability obliges us to work with highly heterogeneous architectures, cooperating across machine, process, language and platform boundaries. Rather than distributing agency via the common ``proxy'' model that we describe in section \ref{sec:rest}, we recommend instead what we term the ``avatar'' model, described in \cite{Clark17}, whereby a portion of one system becomes a fully effective representative for a portion of another, for some bounded period of time. This is conformant with the REST model discussed in that section, where entire resources are transferred, rather than answers to limited questions. As a result of this heterogeneity, we are guided towards models of dispatch that are likely to be intelligible and computable in the widest variety of environments; an environment with highly dynamic dispatch cannot be emulated in one without it. As an example, we may find ourselves with highly undynamic peers implemented in languages like C or GLSL shaders.
+We propose an aggressive program to assimilate the functions of traditional programming languages and their component systems, by stratifying them vertically into two parts. On top, we have an integration domain which encodes not only relations between runtime values, but also the structure of any adaptations expressed in the ``virtual class'' idiom seen in section \ref{sec:level4}, using the selector structure described in section \ref{sec:iocss} to predicate the addresses of these relations and the targets of these adaptations. In order to retain the symmetry implied by our ``algebra of differences'', {\it all} component structure is expressed within the integration domain, that is, it encodes all classes as well as virtual classes. Below the integration domain, then, remains a highly impoverished language dialect that just consists of free functions which express any remnant computation that could not be effectively expressed in the integration domain. The free functions in the impoverished language are addressible through stable names in their own global namespace, and each of them obeys the Law of Demeter strongly, in that they are pure functions of their immediate arguments.
 
-How could we expect to implement highly dynamic, context-aware overall applications whilst locally maintaining our commitment to strong externalisability? Drawing again from the fund of techniques inspired by the web technologies discussed in earlier sections, we propose a system based on an equivalence between {\it wholesale adaptation} and {\it differential adaptation}. In just the same way as we propose in section \ref{sec:rest} to interpret messages passed between systems as either wholesale or differential transfers of state, we propose that adaptations of a system be available in both differential and wholesale varieties, where the latter is expensive but can be honoured in environments with poor dynamism, and the former is cheap but requires dynamic, complex runtimes. Under wholesale adaptation, an appreciable part, or the entirety of an implementation is torn down, the dynamic state it accrued during its runtime temporarily stored elsewhere, and it is then rebuilt in the adapted form with the dynamic state reapplied. This model of adaptation is described in \cite{Basman16}, there named ``Queen of Sheba adaptation''.
+By assimilating the power of reference to the addresses of state into an integration domain which is incapable of computation, we thus remove the fragility risks that the LoD was designed to protect against. The remaining expressions in the base language can then satisfy the LoD strongly, and the integration domain itself can satisfy a sublimated form of the LoD by the use of selectors rather than explicit tree paths to the state and components that it addresses.
+
+\section{Implications of Externalised Authoring}\label{sec:dispatch}
+
+Following our arguments section in \ref{sec:address} on the necessarily cellular structure of successful openly authorable systems, we make further inferences about the approaches such open systems should take to implement adaptations and allow agency and authoring to be externalised throughout a distributed system.
+
+\subsection{Avatars imply static dispatch}
+
+A central feature of every object-oriented system, and those from many other traditions, is its algorithm for {\it dispatch}. This is the means by which the runtime selects amongst multiple available choices for the implementation of a method based on the environment around the call site. Both of the highly adaptible level 3 systems that we surveyed in section \ref{sec:demanding} solved their reuse questions through use of a highly dynamic dispatch --- that is, the runtime performs a complex calculation at the point where an operation is invoked, in order to determine which implementation should be selected. We argue that strongly satisfying the OAP implies that we take a different approach that provides externalisability via more static dispatch.
+
+Our externalisability obliges us to work with highly heterogeneous architectures, cooperating across machine, process, language and platform boundaries. Rather than distributing agency via the common ``proxy'' model that we describe in section \ref{sec:rest}, we recommend instead what we term the ``avatar'' model, described in \cite{Clark17}, whereby a portion of one system becomes a fully effective representative for a portion of another, for some bounded period of time. This is conformant with the REST model discussed in that section, where entire resources are transferred, rather than answers to limited questions. As a result of this heterogeneity, we are guided towards models of dispatch that are likely to be intelligible and computable in the widest variety of environments; an environment with highly dynamic dispatch cannot be easily emulated in one without it. As an example, we may find ourselves with highly undynamic peers implemented in languages like C or GLSL shaders.
+
+\subsection{Wholesale adaptation requires transactions}
+
+How could we expect to implement highly dynamic, context-aware overall applications whilst locally maintaining our commitment to strong externalisability? Drawing again from the fund of techniques inspired by the web technologies discussed in earlier sections, we propose a system based on an equivalence between {\it wholesale adaptation} and {\it differential adaptation}. In just the same way as we propose in section \ref{sec:rest} to interpret messages passed between systems as either wholesale or differential transfers of state, we propose that adaptations of a system be available in both differential and wholesale varieties, where the latter is expensive but can be honoured in environments with poor dynamism, and the former is cheap but requires dynamic, complex runtimes. Under wholesale adaptation, a substantial part of an implementation is torn down, the dynamic state it accrued during its runtime temporarily stored elsewhere, and it is then rebuilt in the adapted form with the dynamic state reapplied. This model of adaptation is described in \cite{Basman16}, there named ``Queen of Sheba adaptation''.
 
 There are a few requirements on the implementation in order to make this form of adaptation practical. Firstly, there must be a filtration of its state which allows the dynamic portion of it to be characterised and separated during the period of destruction. This requirement is likely to be met naturally as a result of meeting the requirements for strong externalisability that the OAP already implies. Secondly, there needs to be a capability to prevent observation of the system during the time the wholesale adaptation is in progress. Traditional idioms for such capabilities involve transactions or atomic operations of similar kinds which are familiar from mature persistence technologies.
 
@@ -630,7 +656,9 @@ Closing the circle on our discussion of web technologies, these transactions are
 
 This scheme of allowing successive static systems to ape a dynamic one can be compared to the dynamic $>=$ static idiom of \cite{Edwards13}, or some of the techniques seen within the Generative Programming tradition \cite{Czarnecki00}.
 
-%law of Demeter here? "containment without dependency" as being enabled through an "integration domain"?
+\subsection{Minimising divergence}\label{sec:diverge}
+
+The discussion in this section can be subsumed under a wider one taken from \cite{Basman16}. There, the authors identify that a quantity which needs to be minimised in an OA system is the discrepancy between the state with which it can be authored and the state into which it can be externalised at runtime. In \cite{Basman16} this quantity is named {\it divergence}. Minimising divergence is the underlying reason for the running theme in this paper arguing for more static dispatch --- a system with elaborate method lookup and composition has more elaborate internal coordinates which are hard to expose during execution. Similarly, as we allude in section \ref{sec:private}, the mere use of function composition creates such internal coordinates, as does the use of deeply nested function calls of any kind, these coordinates being stored on the program stack whilst the calls are in progress. Other kinds of divergence are enacted by the storage of references to components transmitted as function arguments, as is commonly seen in patterns such as event listener subscription. Systems with greater divergence impede distribution via the avatar pattern and hence have degraded authorability. The integration domain in an OA system should mediate all such divergent processes by encoding the correspondence between their referents in a declarative form.
 
 \section{Conclusion}
 
@@ -689,9 +717,9 @@ Colin Clark and Antranig Basman {\it Tracing a Paradigm for Externalization: Ava
 \bibitem[Coplien(1995)]{Coplien95}
 James O. Coplien {\it Curiously Recurring Template Patterns} C++ Report: 24--27, 1995.
 
-\bibitem[Costanza(2005)]{Costanza05}
-Pascal Costanza and Robert Hirschfeld {\it Language Constructs for Context-Oriented Programming: an Overview of ContextL}, in: DLS'05: Proceedings of the 2005
-Symposium on Dynamic Languages, ACM, New York, NY, USA, pages 1-10, 2005.
+%\bibitem[Costanza(2005)]{Costanza05}
+%Pascal Costanza and Robert Hirschfeld {\it Language Constructs for Context-Oriented Programming: an Overview of ContextL}, in: DLS'05: Proceedings of the 2005
+%Symposium on Dynamic Languages, ACM, New York, NY, USA, pages 1-10, 2005.
 
 \bibitem[Czarnecki(2000)]{Czarnecki00}
 Krzysztof Czarnecki and Ulrich W. Eisenecker. 2000. Generative Programming: Methods, Tools, and Applications. ACM Press/Addison-Wesley Publ. Co., New York, NY, USA.
@@ -701,9 +729,6 @@ Daylight Chemical Information Systems, Inc. {\it SMARTS - A Language for Describ
 
 \bibitem[Edwards(2013)]{Edwards13}
 Jonathan Edwards, {\it dynamic $=>$ static: type as subtext}, \url{https://vimeo.com/74314050}, 2013
-
-\bibitem[W3C(2002)]{W3C02}
-Philippe Le H\'egaret. ``The W3C Document Object Model (DOM)''. World Wide Web Consortium, 2002 \url{http://www.w3.org/2002/07/26-dom-article.html}
 
 \bibitem[Fielding(2000)]{Fielding2000}
 Roy T. Fielding {\it Architectural Styles and the Design of Network-based Software Architectures}, PhD thesis, University of California, Irvine, 2000.
@@ -716,6 +741,12 @@ Richard P. Gabriel {\it The structure of a programming language revolution}, Pro
 
 \bibitem[Gamma(1994)]{Gamma94}
 Erich Gamma, John Vlissides, Ralph Johnson, and Richard Helm {\it Design Patterns: Elements of Reusable Object-Oriented Software}, Addison-Wesley, 1994
+
+\bibitem[W3C(2002)]{W3C02}
+Philippe Le H\'egaret. ``The W3C Document Object Model (DOM)''. World Wide Web Consortium, 2002 \url{http://www.w3.org/2002/07/26-dom-article.html}
+
+\bibitem[Hirschfeld(2008)]{Hirschfeld08}
+Robert Hirschfeld, Pascal Costanza and Oscar Nierstrasz, {\it Context-Oriented Programming}, Journal of Object Technology, 7 (3): 125--151, March-April 2008.
 
 \bibitem[Nexus(2017)]{Nexus17}
 GPII Team {\it The GPII Nexus}, \url{https://wiki.gpii.net/w/The_Nexus}, 2017.
@@ -735,7 +766,7 @@ gordian-software-has-convinced-me\\
 Alan Kay {\it ``E-Mail of 2003-07-23''. Dr. Alan Kay on the Meaning of ``Object-Oriented Programming''.} \url{http://www.purl.org/stefan_ram/pub/doc_kay_oop_en}, 2003.
 
 \bibitem[Kiczales(1997)]{Kiczales97}
-Gregor Kiczales, John Lamping, Anurag Mendhekar, Chris Maeda, Cristina Videira Lopes, Jean-Marc Loingtier and John Irwin {\it Aspect-oriented programming}. Proceedings of the 11th ECOOP (1997).
+Gregor Kiczales, John Lamping, Anurag Mendhekar, Chris Maeda, Cristina Videira Lopes, Jean-Marc Loingtier and John Irwin {\it Aspect-oriented programming}. Proceedings of the 11th ECOOP, 1997.
 
 \bibitem[Kell(2009)]{Kell09}
 Stephen Kell {\it The mythical matched modules: overcoming the tyranny of inflexible software construction}, Proceedings of the 2009 OOPSLA Companion (Onward), pages 881-888, ACM.
@@ -746,6 +777,12 @@ Stephen Kell, Danilo Ansaloni, Walter Binder and Luk\'a\u{s} Marek {\it The JVM 
 \bibitem[Klokmose(2015)]{Klokmose15}
 Clemens N. Klokmose, James R. Eagan, Siemen Baader, Wendy Mackay and Michel Beaudouin-Lafon {\it Webstrates: Shareable Dynamic Media}, Proceedings of the 2015 UIST, pages 280-290, ACM, New York.
 
+\bibitem[Lieberherr(1989)]{Lieberherr89}
+Karl Lieberherr and Ian Holland {Assuring Good Style for Object-oriented Programs}, IEEE Software, September 1989, pages 38-48, 1989.
+
+\bibitem[Lincke(2011)]{Lincke11}
+Jens Lincke, Malte Appeltauer, Bastian Steinert and Robert Hirschfeld, {\it An open implementation for context-oriented layer composition in ContextJS}, Science of Computer Programming, 76:12, pages 1194-1209, 2011.
+
 \bibitem[Liskov(1988)]{Liskov88}
 Liskov, B. {\it Keynote address - data abstraction and hierarchy}. ACM SIGPLAN Notices. 23 (5): 17–34, 1988
 
@@ -754,6 +791,9 @@ Robert C. Martin {\it The Open-Closed Principle}, C++ Report, January 1996
 
 \bibitem[Meyer(1988)]{Meyer88}
 Bertrand Meyer {\it Object-Oriented Software Construction}, Prentice-Hall, 1988
+
+\bibitem[Springer(2016)]{Springer16}
+Matthias Springer, Fabio Niephaus, Robert Hirschfeld, and Hidehiko Masuharam {\it Matriona: Class Nesting with Parameterization in Squeak/Smalltalk}, In Proceedings of the Conference on Modularity, March 14-17, 2016.
 
 \bibitem[Ungar(2013)]{Ungar13}
 David Ungar and Randall B. Smith {\it The thing on the screen is supposed to be the actual thing} \url{http://davidungar.net/Live2013/Live_2013.html}, 2013.
