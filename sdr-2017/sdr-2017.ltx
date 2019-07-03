@@ -1,4 +1,4 @@
-\documentclass[sigconf]{acmart}
+\documentclass[acmtog]{acmart}
 \usepackage{epsfig}
 \usepackage{natbib}
 \usepackage{booktabs}
@@ -24,6 +24,20 @@
 }
 \newcommand{\tp}[1]{%\textcolor[rgb]{.6, .6, .1}{Tomas: #1}
 }
+
+\setcopyright{none}
+\makeatletter
+\def\@copyrightspace{\relax}
+\def\@copyrightowner{\relax}
+\def\@copyrightpermission{\relax}
+\@printpermissionfalse
+\@printcopyrightfalse
+\@acmownedfalse
+\makeatother
+\settopmatter{printacmref=false}
+\fancyfoot{}
+\renewcommand{\footnotetextcopyrightpermission}[1]{}
+
 
 \copyrightyear{2017} 
 \acmYear{2017} 
@@ -80,11 +94,10 @@ We will situate the concept of an {\bf avatar} (a working simulacrum of part of 
 </ccs2012>
 \end{CCSXML}
 
-\ccsdesc[500]{Software and its engineering~Abstraction, modeling and modularity}
-\ccsdesc[500]{Software and its engineering~Interoperability}
-\ccsdesc[500]{Software and its engineering~Context specific languages}
 
 \maketitle
+
+\thispagestyle{empty}
 
 \section{Avatars}\label{sec:avatars}
 An avatar is a part of a system of which a working simulacrum can be naturally embodied elsewhere. The simulacrum is a functioning replica of the remote system, which can stand in for it to some level of faithfulness without having to ask questions of it at each interaction. The notion of ``naturalness'' we hope to establish, however, cannot be determined by examining properties of a single group of interacting systems. Instead, we will need to consider ecologies of such related systems, their users, and networks of other authors who work with them. By exhibiting different kinds of systems which we consider meet and do not meet our definition, we hope to sharpen understanding of the distinction we are interested in, as well as promote new development techniques that make the implementation of avatars natural and idiomatic.
