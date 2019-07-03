@@ -1,0 +1,192 @@
+\documentclass[acmtog]{acmart}
+\usepackage{epsfig}
+\usepackage{natbib}
+\usepackage{ucs}
+\usepackage{color}
+\usepackage{fancyvrb}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xstring}
+\usepackage{hyperref}
+
+% The titlebox defines how much vertical space is given for
+% the authors' list. If you need extra space to show all the
+% authors, uncomment the line below and increase the value. Please
+% do not make the titlebox smaller than the original size of 5cm.
+%\setlength\titlebox{5cm}
+
+\newcommand{\amb}[1]{%\textcolor[rgb]{.3, .5, .6}{Antranig: #1}}
+}
+\newcommand{\sjb}[1]{%\textcolor[rgb]{.8, .2, .2}{Simon: #1}}
+}
+\newcommand{\pt}[1]{%\textcolor[rgb]{.3, .7, .4}{Philip: #1}}
+}
+\newcommand{\mbl}[1]{%\textcolor[rgb]{.5, .2, 1}{Michel: #1}}
+}
+\newcommand{\changed}[1]{\textcolor[rgb]{.2, .5, 1}{#1}}
+% uncomment to include changes without coloring
+%\renewcommand{\changed}[1]{#1}
+%\setcopyright{none}
+%\makeatletter
+%\def\@copyrightspace{\relax}
+%\def\@copyrightowner{\relax}
+%\def\@copyrightpermission{\relax}
+%\@printpermissionfalse
+%\@printcopyrightfalse
+%\@acmownedfalse
+%\makeatother
+%\settopmatter{printacmref=false}
+%\fancyfoot{}
+%\renewcommand{\footnotetextcopyrightpermission}[1]{}
+
+\begin{document}
+
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10011007.10010940.10010941.10010942.10010948</concept_id>
+<concept_desc>Software and its engineering~Virtual machines</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10011007.10011006.10011008.10011009.10011019</concept_id>
+<concept_desc>Software and its engineering~Extensible languages</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10011007.10011006.10011008.10011024.10011027</concept_id>
+<concept_desc>Software and its engineering~Control structures</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10011007.10011074.10011092.10011691</concept_id>
+<concept_desc>Software and its engineering~Error handling and recovery</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10011007.10010940.10010971.10010972.10010974</concept_id>
+<concept_desc>Software and its engineering~Layered systems</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
+<concept>
+<concept_id>10011007.10010940.10010971.10010980.10010985</concept_id>
+<concept_desc>Software and its engineering~Feature interaction</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
+<concept>
+<concept_id>10010583.10010786.10010787.10010789</concept_id>
+<concept_desc>Hardware~Emerging languages and compilers</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Software and its engineering~Virtual machines}
+\ccsdesc[500]{Software and its engineering~Extensible languages}
+\ccsdesc[500]{Software and its engineering~Control structures}
+\ccsdesc[500]{Software and its engineering~Error handling and recovery}
+\ccsdesc[300]{Software and its engineering~Layered systems}
+\ccsdesc[300]{Software and its engineering~Feature interaction}
+\ccsdesc[300]{Hardware~Emerging languages and compilers}
+
+\copyrightyear{2019}
+\acmYear{2019}
+\setcopyright{acmlicensed}
+\acmConference[Programming '19]{Companion of the 3rd International
+Conference on Art, Science, and Engineering of Programming}{April 1--4,
+2019}{Genova, Italy}
+\acmBooktitle{Companion of the 3rd International Conference on Art, Science,
+and Engineering of Programming (Programming '19), April 1--4, 2019, Genova,
+Italy}
+\acmPrice{15.00}
+\acmDOI{10.1145/3328433.3338057}
+\acmISBN{978-1-4503-6257-3/19/04}
+%\settopmatter{printfolios=true}
+
+%\pagenumbering{gobble}
+
+\title{Critique of `Let Them Fail: Towards VM built-in behavior that falls back to the program'}
+
+% List the authors like you would in a table.
+% The \And command creates another author's column. Use it after the
+% details of one author to separate them from the following author horizontally.
+% The \AND command creates a new "row" of authors and it should be used
+% when the authors don't fit on the same line. You may have to increase
+% the titlebox so that the author's don't overlap with the abstract.
+
+\author{Antranig Basman}
+\affiliation{%
+  \institution{Raising the Floor - International}
+  \city{London}
+  \country{England}
+}
+\email{amb26@ponder.org.uk}
+
+\interfootnotelinepenalty=10000
+
+\begin{abstract}
+We supply a critique of the paper {\it Let Them Fail: Towards VM built-in behavior that falls back to the program}, suggesting directions in which its work of negotiating the boundary between the responsibilities of VMs and their hosted programs can be continued, and questioning our current disciplinary separation between systems and languages research.
+\end{abstract}
+\maketitle
+
+\section{Introduction}
+
+{\it Let Them Fail} analyses the division of responsibilities between virtual machines, hosted applications and language features, particularly in the context of Smalltalk code running within a Squeak VM. The paper makes welcome contributions in several areas:
+\begin{itemize}
+\item Taxonomy of interaction modes available in determining what execution is appropriate when the client of VM services dispatches an ``error''
+\item Speculations about the role of a VM, its “Sphere of Influence” and style of interaction with running programs
+\item A recognition of the independent evolution cycles of VM and programs, how this independence might align with different choices of interaction modes
+\end{itemize}
+
+The taxonomy of interaction modes itself is comprehensive and sound, given the particular framing assumptions in the paper. This critique will focus on these assumptions themselves, and consider how the relationship currently embodied in the separation between VMs and their client programs could be more productively reframed.
+
+\section{An Error Begins a Negotiation}
+
+The paper rightly makes the point that invocation of VM primitives should be the start of a more open negotiation than is the case in many traditionally constructed VMs/runtimes in which an invocation found to be in error causes the VM to bail. The paper surveys nine variants of “fallback behaviour” which can be made available within Smalltalk VMs, when a primitive is found to be “unsuccessful”. However, waiting for the actual ``point of contact'' between an application and the VM, as embodied in a function call made by the former to the latter's API, may well not be the most appropriate integration strategy for honoring many kinds of authorial intention.
+
+There are some concrete cases, for example, where this point of contact may simply occur too late --- consider a client who wishes to express an intention to the VM's virtual memory system that a particular piece of the implementation has weak requirements for user latency and should be pushed out of main memory if this becomes congested. Waiting for a function call to execute implies that the client must already be executing in main memory, defeating its intention. However, there is a much wider space of authorial intentions where ``point of contact'' interactions are inappropriate, since these are only available for inspection and interception by other privileged parties.
+
+Further, the very nature of “errors” themselves is called into question by the treatment of \cite{Petricek2017}. This includes a discussion of the Erlang-inspired ``let it crash'' model of failure handling, echoing the paper's title itself, but more importantly tries to move beyond the ``Algol research programme'' model of an error as something which could be excluded from the design of a correct system by means of proof. Instead, one thread of the discussion positions errors not as an end to an interaction, but instead just the beginning of a negotiation between a group of interacting authors on the expected meaning and behaviour of a computational artefact.
+
+\section{Helicopter VM or Fire and Forget?}
+
+{\it Let Them Fail} quietly invokes the notion of an intrusive, intolerant and constantly hovering ``helicopter parent'' in its metaphor for the relationship between a VM and its hosted processes. It rightly argues that VMs should share more responsibility for the correct operation of the system with the programs they are running. However, it may be that the VM's operation needs to be more tightly integrated with those of its programs and not less. The VM ends up operating an intolerant model for failure because of the necessarily arms-length nature of integration that is possible via APIs. In many important cases it cannot be informed of unwelcome developments or violation of contracts until it is too late.
+
+The ``Spheres of Influence'' discussion in the paper thus quietly embeds some paradigmatic assumptions:
+
+\begin{itemize}
+\item That this is a hierarchical relationship of just two parties
+\item That authorial intents are encoded by expressions directly written in source text under full control of one party
+\end{itemize}
+
+Going beyond the integration model entertained by the paper, a key approach would hoist richer metadata about the expectations of “primitives” out of the VM/OS into an integration domain \cite{Kell2009} where these may be brokered against the expectations of invokers, providing a richer and more open structure than can be achieved by relying on {\it post facto} runtime failures alone.
+
+Continued questioning of the mediating role of the operating system is found in \cite{Kell2013}, which does indeed seek the “lurking Smalltalk” latent within today’s actual operating systems, and considers what might be necessary to mature these binding and integration facilities into a holistic system.
+
+\section{Authorial Roles Amongst Systems and Programs}
+
+Further developing his thought on how richer networks of metadata may be orchestrated into an integration domain which coordinates the relationships of components interacting at a system level, 
+\citep{Kell2015} identifies as latent within Unix some courtesies which are not typically considered part of its specification but in practice are built up to support a breadth of authorial roles (in practice often driven by the debugging role), including:
+
+\begin{itemize}
+\item An explanation and ontology for the contents of memory
+\item Facilities for introspection and interception
+\end{itemize}
+
+Smalltalk VMs such as Squeak supply many of these courtesies, but in practice the breadth of roles that can be supported by an API integration model are limited. 
+
+As a low-level example of a limitation of embodying the integration relationship as an API separating a 2-party ecosystem composed of ``VMs'' and ``programs'', consider the relationship of primitive built-in behaviour and fallback code described in the paper. This fallback process can only be initiated in the case the VM service provider has first signalled an error due to the preferred implementation not being available. This implies a fixed pipeline of choices among the interacting parties --- unless the service provider raises an error, the fallback cannot be selected. Considering, for example the case in section 3.6, one could imagine situations where this might not be appropriate. One author has produced a native, fast primitive that is optionally available, and another has implemented a fallback. Now imagine that a third author wants to declare that, despite the fast primitive being available, they nonetheless prefer to activate the so-called “fallback” (perhaps it performs the FFT with greater accuracy). \cite{Basman2018} is a useful presentation of modelling authorial networks of this kind, and their economics.
+
+\section{Language Primitives at a System Level}
+
+What consideration of this pipeline suggests is that what is being modelled is a kind of dispatch, plus a form of method combination --- approaches to which there are a huge wealth of in the literature. To start with, the context-oriented programming framework of \cite{Lincke2011} is an interesting scheme for modelling such dispatch and the potential for plural influences on it --- it would be highly interesting to see a treatment considering this at the scope of an entire VM and its contained applications. Other approaches to plural dispatch include the “symmetric dimensions of context” approach of Korz \cite{Ungar2014} and Bracha’s Newspeak \cite{Bracha2010}. Each of these approaches offers some limited capability to remedy the power imbalance between these participants rather than the “in-code” approach to remedying an already encoded decision to reject execution taxonomised in the paper.
+
+The difficulty is that this wealth of literature lies in a discipline which is considered distinct from the subject--matter of the paper. \cite{Gabriel2012} reflects on the unwelcome historical process by which ``systems'' work came to constitute a separate discipline from ``languages'' work, and how these disciplines started to address their respective problems in different ontologies and in different venues. The result is that it becomes hard even for members of the same research group to fruitfully consume each others' work if they lie on different sides of this disciplinary divide. 
+
+\section{Conclusion}
+The dominant integration schemes for system-level components involve a 2-party ``point of contact'' idiom in which the parties are connecting by an API embodied as a function call, which may then make a regular return, or signal an error. These schemes are authorially inhibiting and result in systems which fail to put the complete capabilities of the system at the disposal of the user, as a result of the opaque nature of this boundary and its lack of timely operation. We need richer ontologies of live, system-level metadata to describe interacting systems within an integration domain in the sense of \cite{Kell2009}, dissolving the particular kinds of boundaries separating processes, applications and OS components. In such a scheme, the disconnection between system-level and language-level descriptions of system activity will be healed, allowing both for transparent reasoning about the behaviour of systems as a whole, together with system-level adaptations which can reach into parts of a design traditionally considered the preserve of programming languages.
+
+\bibliography{refs}
+\bibliographystyle{ACM-Reference-Format}
+\end{document}
