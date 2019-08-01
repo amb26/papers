@@ -1,0 +1,74 @@
+\usepackage{listings}
+% documentation: http://distrib-coffee.ipsl.jussieu.fr/pub/mirrors/ctan/macros/latex/contrib/listings/listings.pdf
+
+% Javascript style definition
+% customized from https://mysnippets443.wordpress.com/2015/11/28/latex-insert-javascript-code-with-lstlisting-package/
+% see also http://tex.stackexchange.com/questions/89574/language-option-supported-in-listings/89576
+\definecolor{lstcomments}{rgb}{0,0.6,0}
+\definecolor{lstnumbers}{rgb}{0.5,0.5,0.5}
+\definecolor{lststrings}{rgb}{0.58,0,0.82}
+
+%Customize a bit the look
+\lstset{ %
+backgroundcolor=\color{white}, % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+basicstyle=\tiny \ttfamily,% \sffamily, % \ttfamily, % the size and family of fonts that are used for the code
+% frustratingly, we apparently can't ask for a font that is both fixed-width and sans-serif
+breakatwhitespace=false, % sets if automatic breaks should only happen at whitespace
+breaklines=true, % sets automatic line breaking
+captionpos=b, % sets the caption-position to bottom
+commentstyle=\color{lstcomments}, % comment style
+deletekeywords={...}, % if you want to delete keywords from the given language
+escapeinside={\%*}{*)}, % if you want to add LaTeX within your code
+extendedchars=true, % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+% frame=single, % adds a frame around the code
+keepspaces=true, % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+columns=fullflexible,
+keywordstyle=\color{blue}, % keyword style
+% language=Octave, % the language of the code
+morekeywords={*,...}, % if you want to add more keywords to the set
+numbers=left, % where to put the line-numbers; possible values are (none, left, right)
+numbersep=5pt, % how far the line-numbers are from the code
+numberstyle=\tiny\color{lstnumbers}, % the style that is used for the line-numbers
+rulecolor=\color{black}, % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+showspaces=false, % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+showstringspaces=false, % underline spaces within strings only
+showtabs=false, % show tabs within strings adding particular underscores
+stepnumber=1, % the step between two line-numbers. If it's 1, each line will be numbered
+stringstyle=\color{lststrings}, % string literal style
+tabsize=2, % sets default tabsize to 2 spaces
+title=\lstname, % show the filename of files included with \lstinputlisting; also try caption instead of title
+% belowskip=-0.8 \baselineskip % cut the large vertical space after each listing
+}
+%END of listing package%
+ 
+\definecolor{lstndkeywords}{rgb}{.4,.4,.4}
+% \definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+ 
+%define Javascript language
+\lstdefinelanguage{JavaScript}{
+keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break, class, extends, constructor, set, get, let},
+keywordstyle=\color{blue}\bfseries,
+ndkeywords={export, boolean, throw, implements, import, this},
+ndkeywordstyle=\color{lstndkeywords}\bfseries,
+identifierstyle=\color{black},
+sensitive=false,
+comment=[l]{//},
+morecomment=[s]{/*}{*/},
+morestring=[b]',
+morestring=[b]"
+}
+
+\lstdefinelanguage{CSS}{
+  keywords={color,background-image:,margin,padding,font,weight,display,position,top,left,right,bottom,list,style,border,size,white,space,min,width, transition:, transform:, transition-property, transition-duration, transition-timing-function, background-color, pink},	
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  alsoletter={:},
+  alsodigit={-}
+}
+ 
+\lstset{
+language=JavaScript
+}

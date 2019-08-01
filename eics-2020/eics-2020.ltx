@@ -1,0 +1,455 @@
+%%
+%% This is file `sample-authordraft.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% samples.dtx  (with options: `authordraft')
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% For the copyright see the source file.
+%% 
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from sample-authordraft.tex.
+%% 
+%% For distribution of the original source see the terms
+%% for copying and modification in the file samples.dtx.
+%% 
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+%%
+%% The first command in your LaTeX source must be the \documentclass command.
+% \documentclass[acmsmall,anonymous,authordraft]{acmart}
+\documentclass[acmsmall,anonymous]{acmart}
+
+%%
+%% \BibTeX command to typeset BibTeX logo in the docs
+\AtBeginDocument{%
+  \providecommand\BibTeX{{%
+    \normalfont B\kern-0.5em{\scshape i\kern-0.25em b}\kern-0.8em\TeX}}}
+
+%% Rights management information.  This information is sent to you
+%% when you complete the rights form.  These commands have SAMPLE
+%% values in them; it is your responsibility as an author to replace
+%% the commands and values with those provided to you when you
+%% complete the rights form.
+\setcopyright{acmcopyright}
+\copyrightyear{2018}
+\acmYear{2018}
+\acmDOI{10.1145/1122445.1122456}
+
+%% These commands are for a PROCEEDINGS abstract or paper.
+\acmConference[EICS '20]{The 12th ACM SIGCHI Symposium on Engineering Interactive Computing Systems}{June 23-26}{Sophia Antipolis, France}
+\acmBooktitle{EICS '20: ACM Symposium on Engineering Interactive Computing Systems,
+  June 23--26, 2020, Sophia Antipolis, France}
+\acmPrice{15.00}
+\acmISBN{978-1-4503-9999-9/18/06}
+
+\input{javascript}
+
+% render non-ASCII characters
+\usepackage[utf8]{inputenc}
+\usepackage{xspace}
+% draw circles around letters
+\usepackage{tikz}
+\usepackage{multicol}
+
+\usepackage{listings}
+% \lstset{showspaces=true, showtabs=true, tab=\rightarrowfill}
+\lstset{tabsize=2} % does nothing because we have spaces and not tabs in code snippets
+\captionsetup[lstlisting]{position=top}
+
+\newcommand{\cnk}[1]{\textcolor[rgb]{.3, .5, .6}{Clemens: #1}}
+
+\newcommand{\pt}[1]{\textcolor[rgb]{.3, .7, .4}{Philip: #1}}
+
+\newcommand{\mbl}[1]{\textcolor[rgb]{.5, .2, 1}{Michel: #1}}
+
+\newcommand{\ab}[1]{\textcolor[rgb]{.1, .5, 1}{Antranig: #1}}
+
+% uncomment to remove author comments
+\renewcommand{\pt}[1]{}
+\renewcommand{\mbl}[1]{}
+\renewcommand{\ab}[1]{}
+\renewcommand{\cnk}[1]{}
+
+\newcommand{\changed}[1]{\textcolor[rgb]{.2, .5, 1}{#1}}
+\newcommand{\added}[1]{\textcolor[rgb]{.1, .3, 1}{#1}}
+% uncomment to include changes without coloring
+\renewcommand{\changed}[1]{#1}
+\renewcommand{\added}[1]{#1}
+
+\newcommand{\todo}[1]{\textbf{TODO: #1}}
+% uncomment to remove TODOs
+\renewcommand{\todo}[1]{}
+
+%% Add here your own macros
+% It's a good idea to have one for the name of your system/technique/...)
+\newcommand{\Buttons}[0]{\emph{Buttons}\xspace}
+\newcommand{\Arch}[0]{co-occurrences $+$ entanglements} % pick a consistent pluralization and stick with it
+\newcommand{\Sys}[0]{\textsf{T\textsc{angler}}\xspace}
+\newcommand{\SYS}[0]{Tangler\xspace}
+
+\newcommand*{\eg}{e.g.\@\xspace}
+\newcommand*{\ie}{i.e.\@\xspace}
+\newcommand*{\vs}{vs.\@\xspace}
+
+\makeatletter
+\newcommand*{\etal}{%
+    \@ifnextchar{.}%
+        {et~al}%
+        {et~al.\@\xspace}%
+}
+\newcommand*{\etc}{%
+    \@ifnextchar{.}%
+        {etc}%
+        {etc.\@\xspace}%
+}
+\makeatother
+
+\newcommand*\circled[1]{\raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {\textsf{{#1}}}}}}
+
+
+
+%%
+%% Submission ID.
+%% Use this when submitting an article to a sponsored event. You'll
+%% receive a unique submission ID from the organizers
+%% of the event, and this ID should be used as the parameter to this command.
+%%\acmSubmissionID{123-A56-BU3}
+
+%%
+%% The majority of ACM publications use numbered citations and
+%% references.  The command \citestyle{authoryear} switches to the
+%% "author year" style.
+%%
+%% If you are preparing content for an event
+%% sponsored by ACM SIGGRAPH, you must use the "author year" style of
+%% citations and references.
+%% Uncommenting
+%% the next command will enable that style.
+%%\citestyle{acmauthoryear}
+
+%%
+%% end of the preamble, start of the body of the document source.
+\begin{document}
+
+%%
+%% The "title" command has an optional parameter,
+%% allowing the author to define a "short title" to be used in page headers.
+\title[Co-Occurrences and Entanglements]{Co-Occurrences and Entanglements:\\A Programming Model for Open-Ended Interactive Software}
+
+%%
+%% The "author" command and its associated commands are used to define
+%% the authors and their affiliations.
+%% Of note is the shared affiliation of the first two authors, and the
+%% "authornote" and "authornotemark" commands
+%% used to denote shared contribution to the research.
+\author{Philip Tchernavskij}
+\email{ptcher@lri.fr}
+\affiliation{
+\institution{LRI, Université Paris-Sud}
+\city{Paris}
+\country{France}
+}
+
+\author{Antranig Basman}
+\email{amb26@ponder.org.uk}
+\affiliation{
+\institution{Raising the Floor, International}
+\city{London}
+\country{United Kingdom}
+}
+
+\author{Clemens Nylandsted Klokmose}
+\email{clemens@cavi.au.dk}
+\affiliation{
+\institution{Institute of Communication and Culture, Aarhus University}
+\city{Aarhus}
+\country{Denmark}
+}
+
+\author{Michel Beaudouin-Lafon}
+\email{mbl@lri.fr}
+\affiliation{
+\institution{LRI, Université Paris-Sud}
+\city{Paris}
+\country{France}
+}
+
+%%
+%% By default, the full list of authors will be used in the page
+%% headers. Often, this list is too long, and will overlap
+%% other information printed in the page headers. This command allows
+%% the author to define a more concise list
+%% of authors' names for this purpose.
+\renewcommand{\shortauthors}{Tchernavskij et al.}
+
+%%
+%% The abstract is a short summary of the work to be presented in the
+%% article.
+%%%
+\begin{abstract}
+% End users must generally accept interactive systems as-is, with little or no ability to modify, add or remove artifacts such as commands, interaction techniques or input devices.
+Tools for creating highly adaptable software, such as live programming environments, enable the ongoing adaptation of an interactive systems to fit diverse and changing use situations.
+However, state-of-the-art adaptable environments provide limited support for adaptations that affect how objects interact with each other.
+By contrast to other types of system refinement, these kinds of adaptations tend to be more rigid and brittle, because they create strong couplings among formerly independent elements.
+We present a programming model that alleviates this issue by turning interaction adaptations into first-class citizens independent of the objects they orchestrate.
+This model is based on \emph{co-occurrences}, the prerequisite conditions for interactions to take place, and \emph{entanglements}, the temporary coupling and interplay among elements of an interaction.
+We describe \Sys, a proof-of-concept implementation of this model, and demonstrate its power and generality with two adaptation scenarios.
+\end{abstract}
+
+%%
+%% The code below is generated by the tool at http://dl.acm.org/ccs.cfm.
+%%
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10003120.10003121.10003126</concept_id>
+<concept_desc>Human-centered computing~HCI theory, concepts and models</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10003120.10003121.10003129.10011756</concept_id>
+<concept_desc>Human-centered computing~User interface programming</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Human-centered computing~HCI theory, concepts and models}
+\ccsdesc[500]{Human-centered computing~User interface programming}
+
+\keywords{Interaction Architectures, Malleable Software, Tailorability.}
+
+
+%% A "teaser" image appears between the author and affiliation
+%% information and the body of the document, and typically spans the
+%% page.
+% \begin{teaserfigure}
+%   \includegraphics[width=\textwidth]{sampleteaser}
+%   \caption{Seattle Mariners at Spring Training, 2010.}
+%   \Description{Enjoying the baseball game from the third-base
+%   seats. Ichiro Suzuki preparing to bat.}
+%   \label{fig:teaser}
+% \end{teaserfigure}
+
+%%
+%% This command processes the author and affiliation and title
+%% information and builds the first part of the formatted document.
+\maketitle
+\subsection{One to Two Mice}
+\label{sec:OneToTwoMice}
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{images/MouseToCursorBehavior.pdf}
+  \caption{The behavior associating mice and cursors before and after the desired adaptation.}
+  \label{fig:MouseCursorBehavior}
+\end{figure}
+
+The task is to adapt a \Sys instance that is configured to use a single mouse cursor (as in any modern operating system) so that it instead has uses a different cursor for each mouse plugged into the computer.
+Before the adaptation, a single cursor will no matter how many mice are plugged in, and the movements of each mouse will be mapped to that cursor (figure~\ref{fig:MouseCursorBehavior}, left).
+The adaptation must provide the ability to map each mouse to a different cursor, creating and destroying the cursors as the mice are plugged in and unplugged (figure~\ref{fig:MouseCursorBehavior}, right).
+
+Listing~\ref{lst:MousePolicy} shows the code implementing the initial mouse policy.
+\textsf{defs.mouseEntanglement} defines the cursor, its location, and the means of connecting each mouse to the cursor.
+
+\begin{figure}
+\begin{lstlisting}[multicols=2]
+tangler.define('defs.cursor', {
+  parentType: 'tangler.viewComponent',
+  model: {
+    position: {
+      x: 0,
+      y: 0
+    },
+    radius: '10 px'
+  },
+  draw: 'defs.drawCursor'
+});
+
+tangler.define('defs.mouseEntangler', {
+  parentType: 'tangler.entangler',
+  conditions: [
+    'mouse matches :mouse'
+  ],
+  entanglementTemplate: {
+    name: 'mouseExists',
+    type: 'defs.mouseEntanglement',
+    options: {
+      mouse: '{source}.mouse',
+    }
+  }
+});
+
+tangler.define('defs.mouseEntanglement', {
+  parentType: 'tangler.coOccurrence',
+  distributeOptions: {
+    // create a cursor at the constant location {ui}.cursor
+    // '{ui}' resolves to a component under the root component, 
+    // which contains all elements in the "interface" layer.
+    // redundant instances of this distribution have no effect
+    createCursor: {
+      record: 'defs.cursor',
+      target: '{ui}.options.components.cursor.type'
+    }
+  },
+  components: {
+    // mirror the created cursor locally
+    cursor: '{ui}.cursor',
+    // create a transducer connecting 
+    // the detected mouse and created cursor
+    transducer: {
+      type: 'defs.mouseCursorTransducer',
+      options: {
+        components: {
+          mouse: '{that}.mouse',
+          cursor: '{ui}.cursor'
+        }
+      }
+    }
+  }
+});
+
+tangler.define('defs.mouseCursorTransducer', {
+  parentType: 'tangler.component',
+  distributOptions: {
+    forwardMouseEvents: {
+      record: {
+        'device-mousedown': '{coOccurrence}.cursor.events.device-mousedown',
+        // ... additional forwarded events omitted ...
+      },
+      target: '{coOccurrence}.cursor.events'
+    }
+  },
+  modelRelays: {
+    // cursor.position = cursor.position + mouse.delta
+    // rules using un-invertible transforms work one way
+    cursorAccumulatesMouse: {
+      target: '{that}.cursor.model.position',
+      transform: {
+        x: {
+          transformType: 'tangler.add',
+          left: '{that}.mouse.model.delta.x',
+          right: '{that}.cursor.model.position.x'
+        },
+        y: {
+          transformType: 'tangler.add',
+          left: '{that}.mouse.model.delta.y',
+          right: '{that}.cursor.model.position.y'
+        }
+      }
+    }
+  }
+});
+\end{lstlisting}
+\captionof{lstlisting}{The initial mouse policy}
+\label{lst:MousePolicy}
+\end{figure}
+
+The key to this adaptation is to replace it with a component that can dynamically instantiate different cursor configurations depending on the particular mouse that it is created for.
+To accomplish this, we create a record that maps a mouse identifier, which identifies the hardware model, to a type defining the appropriate configuration (listing~\ref{lst:MouseEntanglement}).
+
+\begin{figure}
+\begin{lstlisting}[multicols=2]
+tangler.define('defs.bimanualMouseEntanglement', {
+  parentType: 'tangler.coOccurrence',
+  mouseToCursorMap: { 
+    'mouse-1133-49232': 'defs.rightHandCursorConfiguration',
+    'mouse-1149-4099': 'defs.leftHandCursorConfiguration',
+    // 'default' value is returned for invalid keys
+    // this creates a ``catchall'' cursor for additional mice
+    'default': 'defs.genericCursorConfiguration'
+  },
+  components: {
+    cursorConfiguration: {
+      // rather than provide a static type name here, 
+      // resolve one dynamically based on the mouse id.
+      // the array-form path avoids ambiguous parsing
+      type: ['{that}', 'mouseToCursorMap', '{that}.mouse.id'],
+      options: {
+        components: {
+          mouse: '{that}.mouse'
+        }
+      }
+    }
+  }
+});
+
+tangler.define('defs.rightHandCursorConfiguration', {
+  parentType: 'tangler.component',
+  distributeOptions: {
+    createCursorRemotely: {
+      record: 'defs.cursor',
+      target: '{ui}.options.components.rightHandCursor.type'
+    },
+    mirrorCursorLocally: {
+      record: '{ui}.rightHandCursor',
+      target: '{that}.options.components.cursor'
+    }
+  },
+  components: {
+    transducer: {
+      type: 'defs.mouseCursorTransducer',
+      options: {
+        mouse: '{that}.mouse',
+        cursor: '{that}.cursor',
+      }
+    }
+  }
+});
+
+// ... Other cursor configurations omitted ...
+\end{lstlisting}
+\captionof{lstlisting}{The mouse entangler}
+\label{lst:MouseEntanglement}
+\end{figure}
+
+The last step is to add a component to the mouse entangler that replaces the old entanglement with the new one (listing~\ref{lst:MouseDistributor}).
+
+\begin{figure}
+\begin{lstlisting}
+tangler.define('defs.bimanualMousePolicyDistributor', {
+  parentType: 'tangler.component',
+  distributeOptions: {
+    setMousePolicy: {
+      record: 'defs.bimanualMouseCoOccurrence',
+      target: '{mouseEntangler}.entanglementTemplate.type'
+    }
+  }
+});
+
+tangler.make('root.mouseEntangler.options.components.mousePolicy', 'defs.bimanualMousePolicyDistributor');
+\end{lstlisting}
+\captionof{lstlisting}{The mouse distributor}
+\label{lst:MouseDistributor}
+\end{figure}
+
+\subsubsection{Analysis}
+This example illustrates the generality and power of our model.
+In particular, it demonstrates how entanglers can extend the space of variation of an interactive system in a robust way:
+the result of this adaptation is a system that provides a meaningful interface whether there are zero or more mice plugged in.
+% \mbl{I am not sure I buy this sentence:}
+% In this sense, \Sys supports not only adaptable systems but also \emph{adaptive} ones.
+% \todo{A short paragraph about why this is an interesting example adaptation. For one, it is out of scope for most toolkits/environments, which consider devices and the cursor to be from the outside world. Two, it shows off a good case for our "interaction as the product of a reactive function" approach, in that the system both constructs and deconstructs neatly as mice come and go. Relatedly, it is an example of a meaningful hand-off between adapting programmers and end users: once this code is added, there is no need to run code to instantiate special instances of things, the system simply changes in this way. This code could realistically come with a generic Tangler instance.}
+
+In the above example, \textsf{defs.rightHandCursorConfiguration} applies the same cursor and transducer types to each new mouse as the original setup.
+In practice it would likely be customized, at a minimum to visually distinguish the right- and left-hand cursors.
+This would not have to happen immediately however, as the new cursors may be customized independently by distributing further options to them.
+
+\mbl{This sounds a bit terse in terms of analysis.}
+
+%%
+%% The next two lines define the bibliography style to be used, and
+%% the bibliography file.
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{refs}
+
+
+\end{document}
+\endinput
+%%
+%% End of file `sample-authordraft.tex'.
