@@ -1,15 +1,41 @@
-\documentclass[english,submission,utf8]{programming}
-%% First parameter: the language is 'english'.
-%% Second parameter: use 'submission' for initial submission, remove it for camera-ready (see 5.1)
+%%
+%% This is file `sample-manuscript.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% samples.dtx  (with options: `manuscript')
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% For the copyright see the source file.
+%% 
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from sample-manuscript.tex.
+%% 
+%% For distribution of the original source see the terms
+%% for copying and modification in the file samples.dtx.
+%% 
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+%%
+%% The first command in your LaTeX source must be the \documentclass command.
+%%%% Small single column format, used for CIE, CSUR, DTRAP, JACM, JDIQ, JEA, JERIC, JETC, PACMCGIT, TAAS, TACCESS, TACO, TALG, TALLIP (formerly TALIP), TCPS, TDSCI, TEAC, TECS, TELO, THRI, TIIS, TIOT, TISSEC, TIST, TKDD, TMIS, TOCE, TOCHI, TOCL, TOCS, TOCT, TODAES, TODS, TOIS, TOIT, TOMACS, TOMM (formerly TOMCCAP), TOMPECS, TOMS, TOPC, TOPLAS, TOPS, TOS, TOSEM, TOSN, TQC, TRETS, TSAS, TSC, TSLP, TWEB.
+% \documentclass[acmsmall]{acmart}
 
-%\usepackage[utf8]{inputenc}
-%\usepackage[english]{babel}
-\usepackage[square,numbers]{natbib}
-\bibliographystyle{abbrvnat}
-%\usepackage[backend=biber]{biblatex}
-%\addbibresource{bibliography.bib}
+%%%% Large single column format, used for IMWUT, JOCCH, PACMPL, POMACS, TAP, PACMHCI
+% \documentclass[acmlarge,screen]{acmart}
 
+%%%% Large double column format, used for TOG
+% \documentclass[acmtog, authorversion]{acmart}
 
+%%%% Generic manuscript mode
+\documentclass[sigconf,screen]{acmart}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{csquotes}
 %
 % Packages and Commands specific to article (see 3)
 %
@@ -17,8 +43,33 @@
 \definecolor{deepblue}{rgb}{0,0,0.5}
 \definecolor{deepred}{rgb}{0.6,0,0}
 \definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{P@Blue}{rgb}{0.3,.5,1}
+\definecolor{P@ColorOnBlue}{gray}{.95}
+\definecolor{P@GrayFG}{named}{darkgray}
+\definecolor{P@GrayBG}{gray}{.90}
 
 \usepackage{listings}
+
+% \renewcommand*\P@listingnumbersfont{\sffamily\small\color{P@GrayFG!40}}
+
+\lstset{%
+  basicstyle=\small\ttfamily,%
+  columns=fullflexible,
+  extendedchars=true,
+  upquote=true,
+  captionpos=t,
+  backgroundcolor=\color{P@GrayBG},%
+  breaklines=true,
+  postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{P@Blue}\hookrightarrow\space}},
+  numbers=left,
+  numberstyle=\P@listingnumbersfont,
+  numbersep=.5em,
+  frame=single,
+  framerule=0pt,
+  numberstyle=\sffamily\small\color{P@GrayFG!40}}
+% \lst@AddToHook{FontAdjust}{\P@CodeSetup}
+% \lst@AddToHook{DisplayStyle}{\def\baselinestretch{1}\@currsize}
+% \lst@AddToHook{TextStyle}{\lstset{breaklines=false}}
 
 % Python style for highlighting
 \lstset{%
@@ -65,58 +116,131 @@ stringstyle=\color{deepgreen},
 %\textcolor[rgb]{.1, .5, 1}{Antranig: #1}
 }
 
+\newcommand{\added}[1]{%
+\textcolor[rgb]{.2, .5, .9}{#1}
+}
+
+\newcommand{\changed}[1]{%
+\textcolor[rgb]{.0, .2, .6}{#1}
+}
+
+\newcommand{\smallerfootnote}[1]{\footnote{\smaller{#1}}}
+%%
+%% \BibTeX command to typeset BibTeX logo in the docs
+\AtBeginDocument{%
+  \providecommand\BibTeX{{%
+    \normalfont B\kern-0.5em{\scshape i\kern-0.25em b}\kern-0.8em\TeX}}}
+
+%% Rights management information.  This information is sent to you
+%% when you complete the rights form.  These commands have SAMPLE
+%% values in them; it is your responsibility as an author to replace
+%% the commands and values with those provided to you when you
+%% complete the rights form.
+
+%%% If you see 'ACMUNKNOWN' in the 'setcopyright' statement below,
+%%% please first submit your publishing-rights agreement with ACM (follow link on submission page).
+%%% Then please update our instructions page and copy-and-paste the NEW commands into your article.
+%%% Please contact us in case of questions; allow up to 10 min for the system to propagate the information.
+%%%
+%%% The following is specific to <Programming'20> Companion-CCS and the paper
+%%% 'Escaping the Prison of Style'
+%%% by Antranig Basman and Philip Tchernavskij.
+%%%
+\copyrightyear{2020}
+\acmYear{2020}
+\setcopyright{acmcopyright}\acmConference['20]{Conference Companion of the 4th International Conference on the Art,
+Science, and Engineering of Programming}{March 23--26, 2020}{Porto, Portugal}
+\acmBooktitle{Conference Companion of the 4th International Conference on the Art, Science, and Engineering of
+Programming ('20), March 23--26, 2020, Porto, Portugal}
+\acmPrice{15.00}
+\acmDOI{10.1145/3397537.3397548}
+\acmISBN{978-1-4503-7507-8/20/07}
+
+
+%%
+%% Submission ID.
+%% Use this when submitting an article to a sponsored event. You'll
+%% receive a unique submission ID from the organizers
+%% of the event, and this ID should be used as the parameter to this command.
+%%\acmSubmissionID{123-A56-BU3}
+
+%%
+%% The majority of ACM publications use numbered citations and
+%% references.  The command \citestyle{authoryear} switches to the
+%% "author year" style.
+%%
+%% If you are preparing content for an event
+%% sponsored by ACM SIGGRAPH, you must use the "author year" style of
+%% citations and references.
+%% Uncommenting
+%% the next command will enable that style.
+%%\citestyle{acmauthoryear}
+
+%%
+%% end of the preamble, start of the body of the document source.
 \begin{document}
 
+%%
+%% The "title" command has an optional parameter,
+%% allowing the author to define a "short title" to be used in page headers.
 \title{Escaping the Prison of Style}
-% \subtitle{}% optional
-% \titlerunning{How to Evaluate Programming Tools for Authorial Openness} %optional, in case that the title is too long; the running title should fit into the top page column
 
+%%
+%% The "author" command and its associated commands are used to define
+%% the authors and their affiliations.
+%% Of note is the shared affiliation of the first two authors, and the
+%% "authornote" and "authornotemark" commands
+%% used to denote shared contribution to the research.
 \author{Antranig Basman}
-\authorinfo{is a software developer, mathematician and technology theorist. He is the owner of an indolent, well-travelled cat. Contact him at
-  \email{amb26@ponder.org.uk}.}
-\affiliation{Raising the Floor, International}
-\author{Philip Tchernavskij}
-\authorinfo{is a computer-mediated activity researcher and computer scientist. He is in an inter-employment and -residence limbo. Contact him at \email{philip@tcher.tech}.}
-\affiliation{Inclusive Design Research Center, OCAD University}
-
-% \authorrunning{T. Pape, C. Lopes, R. Hirschfeld} % Optional, for long author lists
-
-\keywords{programming styles, programming paradigms, open authorship, software evolution, convivial computing} % please provide 1--5 keywords
-
-
-%%%%%%%%%%%%%%%%%%
-%% These data MUST be filled for your submission. (see 5.3)
-\paperdetails{
-  %% perspective options are: art, sciencetheoretical, scienceempirical, engineering.
-  %% Choose exactly the one that best describes this work. (see 2.1)
-  perspective=art,
-  %% State one or more areas, separated by a comma. (see 2.2)
-  %% Please see list of areas in http://programming-journal.org/cfp/
-  %% The list is open-ended, so use other areas if yours is/are not listed.
-  area={Social Coding, General-purpose programming},
-  %% You may choose the license for your paper (see 3.)
-  %% License options include: cc-by (default), cc-by-nc
-  % license=cc-by,
+\affiliation{%
+  \institution{Raising the Floor, International}
+  \city{London}
+  \country{England}
 }
-%%%%%%%%%%%%%%%%%%
+\email{amb26@ponder.org.uk}
 
-%%%%%%%%%%%%%%%%%%
-%% These data are provided by the editors. May be left out on submission.
-%\paperdetails{
-%  submitted=2016-08-10,
-%  published=2016-10-11,
-%  year=2016,
-%  volume=1,
-%  issue=1,
-%  articlenumber=1,
-%}
-%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Please go to https://dl.acm.org/ccs/ccs.cfm and generate your Classification
-% System [view CCS TeX Code] stanz and copy _all of it_ to this place.
-%% From HERE
- \begin{CCSXML}
+\author{Philip Tchernavskij}
+\affiliation{%
+    \institution{Inclusive Design Research Centre, OCAD University}
+    \city{Toronto}
+    \state{ON}
+    \country{Canada}
+}
+\email{ptchernavskij@ocadu.ca}
+
+
+
+
+%%
+%% By default, the full list of authors will be used in the page
+%% headers. Often, this list is too long, and will overlap
+%% other information printed in the page headers. This command allows
+%% the author to define a more concise list
+%% of authors' names for this purpose.
+\renewcommand{\shortauthors}{Antranig Basman and Philip Tchernavskij}
+
+%%
+%% The abstract is a short summary of the work to be presented in the
+%% article.
+\begin{abstract}
+% Through a critical reading of the notion of ``style'' in our dominant programming cultures, we seek support for our notion of authorially open programming practices.
+We seek support for our notion of authorially open programming practices through a critical reading of the notion of ``style'' in our dominant programming cultures.
+We argue that this popular notion of programming style is inescapably infused with values which diverge from those of its supposed analogues in areas such as literary and artistic expression.
+By examining the discourse around and technical distinctions between programming styles, we reveal their fundamentally different nature in structuring dialogues between the writers of computational artefacts and those who experience them.
+Programming styles are predominantly discussed in inward-facing terms, i.e.~with regard only to the experience of programmers with privileged access to the source code.
+Regardless of their chosen style, programs consist of ``imprisoned expressions'', built of design elements cut off from access to the program which executes in the world.
+We construct a miniature integration language, still bounded within the space of existing programming language styles, to solve an open authorship problem, and observe that the increased open ownership of expressions has come at a significant usability cost. 
+We fail to escape the prison, and reflect that our own dialogue remains predominantly inward-facing, due to the lack of proper materials and vocabulary to put communities into correspondence.
+\pt{``lack of proper materials and vocabulary'' sounds a bit weasely to me. Who beset us with this lack? I think some of this reflection is what's meant to be taking place in the penultimate section, but then again it seems to me that section says ``our experiment fails to bring us very close to our stated goals because so much of the machinery isn't there'', whereas it feels like the previous sentence in the abstract is saying ``this paper only deals with communities in the abstract because so much of the machinery isn't there''.}\amb{But both of those would be true - we can largely only deal with communities in the abstract just because we can't go very far towards our stated goals. Are you primarily concerned that we don't link these points together? I mean, I personally deal with the community of SIMOUN in the concrete but the way I do so has to be so distant from our theory (using a crusty old version of Infusion and some half-cobbled tools to manually lens together a bunch of CSV files) that it would be irrelevant to try to talk about the relationship in a venue like this. So personally I do not feel myself a weasel :P)}
+We look forward to more convivial venues and idioms for expressing computational artefacts, with more equal relationships between the ecologies of construction and ecologies of use.
+\end{abstract}
+
+%%
+%% The code below is generated by the tool at http://dl.acm.org/ccs.cfm.
+%% Please copy and paste the code instead of the example below.
+%%
+\begin{CCSXML}
 <ccs2012>
 <concept>
 <concept_id>10011007.10011006</concept_id>
@@ -145,75 +269,159 @@ stringstyle=\color{deepgreen},
 \ccsdesc[500]{Software and its engineering~Software evolution}
 \ccsdesc[300]{Software and its engineering~Collaboration in software development}
 \ccsdesc[300]{Software and its engineering~Software notations and tools}
-% To HERE
-%%%%%%%%%%%%%%%%%%%%%%%
 
+%%
+%% Keywords. The author(s) should pick words that accurately describe
+%% the work being presented. Separate the keywords with commas.
+\keywords{programming styles, programming paradigms, open authorship, software evolution, convivial computing} % please provide 1--5 keywords
+
+%%
+%% This command processes the author and affiliation and title
+%% information and builds the first part of the formatted document.
 \maketitle
-
-% Please always include the abstract.
-% The abstract MUST be written according to the directives stated in 
-% http://programming-journal.org/submission/
-% Failure to adhere to the abstract directives may result in the paper
-% being returned to the authors.
-\begin{abstract}
-  We follow the received notion of ``style'' in programming, which is implicitly argued to share many of the values of the quantity of the same name in other areas of human expression, such as literary and artistic expressions. We argue that this is not so, and that this correspondence obscures the essential imbalance in power relations in the ecologies surrounding computational artefacts, and also the fundamentally different nature of these styles in structuring dialogues amongst participants. We consider instead that efforts in cataloguing varieties of ``programming styles'' merely succeed in capturing variation amongst imprisoned expressions. We construct a miniature integration language, still bounded within the space of existing programming language styles, to solve an open authorship problem, and observe that the increased open ownership of expressions has come at a significant usability cost. We look forward to more convivial venues and idioms for expressing computational artefacts, with more equal relationships between the ecologies of construction and ecologies of use.
-% In programming, it is implicit in the notion of a ``style'' that distinctions in the methods of shaping artefacts are only of interest to the initial creators of those artefacts, and not to any of the extended network of authors and users who will be involved with them subsequently.
-% This conception of style obscures the imbalance in power relations between the privileged first-order authors of programs and everyone else.
-% We argue that styles in many other fields consider simultaneously the values of artefacts for all the audiences involved in their life cycles, and investigate what it might be like for programming styles to do so as well.
-\end{abstract}
 
 \section{Introduction}
 \label{sec:introduction}
 
-The notion of ``style'' in programming has emerged by analogy from other disciplines, such as literature, the visual arts, and arguably more closely related ones such as architecture and civil engineering. The term may be taken in a narrower or a wider sense, more narrowly referring to more incidental details of expression such as formatting, naming and granularity of structure. This narrow sense is mostly followed by \citet{Kernighan1982} which is a compendium of maxims aimed at producing designs whose code is more easily readable by programmers, and which are more likely to execute more reliably, efficiently and behave better under maintenance.
+We join this workshop's call for more convivial digital tools, that is, software that \enquote{can be easily used, by anybody, as often or as seldom as desired, for the accomplishment of a purpose chosen by the user.}~\cite{Illich1973}.
+We immediately reflect that conviviality can only be derived from the relations or process surrounding an artefact rather than read off from its directly observable properties.
+We are concerned by the role existing programming tools and techniques have in excluding large groups of users from convivial relationships mediated by their tools~\cite{Basman2017,Basman2018PPIG}.
+The vast majority of users of software must choose between off-the-shelf products that may or may not fit their cognitive, physical, and social needs, and are additionally constrained by the fact that they and their collaborators already use many such products that are often incompatible with each other at various levels.
+Having access to the skills of an expert programmer does little to alleviate these issues, because software is generally constructed in a manner that effectively excludes anyone but its original authors and their peers from participating in the design process.
+This is less an intentional behaviour on the part of developers, and more an assumption that has become progressively embedded in our tools and best practices through the historical development of the mode of software production~\cite[section 2.6]{Tchernavskij2019}.
+% \pt{Describe broad notion of the mode of production.}
+% \pt{that's a bold claim, which is fine, but less fine is that it sounds as if this is intentional, whereas it is a mix of intent and at this point deeply embedded constraint. I'd like to not rerun the whole argument here again though.}
 
-More ambitious is Lopes' \citep{Lopes2014} survey of programming styles in a wider sense. She goes beyond the kind of bookkeeping details mentioned above and looks at more substantial details of how computations are organised and expressed. Inevitably, this involves the consideration of entire programming languages which were constructed with the goals of particular programming styles built-in. 
+We want to bring about the opposite situation, in which creative networks are empowered to curate, share, modify, and combine digital tools of interest to them at a cost they can afford.
+Approaches to this goal have been referred to variously as continuing design~\cite{Clark2018}, open authorship~\cite{Basman2018Onward}, and malleable software~\cite{Tchernavskij2019}.
+In this paper, we apply the lens of open authorship in particular, which is defined by the principle that all programs should remain open to ongoing (re-)design by an evolving network of users.
+% \pt{More concrete here: open authorship is about facilitating the practical possibility of external reuse.}
+The open authorial principle states that any design decision made by one author can be modified by contributing an additional expression from another author --- without the need to rewrite the first author's expression~\cite{Basman2018Onward}. 
+It implies a programming practice mediated by \emph{external composition}, that is, the ability to superimpose programs by actions taken out in the world, rather than those which require privileged access to source materials. 
+% relations among multiple communities of technologists 
+% we believe external composition can strength conviviality when multiple communities are bound together by 
+% external composition provides for the possibility that multiple communities sharing programs but having different particular needs may each own and manage their subsets of 
+%any software of significant complexity is shared between communities who contribute to software over time, and may diverge in their requirements
+% this removes the link between ownership and access, 
+Complex and/or long-lived software typically has several communities of authors and users, whose requirements for the software may diverge over time.
+External composition has the potential for strengthening conviviality in these circumstances, since these communities should be able to reflect their local requirements in artefacts owned and maintained by themselves.
+By virtue of moving the point where artefact composition occurs outside the boundary of one development team or organisation, we avoid centring this community as the broker of all relations that are mediated by the artefacts.
+% Conviviality is strengthened in designs built through external composition, where community relations can be directly reflected into artefacts owned by the communities. 
+% By virtue of moving the point where artefact composition occurs outside the boundary of one community (technologists), we avoid centring this community as the broker of all relations that are mediated by the artefacts.
 
-Lopes' survey consists of an evolving set of sample programs written in Python to solve the same task\footnote{At the time of writing, 40 different styles are collected at \url{https://github.com/crista/exercises-in-programming-style}} and an accompanying book describing each style, discussing its trade-offs, and suggesting programming exercises, such as comparing different styles, or extending one of the samples with additional behavior~\citep{Lopes2014}.
-The chosen task is to load a text as input and produce as output a list of the 25 most frequent words in the text, in descending order of frequency.
+Naturally this decentering is accompanied by economics reflecting the relative empowerment or disempowerment of the related communities. 
+Without external composition, variant designs are achieved by means of negotiation around a centralized code base --- 
+this is highly costly and excludes marginalized communities of authors and users, whose requirements are irrelevant or counterproductive to the majority.
+Correspondingly, we believe external composition is an essential mechanism for changing these economics.
 
-We consider Lopes' book and survey to be an excellent illustration of what the phenomenon of ``programming styles'' encompasses for the majority of computer scientists and programmers today.
-The survey illustrates the overlap between notions such as language paradigms, models of computation, and hardware constraints:
+% we conventionally describe our goals in terms of economics, but here we will discuss them in terms of culture
+% who is a valid speaker? who is allowed to speak?
+
+% In contrast, under private , rather than being conformed into a ``one size fits all'' industrial idiom where a community is cast into the role of ``users''. 
+% rather than being conformed into an industrial idiom where any community relying on a program can affect the program's functionality by having their changes folded into the centrally managed code base.
+%Without external composition mechanisms, software mediates
+%even modest changes to software requires the user to convince its developers to take their personal requirements into account\footnote{We discuss the economics of modifying software in more detail in~\cite{Basman2018PPIG}}.
+%This promotes 
+%industrial, rather than convivial, relations, where ``users'' can at best affect which one size should fit all. 
+
+%Under convivial relations, the communities of writers and readers are put into correspondence, rather than being cut off from one another. 
+
+%We deduce that conviviality cannot be achieved if our acts of building are not expressed through external composition, since otherwise communities cannot be put into relation by them.
+% The current lack of external composition mechanisms significantly shapes the experience of anyone desiring to build on existing software.
+% They must obtain the same access to and knowledge of the source programs as their original programmers. 
+
+
+% not this, obviously, but something like it
+% I should re-establish the link to conviviality at least.
+
+This paper is a reflection on how the goals of open authorship fit within the current dialectics of programming practice and computer science, i.e.~the distinctions, value judgements, and trade-offs that programmers consider important to their work.
+The focal point of our reflection is the notion of programming styles.
+
+% \pt{In this essay we will look at one byproduct of the mode of production, in the dialectics of programming styles.}
+
+\section{Our subject of reflection}
+The notion of style in programming has emerged by analogy from other disciplines, such as literature, the visual arts, and arguably more closely related ones such as architecture and civil engineering. 
+The term may be taken in a narrower or a wider sense, more narrowly referring to incidental details of expression such as formatting, naming and granularity of structure, and more widely referring to the primitive mechanisms and organisation of computation.
+
+One canonical illustration of the narrow sense is Kernighan and Plauger's \emph{The Elements of Programming Style}~\citep{Kernighan1982}.
+This book -- a pastiche of Strunk and White's \emph{The Elements of Style}~\citep{Strunk1959} -- is a compendium of maxims primarily aimed at producing programs that are more easily readable by programmers. 
+%, and which are more likely to execute more reliably, efficiently and behave better under maintenance.
+These maxims are illustrated through a series of narrated refactoring exercises, using code samples taken from programming textbooks.
+The refactorings are concerned with use of comments, naming, repetition, indirection through sub-procedures, etc.
+% they are not about which algorithm is chosen but about how well that algorithm is expressed
+Kernighan and Plauger thus frame style as communicative clarity, something that a given program can have more or less of.
+
+In her book \emph{Exercises in Programming Style}~\citep{Lopes2014}, Lopes surveys programming styles in a wider sense. 
+She goes beyond the kind of bookkeeping details mentioned above and looks at more substantial details of how computations are organised and expressed. 
+In her interpretation of ``style'', Lopes combines notions such as models of computation, language paradigms, and architectural patterns.
+For example, there are styles representing programming with stack machines, spreadsheets, and Haskell-esque monads.
+Lopes argues that these phenomena in practice overlap and interact:
 
 \begin{quote}
     [T]here is a continuum in the spectrum of how to write programs that goes from the concepts that the programming languages encourage/enforce to the combination of program elements that end up making up the program; languages and patterns feed on each other, and separating them as two different things creates a false dichotomy.~\cite[p. xii]{Lopes2014}
 \end{quote}
 
+Lopes' survey consists of set of sample Python programs written in different styles to solve the same task\footnote{At the time of writing, 41 different styles are collected at \url{https://github.com/crista/exercises-in-programming-style}} and accompanying descriptions of each style, discussions of their trade-offs, and suggested programming exercises, such as comparing different styles, or extending one of the samples with additional behaviour~\citep{Lopes2014}.
+The chosen task is to load a text as input and produce as output a list of the 25 most frequent words in the text, in descending order of frequency.
+
+We consider Lopes' book and survey to be an excellent illustration of what the phenomenon of programming styles encompasses for the majority of computer scientists and programmers today.
+We believe it does a fair job of reflecting the trade-offs and value judgements that actual programmers consider in justifying one style over another.
+% We read it as a compressed history or travelogue of the available techniques in programming.
+Thus, it forms a good basis for our exercise, to discuss what these reveal about programming as an authorial practice.
+
 % \pt{Check if you actually agree with these distinctions. Also maybe we want to note how the simplicity of the survey sometimes works against it, e.g., styles such as ``RESTful'' don't do a good job of representing the benefits of that approach, because the programming task is not in the domain of web apps}\amb{I think this is fine. I do pile in against the superficial nature of the exhibition of some the styles in section 6, but I'm wondering whether we have room to pile in on what is most likely a side issue}
-Next, we discuss what Lopes' work reveals about programmers' assumptions about the expressive space of programming, and what kinds of value judgements and distinctions are helpful in navigating that space.
+% Next, we discuss what Lopes' work reveals about programmers' assumptions about the expressive space of programming, and what kinds of value judgements and distinctions are helpful in navigating that space.
 
-\section{These styles delineate the boundary of a prison}
-% and that the phenomenon of style mapped out by Lopes reveals deeply embedded issues with how the discipline of programming conceptualizes itself.
+\section{A seeming diversity, a common problem}
+% \pt{Write this to more clearly present the connection between technique -- imprisoned expression -- and culture -- closed authorial networks.}
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{style-output.png}
+    \caption[An example of one of the sample programs from~\cite{Lopes2014} in use, here style 9, ``The One'']{An example of one of the sample programs from~\cite{Lopes2014} in use, here style 9, ``The One''%
+    \footnotemark}
+    \label{fig:style_output}
+\end{figure}
 
-We join this workshop's call to make digital tools more convivial, i.e. making software that \enquote{can be easily used, by anybody, as often or as seldom as desired, for the accomplishment of a purpose chosen by the user.}~\cite{Illich1973}
-We are concerned by the role existing tools and techniques for creating, maintaining, and using programs have in excluding large groups of users from having convivial relationships to their tools~\cite{Basman2017,Basman2018PPIG}.
-The vast majority of users of software must choose between off-the-shelf products that may or may not fit their cognitive, physical, and social needs, and are additionally constrained by the fact that they and their collaborators already use many such products that are often incompatible with each other at various levels.
-Having access to the skills of an expert programmer does little to alleviate these issues, because software is constructed to exclude all but its original authors from participating in the design process.
-This is less an intentional behaviour on the part of developers, and more an assumption that has become progressively embedded in our tools and best practices~\cite[section 2.6]{Tchernavskij2019}.
-% \pt{that's a bold claim, which is fine, but less fine is that it sounds as if this is intentional, whereas it is a mix of intent and at this point deeply embedded constraint. I'd like to not rerun the whole argument here again though.}
+Figure~\ref{fig:style_output} illustrates the view of one of Lopes' sample programs ``from the outside''.
+\footnotetext{\url{https://github.com/crista/exercises-in-programming-style/blob/master/10-the-one}. Note that we refer to the style numbers and names used in the book~\cite{Lopes2014}, which do not always match the ones used in the GitHub repository.}
+It receives a text file from standard input and prints the computed word frequencies.
+%Though this particular program is the one written in the style named ``The One'', which executes the work by wrapping a series of functions with an implementation of the Identity monad, a
+All the programs in \cite{Lopes2014}, from the point of the user, are exactly the same one, not merely variants. 
+They are invoked in just the same way and produce identical output.
+The programs not only have identical interfaces for execution, but identically non-existent interfaces for modification.
+% maybe rather, the tacit interface to understand, change, or integrate the program always necessitates privileged access?
+% any ability for someone 
+In each case, the programs are designed in a way that precludes anyone encountering the running program from attempting to understand, change, or integrate it.
 
-We want to bring about the opposite situation, in which creative networks are empowered to curate, share, modify, and combine digital tools of interest to them at a cost they can afford.
-We have labelled aspects of this goal and the means to achieve it as continuing design~\cite{Clark2018}, open authorship~\cite{Basman2018Onward}, and malleable software~\cite{Tchernavskij2019}.
-In this paper, we apply the lens of open authorship in particular, which is defined by the principle that all programs should remain open to ongoing (re-)design by an evolving network of users 
-
-The notion of programming style is a useful focal point for our critique.
-We argue that the space of possible styles surveyed by Lopes reveals a sort of disciplinary myopia, in which programming is overly concerned with the work of producing an initial, correct, and efficient program, excluding all other labour and perspectives surrounding its extended life cycle.
-This constrained space defining the salient dimensions of expression within programming is a prison, isolating programmers and programs from participating in convivial creative relationships.
-% We want to facilitate and empower creative networks to curate and share artefacts of interest.
-
-\section{These are not styles}
-
-All the programs in \cite{Lopes2014}, from the point of the user, are exactly the same one, not just merely variants. They are invoked in just the same way and produce identical output.
-In almost every case, the programs are designed in a way that precludes anyone encountering the running program from attempting to understand, change, or integrate it.
-In this sense, the ecology of function -- the network of people and tools surrounding the running programs -- is completely cut off from the ecology of design -- the corresponding network involved in the creation of the source code~\cite{SDR2018}. 
-% In this sense, the ecology of function -- the network of people and practices around the running programs -- is completely cut off from the ecology of design -- the corresponding network involved in the creation of the source code. 
-These are ``styles'' only evident to the elite construction ecology. 
 % \pt{I want some clarification here to point out that we are considering more than a programmer/user split, but a split between gods and mere mortals. In other words, who are the programmers who are not full participants in the ecology of construction?}\amb{I think right now I was just considering a programmer/user split? We can talk about the distinction with the "super-elite" e.g. those who write compilers and design languages, but it seems a stretch here}
 
 % \pt{I suggest moving this sentence substantially below the quote. I think it is cognitively more straightforward for the reader to immediately contrast the quote with our point about the split ecologies, before considering the (I think) more difficult distinction about classification vs inspiration. I have suggested the edits as comments}
-% Furthermore, they are not expressive styles since, as with the ripoff of ``Design Patterns'', these ``styles'' are used to end conversations through classification, not begin them through inspiration.
+
+We call this a paradigm of ``imprisoned expressions'', because the design elements of individual program are cut off from extension or reuse by anyone not already inside the boundary of the file. 
+The diversity of styles on offer indicates an apparent freedom to choose one thing or another, yet our choices are framed in such a way that this space of possibilities in practice feels like a prison.
+% yet this space of possibilities is in practice tightly constrained by the framing of our choices in a way that makes it feel like a prison.
+% yet in practice this space of possibilities feels like a prison, because of the framing of our choices.
+We can choose how we want to express our computational power, but we cannot choose how that power is shared with the wider world.
+% what is “the framing of our choices”: it is that all we can choose is which form of closed world we want to describe — and how we want to express our computational power. We’ve got this Turing-completeness at our disposal, all we can choose is how to spend it.
+% Rather than mapping out an expressive freedom, the seeming diversity of these styles instead delineates the boundary of a prison beyond which the expressions cannot travel.
+
+This situation follows from the framing of the style exercise, but it also reveals the authorial culture of programming.
+% The space of possible styles surveyed by Lopes reveals an 
+These are the styles of an inward-facing discipline, i.e.~a practice of programming that is primarily concerned with the work of producing initial, correct, and efficient programs, excluding the experiences and labour of subsequent (re-)users, and implicitly assuming that role of enacting reuse must take place within the discipline.
+
+% This constrained space defining the salient dimensions of expression within programming is a prison, isolating programmers and programs from participating in convivial creative relationships.
+% We want to facilitate and empower creative networks to curate and share artefacts of interest.
+
+% and that the phenomenon of style mapped out by Lopes reveals deeply embedded issues with how the discipline of programming conceptualizes itself.
+The effect of imprisoned expressions is that the ecology of function --- the network of people and tools surrounding the running programs --- is cut off from any direct relation with the ecology of design -- the corresponding network involved in the creation of the source code~\cite{SDR2018}. 
+% In this sense, the ecology of function -- the network of people and practices around the running programs -- is completely cut off from the ecology of design -- the corresponding network involved in the creation of the source code. 
+These are ``styles'' only evident to the elite construction ecology. 
+
+\section{This is a diluted notion of style}
+% These are not styles
 % Compare with Alexander's ``Six Foot Balcony'' pattern: 
-Compare this with \citet{Alexander1977}'s presentation of style in his architectural design patterns, familiar to programmers through their ripoff by \citet{Gamma1994}. For example, his ``Six Foot Balcony'' pattern:
+Compare this with Christopher Alexander's presentation of style in his architectural design patterns~\cite{Alexander1977}, familiar to programmers through their misappropriation by~\citet{Gamma1994}. 
+For example, his ``Six Foot Balcony'' pattern:
 \begin{quote}
 167 Six Foot Balcony: A balcony is first used properly when there is enough room for two or three people to sit in a small group with room to stretch their legs, and room for a small table where they can set down glasses, cups, and the newspaper. No balcony works if it is so narrow that people have to sit in a row facing outward. The critical size is hard to determine, but it is at least six feet. \cite{Alexander1977}
 \end{quote}
@@ -226,57 +434,79 @@ Furthermore, this pattern coexists alongside:
 \end{quote}
 % Note, firstly, the inescapable invocation of the ecology of use.
 % \pt{Is there any meaning in considering here what it would mean for Alexander to only consider the perspective builders in his design patterns? You said that even in that case, there would be no pretension that one way of laying a brick and another would appear exactly the same to users of the building.}
-Note that these are overlapping, opportunistically characterised elements --- they may coexist partially, overlapping, or not at all. Contrast this to programming ``styles'' and ``patterns'', which are purely inward-looking to the ecology of production, and also largely taxonomical --- invocation of one pattern applied to a particular design element typically rules out other patterns applicable to that element (although naturally patterns can be invoked in cooperating relations on cooperating design elements). They are variant ``approaches to a problem'' rather than members of a vocabulary.
+Note that these are overlapping, opportunistically characterised elements --- they may coexist partially, overlapping, or not at all. Contrast this to programming ``styles'' and ``patterns'', which are purely inward-looking to the ecology of production, and also largely taxonomical --- invocation of one pattern applied to a particular design element typically rules out other patterns applicable to that element (although naturally patterns can be invoked in cooperating relations on cooperating design elements). 
 By contrast, programming styles --- and programming design patterns --- are used to end conversations through classification, not begin them through inspiration.
+They are variant ``approaches to a problem'' rather than members of a vocabulary.
+% Furthermore, they are not expressive styles since, as with the misappropriation of ``Design Patterns'', these ``styles'' are used to end conversations through classification, not begin them through inspiration.
 % they are not expressive styles since, as with the ripoff of ``Design Patterns'', these ``styles'' are used to end conversations through classification, not begin them through inspiration.
 % Furthermore, note that these are overlapping, opportunistic elements - they may coexist partially, overlapping, nor not at all. Contrast this to programming "styles" which are purely inward-looking to the ecology of production, and also largely taxonomical - invocation of one pattern applied to a particular design element typically rules out other patterns applicable to that element (although naturally patterns can be invoked in cooperating relations on cooperating design elements). They are variant "approaches to a problem" rather than members of a vocabulary.
 
-\section{Like Design Patterns, a raid}
+% \section{Like Design Patterns, a raid}
+Our critique of the invocation of ``style'' in programming turns out to echo Alexander's own feelings about the Design Patterns community.
+In a keynote delivered to OOPSLA in 1996, \citet{Alexander1996} decried their moral deframing of pattern languages and their lack of orientation toward the communities that motivate and live with programs, and described programmers as behaving as ``guns for hire'':
 
-In practice, this invocation of the notion of ``style'' is very similar to the disciplinary raid executed by members of the Design Patterns community \citep{Gamma1994} on Alexander's Pattern Language. In a keynote delivered to OOPSLA shortly thereafter, \citet{Alexander1996} decried this moral deframing of pattern language and its lack of community orientation, and described the members of the technology community as behaving as ``guns for hire.'' More than 20 years later, nothing has changed, and no shred of moral orientation has been introduced into our notion of ``style''.
+\begin{quote}
+    My comment on this? Please forgive me, I'm going to be very direct and blunt for a horrible second. It could be thought that the technical way in which you currently look at programming is almost as if you were willing to be ``guns for hire.'' In other words, you are the technicians. You know how to make the programs work. ``Tell us what to do daddy, and we'll do it.'' That is the worm in the apple.~\cite{Alexander1996}
+\end{quote}
 
+More than 20 years later, nothing has changed, and no shred of moral orientation has been introduced into our notion of ``style''.
+% In practice, this invocation of the notion of ``style'' is very similar to the disciplinary raid executed by members of the Design Patterns community \citep{Gamma1994} on Alexander's Pattern Language. 
+% In a keynote delivered to OOPSLA shortly thereafter, \citet{Alexander1996} decried this moral deframing of pattern language and its lack of community orientation, and described the members of the technology community as behaving as ``guns for hire.'' More than 20 years later, nothing has changed, and no shred of moral orientation has been introduced into our notion of ``style''.
 Let us make the 2020s the decade when we finally try to deliver on some of Alexander's exhortation to produce living, open, convivial structures, rather than inward-looking, technocratic and dead ones:
 
 \begin{quote}
     What I am proposing here is something a little bit different from that. It is a view of programming as the natural genetic infrastructure of a living world which you/we are capable of creating, managing, making available, and which could then have the result that a living structure in our towns, houses, work places, cities, becomes an attainable thing. That would be remarkable. It would turn the world around, and make living structure the norm once again, throughout society, and make the world worth living in again.
 
-    This is an extraordinary vision of the future, in which computers play a fundamental role in making the world—and above all the built structure of the world—alive, humane, ecologically profound, and with a deep living structure.~\cite{Alexander1996}
+    This is an extraordinary vision of the future, in which computers play a fundamental role in making the world --- and above all the built structure of the world --- alive, humane, ecologically profound, and with a deep living structure.~\cite{Alexander1996}
 \end{quote}
 
-\section{Like Design Patterns, a catalogue of what must be eliminated}
+% \section{Like Design Patterns, a catalogue of what must be eliminated}
+% \pt{Following ``kill your darlings'', I think we might simply skip this section without significant loss to the paper.}
 % \pt{This paragraph is a little clunky because of the "is a catalogue of" reuse in every sentence}
 
-Another similarity with the design patterns ontology is that such a survey of programming style in practice functions as a catalogue of what must be largely eliminated in a move to open, convivial programming. 
-\pt{Suggested change: 
-Its guiding values and trade-offs among them are inward-looking and technocratic.
-Therefore, design elements relating to these values are inessential or at best secondary, and should be eliminated or somehow hidden from view once we accept that every participant in the ecology is at least in theory on a common footing, with equal rights to make an receive expressions.}
-Being inward-looking and technocratic, it is naturally a catalogue of things which must be eliminated or somehow hidden from view once we accept that every participant in the ecology is at least in theory on a common footing, with equal rights to make and receive expressions.
-By definition, it is a catalogue of the inessential or at best what is secondary.
+% Another similarity with the design patterns ontology is that such a survey of programming style functions as a catalogue of what must be largely eliminated in a move to open, convivial programming. 
 
-However, the exhaustive breadth of the survey in \cite{Lopes2014} only shows us the greater extent of the challenge of building a truly open environment. Some modern programming languages (Newspeak~\cite{Bracha2008}, Infusion~\cite{Basman2015}) are succeeding in making the majority of design patterns (especially constructional ones) obsolete. However, we face the task of designing a user programming system that can make it irrelevant or quietly parameterisable whether a design uses continuations, tail recursion, a publish-subscribe system, sensible defaults or aggressive error-checking, is expressed in terms of pure functions or stateful objects, is expressed in dynamically loadable plugins, or is distributable across huge dataspaces. This task is so large as to seem completely prohibitive, yet it is inevitable that our field, if successful, will tackle it, and it certainly helps to have all our enemies listed in one place.
+% The guiding values of this notion of style, and the trade-offs among them, are inward-looking and technocratic.
+% Therefore, design elements relating to these values are inessential or at best secondary, and should be eliminated or somehow hidden from view once we accept that every participant in the ecology is at least in theory on a common footing, with equal rights to make and receive expressions.
 
-A precedent for elimination of inessential programming style through parameterisation is found in \citet{Kell2011}, in this case invoking a notion of ``interface style''.
+% However, the exhaustive breadth of the survey in \cite{Lopes2014} only shows us the greater extent of the challenge of building a truly open environment. Some newer programming languages (Newspeak~\cite{Bracha2008}, Infusion~\cite{Basman2015}), and some older ones (Dylan, Lisp \cite{Norvig1996}) succeed in making the majority of design patterns (especially constructional ones) obsolete. However, we face the task of designing a user programming system that can make it irrelevant or quietly parameterisable whether a design uses continuations, tail recursion, a publish-subscribe system, sensible defaults or aggressive error-checking, is expressed in terms of pure functions or stateful objects, is expressed in dynamically loadable plugins, or is distributable across huge dataspaces. This task is so large as to seem completely prohibitive, yet it is inevitable that our field, if successful, will tackle it, and the catalogue of styles has the further virtue of condensing this catalogue of the inessential in one place.
+
+% A precedent for elimination of inessential programming style through parameterisation is found in \citet{Kell2011}, in this case invoking a notion of ``interface style''. Also, \citet{Norvig1996} notes that 16 out of 23 design patterns are simplified or eliminated in certain dynamic languages.
 % \pt{I recently spoke with Germán Leiva about how there were several attempts to unify objects and databases, since relational tables and objects can kind of be seen as each others' mirrors, and how the fields involved had quietly abandoned the problem. It's not worth getting into here, but I wonder if there's some history lessons to be found there relating to this goal of making details for the elite irrelevant or invisible.}
 
 \section{There are worse things than a catalogue of styles}
-
-So as not to appear backhanded, we should be clear that we greatly welcome the catalogue of program styles assembled in \citet{Lopes2014} since it genuinely shows our field at its best. Travel, even travel within a prison, broadens the mind\footnote{``Denmark's a prison.'' --- ``Then is the world one'', Hamlet: Act II, Scene 2}, and the catalogue is a helpful assistance to the inhabitants of the prison to desist from their traditional activities of mounting a power struggle with their neighbours imprisoned in the adjoining cell. Many programmers can live out their careers either unaware that substantially differing styles exist, or else locked in an endless struggle to demonstrate that the power granted by its furnishings to enslave visitors to their cell greatly exceed those of their colleagues. Notable examples include Hoyte's~\cite{Hoyte2008} declaration \enquote{macro programming is, of course, not about style. It is about power}, and Graham's~\cite{Graham2003} sneering at the users of a programming language he invidiously dubs ``Blub'' and their incapability of grasping the superior power of his chosen style. These inhabitants are what \citet{Orwell1946} would call ``power-worshippers'' --- they worship the strong simply because they are strong, rather than for their tendency to lead their users to ``breathe the air of equality''\citep{Orwell1938}.
+% \pt{I wonder if some of this should be lifted up to section 3. I think we could split it up so the language about not wanting to be backhanded is in section 3, and the intent of taking the map of styles as a palette for our staged escape can be put in what is currently section 8.}
+Despite our reservations on the notion of style it embodies, we welcome the catalogue of program styles assembled in \citet{Lopes2014} since it genuinely shows our field at its best. Travel, even travel within a prison, broadens the mind\footnote{``Denmark's a prison.'' --- ``Then is the world one'', Hamlet: Act II, Scene 2}, and the catalogue is a helpful assistance to the inhabitants of the prison to desist from their traditional activities of mounting a power struggle with their neighbours imprisoned in the adjoining cell. Many programmers can live out their careers either unaware that substantially differing styles exist, or else locked in an endless struggle to demonstrate that the power granted by its furnishings to enslave visitors to their cell greatly exceeds that of their colleagues. Notable examples include Hoyte's declaration \enquote{macro programming is, of course, not about style. It is about power}~\cite{Hoyte2008}, and Graham's sneering at the users of a programming language he invidiously dubs ``Blub'' and their incapability of grasping the superior power of his chosen style~\cite{Graham2003}. These inhabitants are what \citet{Orwell1946} would call ``power-worshippers'' --- they worship the strong simply because they are strong, rather than for their tendency to lead their users to ``breathe the air of equality''~\citep{Orwell1938}.
 
 So let us by all means celebrate the map of our prison provided in the catalogue of styles, and see if, with its help, we can plot out what it might take to stage an escape.
 
 \section{In part of the prison, there is more light}
 \label{sec:light}
-The survey of styles is presented in the traditional disciplinary framing, which is neutral to all values except those of the discipline, such as efficiency, terseness and correctness. 
-% No attempt is made to consider values which arise as the result of different communities that are put into relation by the expressions, and in fact, any such values which originally arose as result of the situations where the styles where originally developed are effaced by putting all the ``style fragments'' onto a common footing as expressed by Python source code invoked from the command line.
-No attempt is made to consider values arising as a result of different communities being put into relation by the programs.
-In fact, any values originating in the situations where the styles were originally developed are effaced by putting all the ``style fragments'' onto a common footing as expressed by Python source code invoked from the command line.
-
-For example, style 1, ``Good Old Times'', and style 26, ``Spreadsheet'' originally enjoyed useful virtues of externalisation, i.e.~the ability to expose a running program's behaviour and state in a document form that can be freely exchanged and modified. 
-Externalisation is a key value for living, convivial software, because it supports ongoing (re-)design and integration~\cite{Clark2017}.
+% \pt{This opening is perhaps better expressed by saying ``Though the styles are primarily motivated from the perspective of originating authors, there are open authorial virtues hidden in this landscape of styles.''}
+Though the styles surveyed by Lopes are primarily motivated in inward-facing terms, scattered throughout there are styles with values oriented toward enabling wider authorial participation.
+In some cases, these values are obscured by the fact that the survey opts to express all styles through Python source code invoked from the command line.
+% The survey of styles is presented in the traditional disciplinary framing, which is neutral to all values except those of the discipline, such as efficiency, terseness and correctness. 
+% No attempt is made to consider values arising as a result of different communities being put into relation by the programs.
+% In fact, any values originating in the situations where the styles were originally developed are effaced by putting all the ``style fragments'' onto a common footing as expressed by Python source code invoked from the command line.
+For example, style 1, ``Good Old Times''%
+\footnote{\url{https://github.com/crista/exercises-in-programming-style/blob/master/01-good-old-times}} reflects the constraints of programming early computers with minimal primary memory, %
+and style 26, ``Spreadsheet''%
+\footnote{\url{https://github.com/crista/exercises-in-programming-style/blob/master/27-spreadsheet}} represents different stages of data processing as columns connected by formulas.
+These styles enjoyed useful virtues of \emph{externalisation} in their original use contexts. 
+Externalisation is the ability to expose a running program's behaviour and state in a document form that can be freely exchanged and modified. 
+It is a key value for living, convivial software, because it supports ongoing (re-)design and integration~\cite{Clark2017}.
 
 In the former case, this arose through the natural virtues inherited from the embodiment of computation in the physical world of wires and memory locations, which had not yet been effaced by decades of programming language refinement. In the latter, the virtue had been explicitly designed into the interaction structure --- a coordinatised, reactive surface of data was exposed to the user as the primary interaction idiom, a direct window onto the system's internal state facing all the way out. In both cases, these virtues are lost in the traditional dogmatic (dis)association between a programming language's variables and the resulting completely opaque system state.
 
-This need not be so, and not all the style elements are in equally dark areas of the prison. Style 14, ``Hollywood'', and Style 15, ``Bulletin Board'', recognise in their writeup that they are suited to the design of systems whose evolution cannot fully be foreseen --- from page 119:
+In other cases, styles directly address the historical need to support unpredictably evolving software.
+% This need not be so, and not all the style elements are in equally dark areas of the prison. 
+Style 14, ``Hollywood''%
+\footnote{\url{https://github.com/crista/exercises-in-programming-style/blob/master/15-hollywood}}, %
+and Style 15, ``Bulletin Board''%
+\footnote{\url{https://github.com/crista/exercises-in-programming-style/blob/master/16-bulletin-board}}%
+represent two different approaches to inversion of control-style architectures.
+\pt{Antranig, can you maybe clarify how 14 and 15 are distinct? I can see that 15 is ``more generic'', but I'm not sure what's most saliently different about them.}
+Lopes recognises in their writeup that they are suited to the design of systems whose evolution cannot fully be foreseen:
 
 \begin{quote}
     Publish-subscribe architectures are popular in companies
@@ -285,7 +515,7 @@ and support unforeseen system evolution – components can be easily added
 and removed, new types of events can be distributed, etc.~\cite[p. 119]{Lopes2014}
 \end{quote}
 
-However, fuller recognition that these styles might enable the possibility for open communities, which must not require members to rewrite the expressions of other authors in order to use them in designs over which they have full ownership~\cite{Basman2018Onward}, is relegated to the reader exercises, for example exercise 14.2:
+However, fuller recognition that these styles might enable the possibility for open authorship, which must not require community members to rewrite the expressions of other authors in order to use them in designs over which they have full ownership~\cite{Basman2018Onward}, is relegated to the reader exercises, for example exercise 14.2:
 
 \begin{quote}
 Exercise 14.2: Words with z. Change the given example program so that it implements
@@ -297,24 +527,72 @@ z” tasks.~\cite[p. 114]{Lopes2014}
 \end{quote}
 
 Style 15 is presented as a ``logical end point'' of style 14, but it is far from an endpoint, since the design still retains a single point of design orchestration expressed within unmodifiable program code, where the components solving sub-tasks are wired together:
+
+\begin{minipage}{\columnwidth}
 \begin{lstlisting}[firstnumber=101]
 em = EventManager()
 DataStorage(em),  StopWordFilter(em),  WordFrequencyCounter(em)
 WordFrequencyApplication(em)
 em.publish(('run', sys.argv[1]))
 \end{lstlisting}
+\end{minipage}
 
 Note that the corresponding exercise to 14.2 in this section, 15.2, still permits the traditional evasion ``adding more lines of code to the main function is allowed''. 
-Let's imagine a variant style continuing with this design intention towards open authorship, but stepping back to the simpler functional style 9, ``The One'', and incorporating some features from part V of the book on Reflection. 
+% Let's imagine a variant style, we'll label 15b, continuing with this design intention towards open authorship, but stepping back to the simpler functional style 9, ``The One'', and incorporating some features from part V of the book on Reflection. 
 
-These reflective faculties are seen in three example styles in this chapter, 16, ``Introspective'', 17, ``Reflective'' and 18, ``Asides'', but in the first, they are merely used to create obstructions to execution, in the 2nd they are used to further obscure the program's source text from the ecology of construction, and in the 3rd they implement an extraneous piece of functionality (profiling) only of interest to technicians.
+% These reflective faculties are seen in three example styles in this chapter, %
+% 16 ``Introspective''\footnote{\url{https://github.com/crista/exercises-in-programming-style/blob/master/17-introspective}}, %
+% 17 ``Reflective''\footnote{\url{https://github.com/crista/exercises-in-programming-style/blob/master/18-reflective}} and %
+% 18 ``Asides''\footnote{\url{https://github.com/crista/exercises-in-programming-style/blob/master/19-aspects}}, %
+% but in the first, they are merely used to create obstructions to execution, in the second they are used to further obscure the program's source text from the ecology of construction, and in the third they implement an extraneous piece of functionality (profiling) only of interest to technicians.
 
 \section{Style 15b - ``Weak Tea''}
 \label{sec:weaktea}
-This program still lies within the convex hull of our prison, combining elements seen in several different styles surveyed by \cite{Lopes2014}, such as the functional styles 9, ``The One'' and 24, ``Quarantine'' and the reflective facilities broadly surveyed in chapters 16, 17 and 18 (although not the same ones in detail), as well as the configuration language style seen in style 19, "No Commitment". However, it orchestrates these styles to a particular end --- to push the goals of open authorship closer to the extreme possible within the standard Python ecosystem. In particular, we want to deliver on the endpoint of the goals we see underlying exercises 14.2 and 15.2, which as an open authorial narrative as per \cite{Basman2018Onward} we could describe as ``Author $A$ has written a term frequency application. Author $B$ wishes to use all of $A$'s design to meet a closely related goal, but $A$ is not entitled by a community relationship to modify $A$'s code, and also does not want to do work proportional to the size of $A$'s design or their enclosing community;''.
+Let's imagine a variant style, we'll label 15b, continuing with this design intention towards open authorship. 
+This style should allow us to solve both the initial word counting problem and the variant ``words with z'' problem, while satisfying the open authorial constraint of creating the variant program only by means of external composition.
+% but stepping back to the simpler functional style 9, ``The One'', and incorporating some features from part V of the book on Reflection. 
 
-This leads us to reconstruct several elements from this previous work in the context of this small ecology of Python programs --- firstly a minimal configuration language (or integration language, in the sense of \cite{Kell2009}) expressed as a hash of JSON records (similar in construction and intention to parts of Infusion~\cite{Basman2015}), determining the dataflow and sequencing of the Python functions in $A$'s design. 
-Secondly, a ``program addition operator'' $\boldsymbol{\oplus}$ \cite[section 5.3]{Basman2018Onward} which is capable of fusing $B$'s differential design onto $A$'s, which through the alignment properties of the configuration language can be expressed by a simple dictionary merge. Finally, a minimal selector dialect which allows the topology of the dataflow to be expressed with respect to the naming structure of the configuration language. Since this is a minimal example, more advanced features such as deeply-structured predicate selectors allowing for query-based extension, and deep multiple inheritance hierarchies for configuration are not supported. The resulting ``minimal viable integration language'' occupies about 50 lines of Python and is not reproduced here\footnote{Full source code for this sample is available at \url{https://github.com/amb26/exercises-in-programming-style/tree/weak-tea/15b-weak-tea}, in particular with the configuration language implemented at \url{https://github.com/amb26/exercises-in-programming-style/blob/weak-tea/15b-weak-tea/tf_config.py}}, but the program itself, shown in Listing \ref{lst:weak-tea-program} and the corresponding configuration structure in Listing \ref{lst:weak-tea-config}.
+We place this style at position 15b in the index, immediately after the ``Bulletin Board'' style 15 that represents the high point of authorial openness achieved in the taxonomy. 
+Our program still lies within the convex hull of our prison, combining elements seen in several different styles surveyed by Lopes, such as the monadic composition styles 9, ``The One'' and 24, ``Quarantine''\footnote{\url{https://github.com/crista/exercises-in-programming-style/blob/master/25-quarantine}} and the reflective facilities broadly surveyed in chapters part V of the book (although not the same ones in detail%
+\footnote{These reflective faculties are seen in three example styles, %
+16 ``Introspective'' %\footnote{\url{https://github.com/crista/exercises-in-programming-style/blob/master/17-introspective}}, %
+17 ``Reflective'' %\footnote{\url{https://github.com/crista/exercises-in-programming-style/blob/master/18-reflective}} 
+and %
+18 ``Asides'' %\footnote{\url{https://github.com/crista/exercises-in-programming-style/blob/master/19-aspects}}, %
+but in the first, they are merely used to create obstructions to execution, in the second they are used to further obscure the program's source text from the ecology of construction, and in the third they implement an extraneous piece of functionality (profiling) only of interest to technicians.}%
+), as well as the configuration language style seen in style 19, "No Commitment"%
+\footnote{\url{https://github.com/crista/exercises-in-programming-style/blob/master/20-plugins}}.
+% Style 15b also incorporates some features from part V of the book on Reflection. 
+
+However, it orchestrates these styles to a particular end --- to push the goals of open authorship closer to the extreme possible within the standard Python ecosystem. 
+In particular, we want to deliver on the endpoint of the goals we see underlying exercises 14.2 and 15.2, which as an open authorial narrative as per \cite{Basman2018Onward} we could describe as ``Author $A$ has written a term frequency application. Author $B$ wishes to use all of $A$'s design to meet a closely related goal, but $A$ is not entitled by a community relationship to modify $A$'s code, and also does not want to do work proportional to the size of $A$'s design or their enclosing community''.
+
+Our goals lead us to reconstruct some elements from \cite{Basman2018Onward} in the context of this small ecology of Python programs.
+Firstly, we construct a minimal configuration language (or \emph{integration language}, in the sense of \cite{Kell2009}) expressed as a hash of JSON records determining the dataflow and sequencing of the Python functions in $A$'s design, similar in construction and intention to parts of Infusion~\cite{Basman2015}.
+% Firstly, we work with two forms of expression describing programs, the base language and integration language.
+
+% This leads us to reconstruct several elements from this previous work in the context of this small ecology of Python programs.
+% Firstly a minimal configuration language (or integration language, in the sense of \cite{Kell2009}) expressed as a hash of JSON records (similar in construction and intention to parts of Infusion~\cite{Basman2015}), determining the dataflow and sequencing of the Python functions in $A$'s design. 
+% Secondly, a ``program addition operator'' $\boldsymbol{\oplus}$ \cite[section 5.3]{Basman2018Onward} which is capable of fusing $B$'s differential design onto $A$'s, which through the alignment properties of the configuration language can be expressed by a simple dictionary merge. 
+% Finally, a minimal selector dialect which allows the topology of the dataflow to be expressed with respect to the naming structure of the configuration language.
+
+%Following the plugin approach of ``No Commitment'', our style expresses computational and configurational aspects of programs separately.
+% Computation outright is expressed in the base language of pure Python functions, whereas the sequencing and parameters of these functions is expressed through the integration language.
+An integration language is a specialisation of the notion of a configuration language presented by Lopes, i.e.~a declarative language for specifying choices among a set of options, e.g.~module implementations and constructor parameters%
+\footnote{Lopes briefly discusses the historical development of configuration languages into Architecture Description Languages, which are more similar to our notion of integration languages~\cite[p. 144--146]{Lopes2014}.}. 
+Integration languages aim to specify all inter-module interfaces, increasing the possibility of reusing modules created by different authors without modification~\cite{Kell2009}.
+For example, whereas the configuration language used in ``No Commitment'' (INI files)~\cite[p. 144]{Lopes2014} maps module names specified in a template program to particular implementations in the base language of Python, our example integration language is used to specify the choice of base language functions, as well as their sequencing and dataflow.
+This obviates the need for a base language template program.
+The dataflow specification is achieved through a minimal selector dialect expressed with respect to the naming structure of the integration language (its hash keys) --- such a selector dialect is also a design element predicted by \cite{Basman2018Onward}.
+
+Secondly, we define a ``program addition operator'' $\boldsymbol{\oplus}$ \cite[section 5.3]{Basman2018Onward} that is capable of fusing multiple programs expressed in our integration language together, allowing for the expression of program additions as separate programs.
+Due to the alignment properties of our integration language, this operator can be expressed by a simple dictionary merge.
+The structure of the configuration language is designed entirely to allow the program addition operator to serve the function of external composition. 
+Whilst, computationally, we implement the behaviour of the operator as a standard function in the Python program, it could be mechanically operated from outside the system by merging the structure of the JSON documents representing $A$ and $B$'s design, without recourse to any of the facilities of the programming language or its runtime.
+
+%Finally, following \cite{Basman2018Onward}, we reconstruct a minimal selector dialect which allows the topology of the dataflow to be expressed with respect to the naming structure of the configuration language.
+
+Our resulting ``minimal viable integration language'' occupies about 50 lines of Python and is not reproduced here\footnote{Full source code for this sample is available at \url{https://github.com/amb26/exercises-in-programming-style/tree/weak-tea/15b-weak-tea}, in particular with the integration language implemented at \url{https://github.com/amb26/exercises-in-programming-style/blob/weak-tea/15b-weak-tea/tf_config.py}}, but the program itself is shown in Listing \ref{lst:weak-tea-program} and the corresponding configuration structure is shown in Listing \ref{lst:weak-tea-config}.
 
 \begin{figure}
 \begin{lstlisting}
@@ -433,10 +711,25 @@ if (__name__ == '__main__'):
 
 Note that listing \ref{lst:weak-tea-program} is extremely similar to the implementation in \cite{Lopes2014} functional style 9, ``The One'' --- the only substantive difference is that we have taken the opportunity to shift out meaningfully parameterisable constants such as i) the stop-word file, ii) the sort order, iii) the number of high frequency terms to display into function arguments and hence out into the configuration dialect.
 
-\subsection{About the Configuration Language}
+\subsection{About the Integration Language}
+\label{sec:about-integration}
+Our integration language implements a small dialect of selectors used to express the structural connections conventionally expressed by e.g.~function executions and shared variables.
+It makes use of three forms of selectors (listing \ref{lst:weak-tea-config}), the first in {\ttfamily priority} fields to control execution order using positional constraints such as {\ttfamily after:frequencies}, and the second in interpolated arguments in {\ttfamily args} such as {\ttfamily \$sort} to control dataflow, and the third to make fully externalisable, module-qualified references in {\ttfamily func} to the implementation functions using expressions such as {\ttfamily tf\_15b.frequencies}.
+% The integration language demonstrated in listing \ref{lst:weak-tea-config} makes use of three forms of selectors, the first in {\ttfamily priority} fields to control execution order using positional constraints such as {\ttfamily after:frequencies}, and the second in interpolated arguments in {\ttfamily args} such as {\ttfamily \$sort} to control dataflow, and the third to make fully externalisable, module-qualified references in {\ttfamily func} to the implementation functions using expressions such as {\ttfamily tf\_15b.frequencies}. 
+This leads it to be extremely verbose. 
 
-The configuration language shown in listing \ref{lst:weak-tea-config} makes use of three forms of selectors, the first in {\ttfamily priority} fields to control execution order using positional constraints such as {\ttfamily after:frequencies}, and the second in interpolated arguments in {\ttfamily args} such as {\ttfamily \$sort} to control dataflow, and the third to make fully externalisable, module-qualified references in {\ttfamily func} to the implementation functions using expressions such as {\ttfamily tf\_15b.frequencies}. This leads it to be extremely verbose. 
-Note that in the extremely compact functional styles such as style 9, ``The One'' and style 24, ``Quarantine'', as well as the basic style 5, ``Candy Factory'', we get all of this topology for free as part of the natural binding structure induced by function composition. This candy is indeed sweet until we find ourselves faced with a differential design exercise which requires us to fish an intermediate computation out of the chain for the benefit of an unsuspected author. We confess that we looked ahead to the differential design exercise before designing the configuration language, but on the other hand, this full externalisation of computation structure was already mandated by the core principle of avoiding ``excess sequential intention'' as set out in section 5 of \cite{Basman2017} and section 2.5 of \cite{Basman2015}.
+Note that in the extremely compact functional styles such as style 9, ``The One'' and style 24, ``Quarantine'', as well as the basic style 6, ``Candy Factory''%
+\footnote{\url{https://github.com/crista/exercises-in-programming-style/blob/master/06-pipeline}}, we get all of this topology for free as part of the natural binding structure induced by function composition. 
+This candy is indeed sweet until we find ourselves faced with a differential design exercise which requires us to fish an intermediate computation out of the chain for the benefit of an unsuspected author.
+% \pt{If we properly situate the exercise in section 8, we don't need to ``confess'' here. The problem is that we need to have integration/differential design problems in mind to design integration language mechanisms. We simply have to say that the value of our toy integration language is precisely that it presents an approach to ``pipeline'' style designs that are sensitised to additional authors over time.}
+% We confess that we looked ahead to the differential design exercise before designing the configuration language, but on the other hand, this full externalisation of computation structure was already mandated by the core principle of avoiding ``excess sequential intention'' as set out in section 5 of \cite{Basman2017} and section 2.5 of \cite{Basman2015}.
+
+% \pt{I really think there is little pedagogical purpose in mentioning ``more advanced integration features'' here. I think we can do with a nod to saying that the exercise here is a comparatively simple integration problem, and the OAP paper presents a more formal ordering of increasingly complex problems, necessitating increasingly elaborate language/composition mechanisms}
+% Since this is a minimal example, more advanced features such as deeply-structured predicate selectors allowing for query-based extension, and deep multiple inheritance hierarchies for configuration are not supported. 
+The ``words with z'' task is only a rudimentary external composition task. 
+Many apparently ordinary occurrences of program extension require more complex authorial manoeuvres than intercepting intermediate computations in a chain of functions, for example introducing or removing layers of containment in a data structure.
+Such cases present more complex issues for defining suitable integration language mechanisms. 
+Some of these issues and their historical solutions are reviewed more systematically in~\cite{Basman2018Onward}.
 
 \subsection{The Differential Design}
 
@@ -485,16 +778,16 @@ Finally we show author $B$'s configuration language expression in Listing \ref{l
 
 Interesting features in Listing \ref{lst:weak-tea-diff-config} are:
 \begin{itemize}
-    \item The {\ttfamily parent} definition referencing author $A$'s config as {\ttfamily tf\_15b.config}. This indicates declaratively that $B$'s program is to be composited on top of $A$'s. This could have been inserted into the driver definition in the base language code, but we are indicating the path towards authoring managed by external tools by trying to retain a standard boilerplate in each file.
+    \item The {\ttfamily parent} definition referencing author $A$'s config as\break {\ttfamily tf\_15b.config}. This indicates declaratively that $B$'s program is to be composited on top of $A$'s. This could have been inserted into the driver definition in the base language code, but we are indicating the path towards authoring managed by external tools by trying to retain a standard boilerplate in each file.
     \item The configuration meets the differential authorship challenge of sequencing execution after $A$'s program with the {\ttfamily after:print\_freqs} priority, whilst reaching into the middle of $A$'s dataflow with the {\ttfamily \$frequencies} reference.
 \end{itemize}
 
-Another interesting feature can be observed together with the snippet of the configuration language implementation shown in Listing \ref{lst:program-addition}. This is the site where two configurations are combined, and it has a very simple form --- the dictionaries of ``steps'' are simply superimposed. It's a crucial goal of our dialect that this composition process takes the simplest possible form, a mechanical process that always succeeds in producing a valid program that expresses the appropriately combined intent of the two authors. However, we note that the addition system is still imprisoned within the boundaries of the Python ecosystem --- we cannot meaningfully combine programs before the relevant module has been referenced via an {\ttfamily import} statement. Section \ref{sec:limitations} speculates on routes out of the prison that necessarily stray into the operating system's notion of the structure of dynamically loadable objects, and \cite{Basman2016a} describes the ``Nexus'' system built on top of Infusion that permits program addition to occur via HTTP verbs.
+Another interesting feature can be observed together with the snippet of the configuration language implementation shown in Listing \ref{lst:program-addition}. This is the site where two configurations are combined, and it has a very simple form --- the dictionaries of ``steps'' are simply superimposed. It's a crucial goal of our dialect that this composition process takes the simplest possible form, a mechanical process that always succeeds in producing a valid program that expresses the appropriately combined intent of the two authors. Without meeting this goal, it is infeasible that the composition process could be enacted outside the ecosystem of the tool chain and runtime. However, our achievement of this goal is purely moral, since we have not succeeded in producing any such venue outside the system where the composition could plausibly take place. Also, the output of our addition system is still imprisoned within the boundaries of the Python ecosystem --- we cannot meaningfully combine programs before the relevant module has been referenced via an {\ttfamily import} statement. Section \ref{sec:limitations} speculates on routes out of the prison that necessarily stray into the operating system's notion of the structure of dynamically loadable objects, and \cite{Basman2016a} describes the ``Nexus'' system built on top of Infusion that permits program addition to occur via HTTP verbs.
 
 \begin{figure}
 \begin{lstlisting}[firstnumber=25]
-        # This line implements the "program addition operator"
-        config['steps'].update(parentConfig['steps'].copy())
+    # This line implements the "program addition operator"
+    config['steps'].update(parentConfig['steps'].copy())
 \end{lstlisting}
 \captionof{lstlisting}{Snippet of {\ttfamily tf\_config.py}: Site of the program addition operator $\boldsymbol{\oplus}$}
 \label{lst:program-addition}
@@ -508,7 +801,12 @@ What is worse, we have put a substantial part of the design outside the reach of
 
 Why on earth have we done this?
 
-At this stage, the design victories of Listing \ref{lst:weak-tea-config} are largely moral. We have shifted a substantial part of the design out of the reach of arbitrary Turing-complete computation into an impoverished representation that should be easy to author with a variety of structured tools. Also, we've provided an arena in which the expressions of different authors, perhaps expressed using substantially different visual or non-visual representations, can be combined, without privileging any of them as central. The infelicities of expression, the duplication of selector names and poor locality of reference could be ``folded up'' by suitable tools which, for example, can show the long expanded chain in Listing \ref{lst:weak-tea-config} as equivalent to its compact functional binding equivalent when considering wider authorial affordances is not necessary.
+% At this stage, the design victories of Listing \ref{lst:weak-tea-config} are largely moral. 
+At this stage, the design victories of the ``Weak Tea'' style are largely moral. 
+We've provided an arena in which the expressions of different authors can be combined, without privileging any of them as central, or relying on the machinery of entire programming languages and their toolchains. 
+Our integration language is significantly constrained compared to languages capable of arbitrary Turing-complete computation, improving the likelihood of creating structured editing tools and substantially different visual or non-visual representations of it.
+% We have shifted a substantial part of the design out of the reach of arbitrary Turing-complete computation into an impoverished representation that should be easy to author with a variety of structured tools. 
+The infelicities of expression, the duplication of selector names and poor locality of reference could be ``folded up'' by suitable tools which, for example, can show the long expanded chain in Listing \ref{lst:weak-tea-config} as equivalent to its compact functional binding equivalent when the view of wider authorial affordances is not necessary.
 
 However, these tools, whilst in theory easier to build on top of this representation, do not exist, and would require a really substantial implementation effort. There is little history of communities effectively building such things --- even at its height, the Spring Framework, one of the best-attested and supported configuration languages, only enjoyed rudimentary authoring support. And a truly effective integration language will need a far richer dialect than the ones we've been able to describe so far.
 
@@ -516,27 +814,34 @@ However, these tools, whilst in theory easier to build on top of this representa
 
 Equally damning is imagining a community for which representations such as listing~\ref{lst:weak-tea-program} could be useful. It's very hard to imagine an author capable of successfully editing such a prolix and fragile JSON representation without the help of powerful tools, who wouldn't be more capable of editing straightforward binding chains in Python itself such as 
 
-{\footnotesize\begin{verbatim}
+\begin{lstlisting}[firstnumber=74]
 print_all(sort(frequencies(remove_stop_words(scan(filter_chars_and\_normalize(read_file(sys.argv[1]))))))[0:25])
-\end{verbatim}
-}
-\noindent as seen in style 6, ``Pipeline''. In any case, the expressions to be duplicated are so short compared to the openly authorable representation that economics strongly favour simply duplicating them. Designs need to be very large, communities very extensive, and the tools brought to play very powerful, before we can imagine the economics shifting credibly onto the other side. But we need to imagine this.
+\end{lstlisting}
+
+\noindent as seen in style 5, ``Candy Factory''. 
+In any case, the expressions to be duplicated are so short compared to the openly authorable representation that economics strongly favour simply duplicating them. Designs need to be very large, communities very extensive, and the tools brought to play very powerful, before we can imagine the economics shifting credibly onto the other side. But we need to imagine this, if we mean to establish a broad literacy supporting convivial relations between the expressions of unbounded communities.
 
 \subsection{Expanding the Coverage}
 \label{sec:limitations}
-One can imagine communities for which the coverage offered by our example configuration language might be useful, but in practice this has not carried us terribly far. To start with, the authorial flexibility is quite limited --- programs consuming streams of values connected via pipes are capable of a wide range of tasks, as the corresponding ecology of UNIX pipes shows, but in practice real communities very often require much more power to organise the allocation and deallocation of state, the naming and correspondence of different pieces of state in unrelated or nested collections, reference to historyful values, etc. In practice we need a much more ambitious system for accounting for the contents of memory and establishing such correspondences, as sketched in \cite{Kell2009, Kell2015}.
+One can imagine communities for which the coverage offered by our example configuration language might be useful, but in practice this has not carried us terribly far. To start with, as we allude in section \ref{sec:about-integration}, the authorial flexibility we've achieved is quite limited --- programs consuming streams of values connected via pipes are capable of a wide range of tasks, as the corresponding ecology of UNIX pipes shows, but in practice real communities very often require much more power to organise the allocation and deallocation of state, the naming and correspondence of different pieces of state in unrelated or nested collections, reference to historyful values, etc. We need a much more ambitious system for accounting for the contents of memory and establishing such correspondences, as sketched in \cite{Kell2009, Kell2015}.
+
+There is an important subtlety we've so far glossed over in our notion of ``composition'', which is the geometry with which it occurs. An important restriction with previous notions of composition (e.g.~ those of \citet{Backus1978}) is not just the one we have stressed so far, that the composition occurs within the privileged realm of those in the community who change source code, but that the composition which it enacts only joins programs together at their \emph{edges} --- that is, classically, where functions accept arguments, or structures contain members. We could call this \emph{peripheral composition}. The ecology of UNIX pipes is a paradigmatic exemplar of this style of composition --- whereas as we've shown, even in this rudimentary task, we need to do more, and instead align entire programs across their \emph{surfaces}, blending the complete intention of two authors. This appeals to a notion of design which may be named \emph{phenotropic}, following \citet{Lanier2003}, where we consider systems to be open for interaction across their entire extent. This is in contrast to other dominant design metaphors such as the cellular model of \citet{Kay2003} and the whole message-passing idiom of which it is a part, where design elements are expected to be insulated by mostly impermeable membranes.
+
+An important element, therefore, of external composition promoting convivial interactions is that it comprise not only ordinary peripheral composition, and phenotropic composition, but also perhaps other richer means of combining the intentions of multiple authors into a single design.
 
 \subsection{Actually Externalising the Design}
 
-Moreover, we have failed to deal with many of the practical issues and articulation work raised in the surrounding ecosystem. We have failed to account for how the theoretically highly legible JSON configuration files are practically shipped around along with the computational artefacts they describe, and how the naming system they operate is intended to interact with the existing ones supplied by the Python ecosystem, let alone those of unrelated programming languages. For example, a substantial source of fragility is our reliance on the Python runtime's table of loaded modules, index by the names they are given as imports. In practice, this relies on all kinds of unstable details such as the directory structure of the environment holding the source code, and the exact versions of code found there. It's difficult to imagine remedies for this that don't make our already prolix expressions bristle with ever-longer qualified names for the things they are referencing.
+Moreover, we have failed to deal with many of the practical issues and articulation work raised in the surrounding ecosystem. We have failed to account for how the theoretically highly legible JSON configuration files are practically shipped around along with the computational artefacts they describe, and how the naming system they operate is intended to interact with the existing ones supplied by the Python ecosystem, let alone those of unrelated programming languages. For example, a substantial source of fragility is our reliance on the Python runtime's table of loaded modules, indexed by the names they are given as imports. In practice, this relies on all kinds of unstable details such as the directory structure of the environment holding the source code, and the exact versions of code found there. It's difficult to imagine remedies for this that don't make our already prolix expressions bristle with ever-longer qualified names for the things they are referencing.
 
 In practice, the standoff between conventional programming languages and integration languages will always be unstable, and we don't see a credible escape route that doesn't leave conventional programming languages mostly demolished. In their role as base language for a truly effective integration domain, it seems that only a small subset of their current capabilities can be supported. Further research and implementation may end up changing this view.
 
-Style 19, ``No Commitment'' shines light in a helpful direction for extension. The plugin model, depending on facilities supplied by the base operating system, is a practical model for external reuse. Unfortunately, the operating system supplies extremely rudimentary facilities for decoding the ontology of loaded objects --- in practice simply named external function entry points into modules, and if you are lucky, a calling convention suitable for invoking them. In terms of supplying a full ontology for the contents of memory, including the layout of memory structures, their site and reason for allocation, the official OS metadata is inadequate, although \cite{Kell2015} has noted that for practical purposes, many operating systems operate a far richer unofficial bus of metadata in order to support advanced authorial affordances such as debugging and profiling. Our vision of open authorship implies that every dynamically loadable object in the OS could be inspected for its complement of configuration language making all such of its capabilities fully visible.
+Style 19, ``No Commitment'' shines light in a helpful direction for extension. The plugin model, depending on facilities supplied by the base operating system, is a practical model for external reuse. Unfortunately, the operating system supplies extremely rudimentary facilities for decoding the ontology of loaded objects --- in practice, named external function entry points into modules, and if you are lucky, a calling convention suitable for invoking them. In terms of supplying a full ontology for the contents of memory, including the layout of memory structures, their site and reason for allocation, the official OS metadata is inadequate, although \cite{Kell2015} has noted that for practical purposes, many operating systems operate a far richer unofficial bus of metadata in order to support advanced authorial affordances such as debugging and profiling. Our vision of open authorship implies that every dynamically loadable object in the OS could be inspected for its complement of configuration language making all such of its capabilities fully visible.
 
 \subsection{What Lies Immediately Outside the Prison}
-
-In terms of a practical extension of the immediate exterior of our prison, we could imagine extending the configuration dialect of style 19, ``No Commitment'' into a richer system of metadata by which modules advertise sites capable of allocation in structured forms such as those seen in style 12, ``Closed Maps'', and express relations in a symbolic form of selectors so that the boilerplate seen in listings such as {\ttfamily tf-18.py} in section 18.2 can be eliminated. However, Lopes provides a salutory warning that correctly predicts that simplistic and incomplete attempts to solve the problem of open authorship will initially make the problem they are trying to solve much worse rather than better:
+\pt{I'm not sure I understand the framing of this subsection well. It seems to be describing how we might recreate our stylistic exercise by evolving Lopes' code samples more directly, but I'm unclear on how these take us outside the prison. It is also highly dependent on references into the book. Perhaps it would help if it gave a little more clarity about what is actually going on in the referenced styles, as I have tried to do a bit of elsewhere?}
+In terms of a practical extension of the immediate exterior of our prison, we could imagine extending the configuration dialect of style 19, ``No Commitment'' into a richer system of metadata by which modules advertise sites capable of allocation in structured forms such as those seen in style 12, ``Closed Maps''\footnote{\url{https://github.com/crista/exercises-in-programming-style/tree/master/13-closed-maps}}, and express relations in a symbolic form of selectors so that the boilerplate seen in listings such as {\ttfamily tf-18.py} in section 18.2 can be eliminated.
+\pt{It is unfriendly to present an unqualified reference to Lopes' book, indistinguishable from an internal self-reference}
+However, Lopes provides a salutary warning that correctly predicts that simplistic and incomplete attempts to solve the problem of open authorship will initially make the problem they are trying to solve much worse rather than better:
 
 \begin{quote}
     Modern frameworks have embraced this style of programming for supporting usage-sensitive customizations. However, when abused, software written in this style can become a ``configuration hell'', with dozens of customization points, each with many different alternatives that can be hard to understand.
@@ -547,7 +852,7 @@ In practice, expression of correlated dependencies is just one of many ambitious
 
 \section{Structure of an escape}
 
-A metaphor for the structure of the escape from such a prison was given by Idries Shah in a Sufi teaching story appearing in his ``The Magic Monastery''\cite{Shah1972}, which we reproduce in extenso:
+A metaphor for the structure of the escape from such a prison was given by Idries Shah in a Sufi teaching story appearing in his ``The Magic Monastery''~\cite{Shah1972}, which we reproduce {\it in extenso}:
 
 \begin{quote}
 \small
@@ -576,14 +881,22 @@ The tinsmith said:
 
 We have argued that computational expressions are imprisoned as a result of the structure of languages, tools and idioms underlying today's software construction, and are unable to participate in an open ecology of function where communities have the power to effectively and economically own their software. We have recognised that a catalogue of today's programming styles is a useful starting point to map out the structure of that prison and to seek out weak points from which an escape might be launched. We have constructed a miniature integration language best meeting the needs of open authorship from within the prison of the Python language and found that it offers a substantially poorer authorial experience in most concrete aspects than the use of conventional styles. We have planned to construct increasingly ambitious such languages, and the crucially necessary accompanying authoring tool supports, until we overcome the extremely substantial obstacles preventing an escape into the apparently extremely hostile exterior of the prison. And perhaps, after centuries, or millenia, the correspondence we succeed in establishing between creators and users of software might give rise to the possibility for genuine, communicative, styles to emerge.
 
-\acks
-The authors are indebted to Colin Clark for illuminating conversations leading to some of the ideas in this paper.
+%%
+%% The acknowledgments section is defined using the "acks" environment
+%% (and NOT an unnumbered section). This ensures the proper
+%% identification of the section in the article metadata, and the
+%% consistent spelling of the heading.
+\begin{acks}
+The authors are indebted to Colin Clark for illuminating conversations leading to some of the ideas in this paper, and for the thoughtful critique he delivered at its presentation. This critique may be read at \url{https://wiki.fluidproject.org/display/fluid/Presentations} under the title of ``The Question Concerning Style''.
+\end{acks}
 
-%\printbibliography
+%%
+%% The next two lines define the bibliography style to be used, and
+%% the bibliography file.
+\bibliographystyle{ACM-Reference-Format}
 \bibliography{bibliography}
 
 \end{document}
-
-% Local Variables:
-% TeX-engine: luatex
-% End:
+\endinput
+%%
+%% End of file `sample-manuscript.tex'.
